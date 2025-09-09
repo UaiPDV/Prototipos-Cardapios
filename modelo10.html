@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Cardápio Digital - Layout TV (Grid)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+            <div class="extra">
+            Opções
+            <ul class="catextra">
+                <li><a href="index.html">Pag 1</a></li>
+                <li><a href="modelo2.html">Pag 2</a></li>
+                <li><a href="modelo3.html">Pag 3</a></li>
+                <li><a href="modelo4.html">Pag 4</a></li>
+                <li><a href="modelo5.html">Pag 5</a></li>
+                <li><a href="modelo6.html">Pag 6</a></li>
+                <li><a href="modelo7.html">Pag 7</a></li>
+                <li><a href="modelo8.html">Pag 8</a></li>
+                <li><a href="modelo9.html">Pag 9</a></li>
+                <li><a href="modelo10.html">Pag 10</a></li>
+                <li><a href="modelo11.html">Pag 11</a></li>
+                <li><a href="modelo12.html">Pag 12</a></li>
+                <li><a href="modelo13.html">Pag 13</a></li>
+            </ul>
+        </div>
+
+        <style>
+            .extra{
+                position: absolute;
+                bottom: 20px;
+                right: 10px;
+
+            }
+
+            .extra:hover {
+                color: #750c0c;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .extra:hover .catextra {
+                pointer-events: all;
+                transition: 0.6s;
+                opacity: 1;
+
+            }
+
+            .catextra {
+                bottom: 100%;
+                left: -30px;
+                position: absolute;
+                background-color: #eeeeee;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100px;
+                opacity: 0;
+                transition: 0.8s;
+                pointer-events: none;
+                padding: 0%;
+                z-index: 99999999;
+            }
+
+            .catextra a {
+                color: #292929;
+                font-weight: 400;
+                font-size: 13.5px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            .catextra li:hover {
+                background-color: #750c0c;
+                border: #750c0c;
+                transition: 0.5s;
+            }
+
+            .catextra li:hover a {
+                color: #eeeeee;
+            }
+
+            .catextra li {
+                list-style-type: none;
+                padding: 5px;
+                border: 1px solid #eeeeee;
+                transition: 0.5s;
+            }
+        </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            overflow: hidden;
+            display: grid;
+            grid-template-areas:
+                "titulo . . header"
+                ". . . ."
+                ". . . ."
+                ". . . preco";
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            height: 100vh;
+            width: 100vw;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .animar-entrada {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .animar-fade-in-up {
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.6);
+        }
+
+        /* Posicionamento dos elementos na grade */
+        #header-grid {
+            grid-area: header;
+            justify-self: end;
+            align-self: start;
+        }
+
+        #produto-titulo-grid {
+            grid-area: titulo;
+            justify-self: start;
+            align-self: start;
+        }
+
+        #produto-preco-grid {
+            grid-area: preco;
+            justify-self: end;
+            align-self: end;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <img id="background-img" src="" alt="Imagem de fundo" class="background-image animar-entrada">
+
+    <header id="header-grid" class="flex items-center animar-fade-in-up md:top-8 md:right-8">
+        <div id="logo-container"
+            class="max-w-xs h-10 rounded-2xl flex items-center justify-center md:h-12">
+            </div>
+        <div id="nome-da-empresa" class="text-2xl font-bold text-gray-200 md:text-3xl"></div>
+    </header>
+
+    <div id="produto-titulo-grid" class="p-2 rounded-xl bg-red-700 animar-fade-in-up md:p-4">
+        <h2 id="produto-titulo" class="text-5xl font-extrabold text-white text-shadow md:text-7xl"></h2>
+    </div>
+
+    <div id="produto-preco-grid" class="animar-fade-in-up">
+        <div id="produto-preco"
+            class="text-5xl font-extrabold text-red-700 bg-white rounded-xl shadow-lg px-4 py-2 md:text-7xl md:px-8 md:py-4">
+        </div>
+    </div>
+
+    <script>
+        // Dados da loja que você pode editar
+        const dadosLoja = {
+            nomeEmpresa: 'Loja de Bolos',
+            logoUrl: 'Logo_Exemplo.png',
+            produtoUnico: {
+                nome: 'Bolo de Aniversário',
+                preco: 80.00
+            }
+        };
+
+        // Função para formatar o preço para BRL
+        const formatarPreco = (preco) => {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(preco);
+        };
+
+        // URL da imagem de fundo
+        const backgroundImageUrl = 'bolo_chocolate.jpg';
+
+        // Função para renderizar o cardápio
+        const renderizarCardapio = () => {
+            // Insere a imagem de fundo
+            document.getElementById('background-img').src = backgroundImageUrl;
+
+            // Insere os dados nos elementos
+            document.getElementById('nome-da-empresa').textContent = dadosLoja.nomeEmpresa;
+            document.getElementById('logo-container').innerHTML =
+                `<img src="${dadosLoja.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
+            document.getElementById('produto-titulo').textContent = dadosLoja.produtoUnico.nome;
+            document.getElementById('produto-preco').textContent = formatarPreco(dadosLoja.produtoUnico.preco);
+
+            document.title = "Cardapio | " + dadosLoja.nomeEmpresa;
+            
+        };
+
+        // Renderiza o cardápio quando a página carregar
+        window.onload = renderizarCardapio;
+    </script>
+
+
+            <div class="extra">
+            Opções
+            <ul class="catextra">
+                <li><a href="index.html">Pag 1</a></li>
+                <li><a href="modelo2.html">Pag 2</a></li>
+                <li><a href="modelo3.html">Pag 3</a></li>
+                <li><a href="modelo4.html">Pag 4</a></li>
+                <li><a href="modelo5.html">Pag 5</a></li>
+                <li><a href="modelo6.html">Pag 6</a></li>
+                <li><a href="modelo7.html">Pag 7</a></li>
+                <li><a href="modelo8.html">Pag 8</a></li>
+                <li><a href="modelo9.html">Pag 9</a></li>
+                <li><a href="modelo10.html">Pag 10</a></li>
+                <li><a href="modelo11.html">Pag 11</a></li>
+                <li><a href="modelo12.html">Pag 12</a></li>
+                <li><a href="modelo13.html">Pag 13</a></li>
+            </ul>
+        </div>
+
+        <style>
+            .extra{
+                position: absolute;
+                bottom: 20px;
+                right: 10px;
+
+            }
+
+            .extra:hover {
+                color: #750c0c;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .extra:hover .catextra {
+                pointer-events: all;
+                transition: 0.6s;
+                opacity: 1;
+
+            }
+
+            .catextra {
+                bottom: 100%;
+                left: -30px;
+                position: absolute;
+                background-color: #eeeeee;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100px;
+                opacity: 0;
+                transition: 0.8s;
+                pointer-events: none;
+                padding: 0%;
+                z-index: 99999999;
+            }
+
+            .catextra a {
+                color: #292929;
+                font-weight: 400;
+                font-size: 13.5px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            .catextra li:hover {
+                background-color: #750c0c;
+                border: #750c0c;
+                transition: 0.5s;
+            }
+
+            .catextra li:hover a {
+                color: #eeeeee;
+            }
+
+            .catextra li {
+                list-style-type: none;
+                padding: 5px;
+                border: 1px solid #eeeeee;
+                transition: 0.5s;
+            }
+        </style>
+</body>
+
+</html>

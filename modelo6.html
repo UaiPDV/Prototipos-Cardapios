@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital - Layout 3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+            <div class="extra">
+            Opções
+            <ul class="catextra">
+                <li><a href="index.html">Pag 1</a></li>
+                <li><a href="modelo2.html">Pag 2</a></li>
+                <li><a href="modelo3.html">Pag 3</a></li>
+                <li><a href="modelo4.html">Pag 4</a></li>
+                <li><a href="modelo5.html">Pag 5</a></li>
+                <li><a href="modelo6.html">Pag 6</a></li>
+                <li><a href="modelo7.html">Pag 7</a></li>
+                <li><a href="modelo8.html">Pag 8</a></li>
+                <li><a href="modelo9.html">Pag 9</a></li>
+                <li><a href="modelo10.html">Pag 10</a></li>
+                <li><a href="modelo11.html">Pag 11</a></li>
+                <li><a href="modelo12.html">Pag 12</a></li>
+                <li><a href="modelo13.html">Pag 13</a></li>
+            </ul>
+        </div>
+
+        <style>
+            .extra{
+                position: absolute;
+                bottom: 20px;
+                right: 10px;
+
+            }
+
+            .extra:hover {
+                color: #750c0c;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .extra:hover .catextra {
+                pointer-events: all;
+                transition: 0.6s;
+                opacity: 1;
+
+            }
+
+            .catextra {
+                bottom: 100%;
+                left: -30px;
+                position: absolute;
+                background-color: #eeeeee;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100px;
+                opacity: 0;
+                transition: 0.8s;
+                pointer-events: none;
+                padding: 0%;
+                z-index: 99999999;
+            }
+
+            .catextra a {
+                color: #292929;
+                font-weight: 400;
+                font-size: 13.5px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            .catextra li:hover {
+                background-color: #750c0c;
+                border: #750c0c;
+                transition: 0.5s;
+            }
+
+            .catextra li:hover a {
+                color: #eeeeee;
+            }
+
+            .catextra li {
+                list-style-type: none;
+                padding: 5px;
+                border: 1px solid #eeeeee;
+                transition: 0.5s;
+            }
+        </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .secao-direita {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Animações de Entrada */
+        .animar-entrada {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .animar-fade-in-up {
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="flex min-h-screen p-8">
+    <main class="w-full flex rounded-3xl overflow-hidden shadow-2xl animar-entrada">
+        <!-- Seção de Destaque Esquerda -->
+        <div id="secao-destaque" class="w-1/3 bg-red-700 text-white p-8 flex flex-col items-center justify-center animar-fade-in-up">
+            <h2 id="categoria-destaque-titulo" class="text-6xl font-extrabold mb-4"></h2>
+            <p id="categoria-destaque-descricao" class="text-xl text-center mb-8"></p>
+            <div id="foto-destaque-container" class="w-full h-80 rounded-2xl bg-gray-300 shadow-md overflow-hidden">
+                <!-- Foto de destaque será inserida aqui -->
+            </div>
+        </div>
+
+        <!-- Seção de Menu Principal Direita -->
+        <div id="secao-menu" class="w-2/3 bg-white p-8 flex flex-col justify-start animar-fade-in-up">
+            <header class="flex items-center justify-between mb-8">
+                <!-- Logo e nome da empresa foram movidos para cá -->
+                <div class="flex items-center space-x-4">
+                    <img id="logo-da-empresa" src="" alt="Logo da Empresa" class="max-w-xs mb-8 h-16 rounded-2xl items-center justify-center">
+                    <div id="nome-da-empresa" class="text-3xl font-extrabold text-gray-800"></div>
+                </div>
+            </header>
+            <div id="lista-categorias" class="flex-grow overflow-y-auto pr-4">
+                <!-- Categorias e subcategorias serão inseridas aqui -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Dados da loja que você pode editar
+        const dadosLoja = {
+            nomeEmpresa: 'Restaurante Sabor & Arte',
+            logoUrl: 'Logo_Exemplo.png',
+            fotoDestaqueUrl: 'pratos.png',
+            categorias: [
+                {
+                    nome: 'Pratos Principais',
+                    descricao: 'Nossa seleção de pratos exclusivos.',
+                    subcategorias: [
+                        {
+                            nome: 'Massas',
+                            itens: [
+                                { nome: 'Lasanha à Bolonhesa', descricao: 'Tradicional, com molho artesanal.', preco: 35.00, imagemUrl: 'lasanha.png' },
+                                { nome: 'Fetuccine ao Pesto', descricao: 'Massa fresca com pesto de manjericão.', preco: 32.00, imagemUrl: 'fetuchine.jpg' },
+                            ]
+                        },
+                        {
+                            nome: 'Carnes',
+                            itens: [
+                                { nome: 'Picanha na Chapa', descricao: 'Acompanha arroz, farofa e vinagrete.', preco: 60.00, imagemUrl: 'picanha.jpg' },
+                                { nome: 'Filé de Frango Grelhado', descricao: 'Servido com legumes cozidos.', preco: 28.00, imagemUrl: 'file.jpeg' },
+                                { nome: 'Salmão ao Molho de Maracujá', descricao: 'Delicioso e leve.', preco: 55.00, imagemUrl: 'salmao.jpg' },
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Função para formatar o preço para BRL
+        const formatarPreco = (preco) => {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(preco);
+        };
+
+        // Função para renderizar o cardápio
+        const renderizarCardapio = () => {
+            // Renderiza o cabeçalho e a seção de destaque
+            document.getElementById('nome-da-empresa').textContent = dadosLoja.nomeEmpresa;
+            document.title = "Cardapio | " + dadosLoja.nomeEmpresa;
+            document.getElementById('logo-da-empresa').src = dadosLoja.logoUrl;
+            document.getElementById('foto-destaque-container').innerHTML = `<img src="${dadosLoja.fotoDestaqueUrl}" alt="Foto de Destaque" class="w-full h-full object-cover rounded-2xl">`;
+            document.getElementById('categoria-destaque-titulo').textContent = dadosLoja.categorias[0].nome;
+            document.getElementById('categoria-destaque-descricao').textContent = dadosLoja.categorias[0].descricao;
+
+            const listaCategorias = document.getElementById('lista-categorias');
+            listaCategorias.innerHTML = '';
+
+            dadosLoja.categorias[0].subcategorias.forEach(subcategoria => {
+                const subcategoriaDiv = document.createElement('div');
+                subcategoriaDiv.className = 'mb-8';
+                subcategoriaDiv.innerHTML = `<h3 class="text-3xl font-bold text-red-700 mb-4 border-b-4 border-dashed border-red-700 pb-2">${subcategoria.nome}</h3>`;
+
+                subcategoria.itens.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex items-center justify-between py-4 border-b border-gray-200 last:border-b-0';
+                    itemDiv.innerHTML = `
+                        <div class="flex items-center space-x-4">
+                            <img src="${item.imagemUrl}" alt="${item.nome}" class="w-16 h-16 rounded-xl object-cover ">
+                            <div>
+                                <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
+                                <div class="text-base text-gray-500">${item.descricao}</div>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-bold text-red-700">${formatarPreco(item.preco)}</div>
+                    `;
+                    subcategoriaDiv.appendChild(itemDiv);
+                });
+                listaCategorias.appendChild(subcategoriaDiv);
+            });
+        };
+
+        // Renderiza o cardápio quando a página carregar
+        window.onload = renderizarCardapio;
+    </script>
+
+
+            <div class="extra">
+            Opções
+            <ul class="catextra">
+                <li><a href="index.html">Pag 1</a></li>
+                <li><a href="modelo2.html">Pag 2</a></li>
+                <li><a href="modelo3.html">Pag 3</a></li>
+                <li><a href="modelo4.html">Pag 4</a></li>
+                <li><a href="modelo5.html">Pag 5</a></li>
+                <li><a href="modelo6.html">Pag 6</a></li>
+                <li><a href="modelo7.html">Pag 7</a></li>
+                <li><a href="modelo8.html">Pag 8</a></li>
+                <li><a href="modelo9.html">Pag 9</a></li>
+                <li><a href="modelo10.html">Pag 10</a></li>
+                <li><a href="modelo11.html">Pag 11</a></li>
+                <li><a href="modelo12.html">Pag 12</a></li>
+                <li><a href="modelo13.html">Pag 13</a></li>
+            </ul>
+        </div>
+
+        <style>
+            .extra{
+                position: absolute;
+                bottom: 20px;
+                right: 10px;
+
+            }
+
+            .extra:hover {
+                color: #750c0c;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .extra:hover .catextra {
+                pointer-events: all;
+                transition: 0.6s;
+                opacity: 1;
+
+            }
+
+            .catextra {
+                bottom: 100%;
+                left: -30px;
+                position: absolute;
+                background-color: #eeeeee;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100px;
+                opacity: 0;
+                transition: 0.8s;
+                pointer-events: none;
+                padding: 0%;
+                z-index: 99999999;
+            }
+
+            .catextra a {
+                color: #292929;
+                font-weight: 400;
+                font-size: 13.5px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            .catextra li:hover {
+                background-color: #750c0c;
+                border: #750c0c;
+                transition: 0.5s;
+            }
+
+            .catextra li:hover a {
+                color: #eeeeee;
+            }
+
+            .catextra li {
+                list-style-type: none;
+                padding: 5px;
+                border: 1px solid #eeeeee;
+                transition: 0.5s;
+            }
+        </style>
+</body>
+</html>

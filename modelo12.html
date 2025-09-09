@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+            <div class="extra">
+            Opções
+            <ul class="catextra">
+                <li><a href="index.html">Pag 1</a></li>
+                <li><a href="modelo2.html">Pag 2</a></li>
+                <li><a href="modelo3.html">Pag 3</a></li>
+                <li><a href="modelo4.html">Pag 4</a></li>
+                <li><a href="modelo5.html">Pag 5</a></li>
+                <li><a href="modelo6.html">Pag 6</a></li>
+                <li><a href="modelo7.html">Pag 7</a></li>
+                <li><a href="modelo8.html">Pag 8</a></li>
+                <li><a href="modelo9.html">Pag 9</a></li>
+                <li><a href="modelo10.html">Pag 10</a></li>
+                <li><a href="modelo11.html">Pag 11</a></li>
+                <li><a href="modelo12.html">Pag 12</a></li>
+                <li><a href="modelo13.html">Pag 13</a></li>
+            </ul>
+        </div>
+
+        <style>
+            .extra{
+                position: absolute;
+                bottom: 20px;
+                right: 10px;
+
+            }
+
+            .extra:hover {
+                color: #750c0c;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .extra:hover .catextra {
+                pointer-events: all;
+                transition: 0.6s;
+                opacity: 1;
+
+            }
+
+            .catextra {
+                bottom: 100%;
+                left: -30px;
+                position: absolute;
+                background-color: #eeeeee;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100px;
+                opacity: 0;
+                transition: 0.8s;
+                pointer-events: none;
+                padding: 0%;
+                z-index: 99999999;
+            }
+
+            .catextra a {
+                color: #292929;
+                font-weight: 400;
+                font-size: 13.5px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            .catextra li:hover {
+                background-color: #750c0c;
+                border: #750c0c;
+                transition: 0.5s;
+            }
+
+            .catextra li:hover a {
+                color: #eeeeee;
+            }
+
+            .catextra li {
+                list-style-type: none;
+                padding: 5px;
+                border: 1px solid #eeeeee;
+                transition: 0.5s;
+            }
+        </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap');
+
+        body {
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-image: url('https://images.unsplash.com/photo-1542838132-9214713c2c77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTUyMjd8MHwxfHNlYXJjaHwxNXx8ZnJ1aXQlMjBhbmQlMjB2ZWdldGFibGVzJTIwbWFya2V0fGVufDB8fHx8MTcwMTg4MzE1NXww&ixlib=rb-4.0.3&q=80&w=1080');
+        }
+        
+        .container-principal {
+            width: 100%;
+            max-width: 1800px;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 2.5rem;
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            position: relative; /* Adicionado para posicionamento da logo */
+        }
+
+        .animar-entrada {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .animar-fade-in-up {
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        @media (max-width: 1455px) {
+                #item-preco {
+                font-size: 1.5rem; /* Tailwind: text-5xl */
+            }
+            }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="animar-entrada">
+
+    <div class="container-principal">
+        <div id="logo-container" class="absolute top-8 right-8 flex items-center max-w-xs h-10 rounded-2xl md:h-12 space-x-2">
+            </div>
+
+        <div class="col-span-full text-center mb-6">
+            <h1 id="titulo-principal" class="text-5xl font-extrabold text-[#1e8838] leading-tight"></h1>
+            <p id="legenda-principal" class="text-xl text-gray-700 mt-2"></p>
+        </div>
+        
+        <div id="lista-categorias" class="col-span-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+    </div>
+
+    <script>
+        // Objeto de configuração para personalização
+        const configuracoes = {
+            nomeEmpresa: "Mercado Central",
+            logoUrl: 'Logo_Exemplo.png', // URL da sua logo
+            titulo: "Nosso Hortifruti",
+            legenda: "Produtos frescos e de qualidade para sua família",
+        };
+
+        // Dados do cardápio que você pode editar
+        const dadosCardapio = {
+            categorias: [
+                {
+                    nome: "Frutas",
+                    cor: "text-[#d62828]",
+                    itens: [
+                        { nome: "Banana", descricao: "Nanica", preco: 5.99, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Morango", descricao: "Bandeja fresca", preco: 8.50, unidade: "unid.", imagem: 'verduras.webp' },
+                        { nome: "Laranja", descricao: "Pera", preco: 3.20, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Maçã", descricao: "Gala", preco: 9.90, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Melancia", descricao: "Doce e suculenta", preco: 2.50, unidade: "kg", imagem: 'verduras.webp' },
+                    ]
+                },
+                {
+                    nome: "Verduras",
+                    cor: "text-[#2e7d32]",
+                    itens: [
+                        { nome: "Alface", descricao: "Lisa", preco: 2.99, unidade: "unid.", imagem: 'verduras.webp' },
+                        { nome: "Couve", descricao: "Maço", preco: 3.50, unidade: "unid.", imagem: 'verduras.webp' },
+                        { nome: "Brócolis", descricao: "Fresco", preco: 7.80, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Rúcula", descricao: "Maço", preco: 4.00, unidade: "unid.", imagem: 'verduras.webp' },
+                    ]
+                },
+                {
+                    nome: "Legumes",
+                    cor: "text-[#ff6f00]",
+                    itens: [
+                        { nome: "Tomate", descricao: "Maduro", preco: 6.90, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Batata", descricao: "Baking", preco: 4.50, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Cenoura", descricao: "Fresca", preco: 3.80, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Pimentão", descricao: "Verde", preco: 5.20, unidade: "kg", imagem: 'verduras.webp' },
+                    ]
+                }
+            ]
+        };
+
+        // Função para formatar o preço para BRL
+        const formatarPreco = (preco) => {
+            return preco.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+        };
+
+        // Função para renderizar o cardápio
+        const renderizarCardapio = (config) => {
+            document.title = "Cardapio | " +  config.nomeEmpresa;
+            document.getElementById('titulo-principal').textContent = config.titulo;
+            document.getElementById('legenda-principal').textContent = config.legenda;
+
+            // Injetar logo e nome da empresa
+            const logoContainer = document.getElementById('logo-container');
+            logoContainer.innerHTML = `
+                <img src="${config.logoUrl}" alt="${config.nomeEmpresa} Logo" class="h-10 w-10 rounded-lg">
+                <span class="text-xl font-bold text-gray-800">${config.nomeEmpresa}</span>
+            `;
+
+            const listaCategorias = document.getElementById('lista-categorias');
+            listaCategorias.innerHTML = '';
+            
+            dadosCardapio.categorias.forEach(categoria => {
+                const categoriaDiv = document.createElement('div');
+                categoriaDiv.className = 'bg-white rounded-2xl shadow-lg p-6 animar-fade-in-up';
+                
+                categoriaDiv.innerHTML = `
+                    <h2 class="text-4xl font-extrabold ${categoria.cor} mb-4 border-b-4 border-dashed ${categoria.cor.replace('text', 'border')} pb-2">
+                        ${categoria.nome}
+                    </h2>
+                `;
+
+                categoria.itens.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex items-center py-4 border-b border-gray-200 last:border-b-0';
+                    itemDiv.innerHTML = `
+                        <img src="${item.imagem}" alt="${item.nome}" class="h-16 w-16 rounded-lg mr-4 object-cover">
+                        <div class="flex-grow">
+                            <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
+                            <div class="text-lg text-gray-500">${item.descricao}</div>
+                        </div>
+                        <div id="item-preco" class="text-3xl font-bold ${categoria.cor} whitespace-nowrap">${formatarPreco(item.preco)} / ${item.unidade}</div>
+                    `;
+                    categoriaDiv.appendChild(itemDiv);
+                });
+                listaCategorias.appendChild(categoriaDiv);
+            });
+        };
+
+        window.onload = () => renderizarCardapio(configuracoes);
+    </script>
+
+
+            <div class="extra">
+            Opções
+            <ul class="catextra">
+                <li><a href="index.html">Pag 1</a></li>
+                <li><a href="modelo2.html">Pag 2</a></li>
+                <li><a href="modelo3.html">Pag 3</a></li>
+                <li><a href="modelo4.html">Pag 4</a></li>
+                <li><a href="modelo5.html">Pag 5</a></li>
+                <li><a href="modelo6.html">Pag 6</a></li>
+                <li><a href="modelo7.html">Pag 7</a></li>
+                <li><a href="modelo8.html">Pag 8</a></li>
+                <li><a href="modelo9.html">Pag 9</a></li>
+                <li><a href="modelo10.html">Pag 10</a></li>
+                <li><a href="modelo11.html">Pag 11</a></li>
+                <li><a href="modelo12.html">Pag 12</a></li>
+                <li><a href="modelo13.html">Pag 13</a></li>
+            </ul>
+        </div>
+
+        <style>
+            .extra{
+                position: absolute;
+                bottom: 20px;
+                right: 10px;
+
+            }
+
+            .extra:hover {
+                color: #750c0c;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .extra:hover .catextra {
+                pointer-events: all;
+                transition: 0.6s;
+                opacity: 1;
+
+            }
+
+            .catextra {
+                bottom: 100%;
+                left: -30px;
+                position: absolute;
+                background-color: #eeeeee;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100px;
+                opacity: 0;
+                transition: 0.8s;
+                pointer-events: none;
+                padding: 0%;
+                z-index: 99999999;
+            }
+
+            .catextra a {
+                color: #292929;
+                font-weight: 400;
+                font-size: 13.5px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            .catextra li:hover {
+                background-color: #750c0c;
+                border: #750c0c;
+                transition: 0.5s;
+            }
+
+            .catextra li:hover a {
+                color: #eeeeee;
+            }
+
+            .catextra li {
+                list-style-type: none;
+                padding: 5px;
+                border: 1px solid #eeeeee;
+                transition: 0.5s;
+            }
+        </style>
+</body>
+</html>

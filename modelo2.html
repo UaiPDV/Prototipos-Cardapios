@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital - Layout 8</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+            <div class="extra">
+            Opções
+            <ul class="catextra">
+                <li><a href="index.html">Pag 1</a></li>
+                <li><a href="modelo2.html">Pag 2</a></li>
+                <li><a href="modelo3.html">Pag 3</a></li>
+                <li><a href="modelo4.html">Pag 4</a></li>
+                <li><a href="modelo5.html">Pag 5</a></li>
+                <li><a href="modelo6.html">Pag 6</a></li>
+                <li><a href="modelo7.html">Pag 7</a></li>
+                <li><a href="modelo8.html">Pag 8</a></li>
+                <li><a href="modelo9.html">Pag 9</a></li>
+                <li><a href="modelo10.html">Pag 10</a></li>
+                <li><a href="modelo11.html">Pag 11</a></li>
+                <li><a href="modelo12.html">Pag 12</a></li>
+                <li><a href="modelo13.html">Pag 13</a></li>
+            </ul>
+        </div>
+
+        <style>
+            .extra{
+                position: absolute;
+                bottom: 20px;
+                right: 10px;
+
+            }
+
+            .extra:hover {
+                color: #750c0c;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .extra:hover .catextra {
+                pointer-events: all;
+                transition: 0.6s;
+                opacity: 1;
+
+            }
+
+            .catextra {
+                bottom: 100%;
+                left: -30px;
+                position: absolute;
+                background-color: #eeeeee;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100px;
+                opacity: 0;
+                transition: 0.8s;
+                pointer-events: none;
+                padding: 0%;
+                z-index: 99999999;
+            }
+
+            .catextra a {
+                color: #292929;
+                font-weight: 400;
+                font-size: 13.5px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            .catextra li:hover {
+                background-color: #750c0c;
+                border: #750c0c;
+                transition: 0.5s;
+            }
+
+            .catextra li:hover a {
+                color: #eeeeee;
+            }
+
+            .catextra li {
+                list-style-type: none;
+                padding: 5px;
+                border: 1px solid #eeeeee;
+                transition: 0.5s;
+            }
+        </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Animações de entrada */
+        .animar-entrada {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .animar-fade-in-up {
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col sm:flex-row justify-center items-center min-h-screen p-4 sm:p-8 overflow-hidden">
+    <main class="w-full max-w-6xl h-full flex rounded-2xl shadow-xl overflow-hidden animar-entrada">
+        <!-- Faixa Lateral (visível apenas em telas maiores) -->
+        <div class="hidden sm:w-1/12 sm:block bg-red-700"></div>
+
+        <!-- Conteúdo Principal -->
+        <div id="secao-principal" class="w-full sm:w-11/12 p-4 sm:p-12 bg-white flex flex-col overflow-y-auto">
+            <!-- Cabeçalho -->
+            <header class="flex items-center mb-8 animar-fade-in-up">
+                <div id="logo-container" class="max-w-xs mb-8 h-20 rounded-2xl transform transition-transform duration-500 hover:rotate-6 flex items-center justify-center">
+                    <!-- A imagem da logo será inserida aqui -->
+                </div>
+                <h1 id="nome-da-empresa" class="text-2xl sm:text-4xl font-extrabold text-gray-800"></h1>
+            </header>
+
+            <!-- Lista de Categorias -->
+            <div id="lista-categorias" class="flex-grow">
+                <!-- Categorias e produtos serão inseridos aqui -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Dados da loja que você pode editar
+        const dadosLoja = {
+            nomeEmpresa: 'Padaria da Esquina',
+            logoUrl: 'Logo_Exemplo.png',
+            categorias: [
+                {
+                    nome: 'Salgados',
+                    imagem: 'Salgados.jpg',
+                    itens: [
+                        { nome: 'Coxinha de Frango', descricao: 'Nossa campeã de vendas!', preco: 7.50, imageUrl: 'Coxinha.webp' },
+                        { nome: 'Quiche de Alho Poró', descricao: 'Feita com massa crocante.', preco: 9.00, imageUrl: 'Alho.avif' },
+                        { nome: 'Empadão de Frango', descricao: 'Fatias generosas e suculentas.', preco: 12.00, imageUrl: 'Empada.jpg' },
+                    ]
+                },
+                {
+                    nome: 'Bebidas',
+                    imagem: 'Bebidas_Geral.jpg',
+                    itens: [
+                        { nome: 'Café Coado', descricao: 'O clássico para um bom dia.', preco: 5.00, imageUrl: 'cafe.jpg' },
+                        { nome: 'Suco de Laranja', descricao: '100% natural, espremido na hora.', preco: 8.50, imageUrl: 'Suco.webp' },
+                    ]
+                },
+            ]
+        };
+
+        // Função para formatar o preço para BRL
+        const formatarPreco = (preco) => {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(preco);
+        };
+
+        // Função para renderizar o cardápio
+        const renderizarCardapio = () => {
+            document.title = "Cardapio | " + dadosLoja.nomeEmpresa;
+            document.getElementById('nome-da-empresa').textContent = dadosLoja.nomeEmpresa;
+            document.getElementById('logo-container').innerHTML = `<img src="${dadosLoja.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
+
+            const listaCategorias = document.getElementById('lista-categorias');
+            listaCategorias.innerHTML = '';
+
+            dadosLoja.categorias.forEach(categoria => {
+                const categoriaDiv = document.createElement('div');
+                categoriaDiv.className = 'mb-8 animar-fade-in-up';
+                categoriaDiv.innerHTML = `
+                    <!-- Adicionamos um novo contêiner flexível para a imagem e o título -->
+                    <div class="flex items-center text-red-600 mb-2">
+                        <img src="${categoria.imagem}" alt="Ícone da Categoria" class="w-20 h-20 rounded-lg object-cover mr-4"/>
+                        <!-- A classe 'flex-grow' faz o h2 expandir, levando a linha junto -->
+                        <h2 class="text-3xl sm:text-4xl font-extrabold pb-2 border-b-4 border-dashed border-red-600 flex-grow">
+                            ${categoria.nome}
+                        </h2>
+                    </div>
+                `;
+
+                categoria.itens.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0';
+                    itemDiv.innerHTML = `
+                        <!-- Contêiner flexível para a imagem e o texto do produto -->
+                        <div class="flex items-center">
+                            <img src="${item.imageUrl}" alt="Imagem de ${item.nome}" class="w-16 h-16 rounded-xl object-cover mr-4">
+                            <div>
+                                <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
+                                <div class="text-lg text-gray-500">${item.descricao}</div>
+                            </div>
+                        </div>
+                        <div class="text-3xl font-bold text-red-600">${formatarPreco(item.preco)}</div>
+                    `;
+                    categoriaDiv.appendChild(itemDiv);
+                });
+                listaCategorias.appendChild(categoriaDiv);
+            });
+        };
+
+        // Renderiza o cardápio quando a página carregar
+        window.onload = renderizarCardapio;
+    </script>
+
+
+            <div class="extra">
+            Opções
+            <ul class="catextra">
+                <li><a href="index.html">Pag 1</a></li>
+                <li><a href="modelo2.html">Pag 2</a></li>
+                <li><a href="modelo3.html">Pag 3</a></li>
+                <li><a href="modelo4.html">Pag 4</a></li>
+                <li><a href="modelo5.html">Pag 5</a></li>
+                <li><a href="modelo6.html">Pag 6</a></li>
+                <li><a href="modelo7.html">Pag 7</a></li>
+                <li><a href="modelo8.html">Pag 8</a></li>
+                <li><a href="modelo9.html">Pag 9</a></li>
+                <li><a href="modelo10.html">Pag 10</a></li>
+                <li><a href="modelo11.html">Pag 11</a></li>
+                <li><a href="modelo12.html">Pag 12</a></li>
+                <li><a href="modelo13.html">Pag 13</a></li>
+            </ul>
+        </div>
+
+        <style>
+            .extra{
+                position: absolute;
+                bottom: 20px;
+                right: 10px;
+
+            }
+
+            .extra:hover {
+                color: #750c0c;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .extra:hover .catextra {
+                pointer-events: all;
+                transition: 0.6s;
+                opacity: 1;
+
+            }
+
+            .catextra {
+                bottom: 100%;
+                left: -30px;
+                position: absolute;
+                background-color: #eeeeee;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100px;
+                opacity: 0;
+                transition: 0.8s;
+                pointer-events: none;
+                padding: 0%;
+                z-index: 99999999;
+            }
+
+            .catextra a {
+                color: #292929;
+                font-weight: 400;
+                font-size: 13.5px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            .catextra li:hover {
+                background-color: #750c0c;
+                border: #750c0c;
+                transition: 0.5s;
+            }
+
+            .catextra li:hover a {
+                color: #eeeeee;
+            }
+
+            .catextra li {
+                list-style-type: none;
+                padding: 5px;
+                border: 1px solid #eeeeee;
+                transition: 0.5s;
+            }
+        </style>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital - Layout 6</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+            <div class="extra">
+            Opções
+            <ul class="catextra">
+                <li><a href="index.html">Pag 1</a></li>
+                <li><a href="modelo2.html">Pag 2</a></li>
+                <li><a href="modelo3.html">Pag 3</a></li>
+                <li><a href="modelo4.html">Pag 4</a></li>
+                <li><a href="modelo5.html">Pag 5</a></li>
+                <li><a href="modelo6.html">Pag 6</a></li>
+                <li><a href="modelo7.html">Pag 7</a></li>
+                <li><a href="modelo8.html">Pag 8</a></li>
+                <li><a href="modelo9.html">Pag 9</a></li>
+                <li><a href="modelo10.html">Pag 10</a></li>
+                <li><a href="modelo11.html">Pag 11</a></li>
+                <li><a href="modelo12.html">Pag 12</a></li>
+                <li><a href="modelo13.html">Pag 13</a></li>
+            </ul>
+        </div>
+
+        <style>
+            .extra{
+                position: absolute;
+                bottom: 20px;
+                right: 10px;
+
+            }
+
+            .extra:hover {
+                color: #750c0c;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .extra:hover .catextra {
+                pointer-events: all;
+                transition: 0.6s;
+                opacity: 1;
+
+            }
+
+            .catextra {
+                bottom: 100%;
+                left: -30px;
+                position: absolute;
+                background-color: #eeeeee;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100px;
+                opacity: 0;
+                transition: 0.8s;
+                pointer-events: none;
+                padding: 0%;
+                z-index: 99999999;
+            }
+
+            .catextra a {
+                color: #292929;
+                font-weight: 400;
+                font-size: 13.5px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            .catextra li:hover {
+                background-color: #750c0c;
+                border: #750c0c;
+                transition: 0.5s;
+            }
+
+            .catextra li:hover a {
+                color: #eeeeee;
+            }
+
+            .catextra li {
+                list-style-type: none;
+                padding: 5px;
+                border: 1px solid #eeeeee;
+                transition: 0.5s;
+            }
+        </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+        }
+
+        .cabecalho-principal {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: #ddd;
+            border-radius: 50%;
+            margin-right: 1.5rem;
+        }
+
+        .nome-empresa {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .categoria-titulo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #c0392b;
+            margin-bottom: 0.5rem;
+            border-bottom: 3px dashed #c0392b;
+            padding-bottom: 0.25rem;
+        }
+
+        .item-produto {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-produto:last-child {
+            border-bottom: none;
+        }
+
+        .nome-produto {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .descricao-produto {
+            font-size: 0.875rem;
+            color: #777;
+        }
+
+        .preco {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #c0392b;
+        }
+
+        .animar-entrada {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .animar-fade-in-up {
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 p-8">
+    <div class="w-full h-full p-10 flex flex-col justify-between animar-entrada">
+        <!-- Cabeçalho -->
+        <header class="flex items-center p-4 animar-fade-in-up">
+            <div id="logo-container" class="max-w-xs mb-8 h-20 rounded-2xl transform transition-transform duration-500 flex items-center justify-center">
+                <!-- A imagem da logo pode ser inserida aqui -->
+            </div>
+            <h1 id="nome-da-empresa" class="text-4xl font-extrabold text-gray-800"></h1>
+        </header>
+
+        <!-- Conteúdo Principal -->
+        <main class="flex-grow mt-4">
+            <div id="lista-categorias" class="w-full">
+                <!-- Categorias serão inseridas aqui -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Dados da loja que você pode editar
+        const dadosLoja = {
+            nomeEmpresa: 'Padaria Artesanal',
+            logoUrl: 'Logo_exemplo.png',
+            categorias: [
+                {
+                    nome: 'Pães',
+                    imagem: 'Paes.webp',
+                    itens: [
+                        { nome: 'Pão de Centeio', descricao: 'Fatia grossa, ideal para torradas.', preco: 10.00, imageUrl: 'Pao_fofo.webp' },
+                        { nome: 'Pão de Castanha-do-Pará', descricao: 'Feito com farinha integral.', preco: 12.00, imageUrl: 'Pao_fresco.webp' },
+                    ]
+                },
+                {
+                    nome: 'Doces',
+                    imagem: 'doces.png',
+                    itens: [
+                        { nome: 'Bolo de Fubá', descricao: 'Com goiabada, para acompanhar o café.', preco: 8.00, imageUrl: 'fuba.webp' },
+                        { nome: 'Cookies de Chocolate', descricao: 'Com gotas de chocolate belga.', preco: 5.00, imageUrl: 'cookie.webp' },
+                        { nome: 'Cuca de Banana', descricao: 'Uma delícia do sul.', preco: 11.00, imageUrl: 'cuca.webp' },
+                    ]
+                }
+            ]
+        };
+
+        // Função para formatar o preço para BRL
+        const formatarPreco = (preco) => {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(preco);
+        };
+
+        // Função para renderizar o cardápio
+        const renderizarCardapio = () => {
+            document.title = "Cardapio | " + dadosLoja.nomeEmpresa;
+            document.getElementById('nome-da-empresa').textContent = dadosLoja.nomeEmpresa;
+            document.getElementById('logo-container').innerHTML = `<img src="${dadosLoja.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
+
+            const listaCategorias = document.getElementById('lista-categorias');
+            listaCategorias.innerHTML = '';
+
+            dadosLoja.categorias.forEach(categoria => {
+                const categoriaDiv = document.createElement('div');
+                categoriaDiv.className = 'bg-white rounded-2xl shadow-lg p-4 mb-4 flex flex-col justify-start animar-fade-in-up';
+                categoriaDiv.innerHTML = `
+                    <div class="flex items-center text-red-600 mb-2">
+                        <img src="${categoria.imagem}" alt="Ícone da Categoria" class="w-20 h-20 rounded-lg object-cover mr-2"/>
+                        <h2 class="text-3xl font-extrabold pb-2 border-b-4 border-dashed border-red-600 flex-grow">${categoria.nome}</h2>
+                    </div>
+                `;
+
+                categoria.itens.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0';
+                    itemDiv.innerHTML = `
+                        <div class="flex items-center">
+                            <img src="${item.imageUrl}" alt="${item.nome}" class="w-16 h-16 rounded-xl object-cover mr-4">
+                            <div>
+                                <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
+                            <div class="text-lg text-gray-500">${item.descricao}</div>
+                        </div>
+                        </div>
+                        <div class="text-3xl font-bold text-red-600 bg-gray-100 rounded-lg px-4 py-2 shadow-sm">${formatarPreco(item.preco)}</div>
+                    `;
+                    categoriaDiv.appendChild(itemDiv);
+                });
+                listaCategorias.appendChild(categoriaDiv);
+            });
+        };
+
+        // Renderiza o cardápio quando a página carregar
+        window.onload = renderizarCardapio;
+    </script>
+
+
+            <div class="extra">
+            Opções
+            <ul class="catextra">
+                <li><a href="index.html">Pag 1</a></li>
+                <li><a href="modelo2.html">Pag 2</a></li>
+                <li><a href="modelo3.html">Pag 3</a></li>
+                <li><a href="modelo4.html">Pag 4</a></li>
+                <li><a href="modelo5.html">Pag 5</a></li>
+                <li><a href="modelo6.html">Pag 6</a></li>
+                <li><a href="modelo7.html">Pag 7</a></li>
+                <li><a href="modelo8.html">Pag 8</a></li>
+                <li><a href="modelo9.html">Pag 9</a></li>
+                <li><a href="modelo10.html">Pag 10</a></li>
+                <li><a href="modelo11.html">Pag 11</a></li>
+                <li><a href="modelo12.html">Pag 12</a></li>
+                <li><a href="modelo13.html">Pag 13</a></li>
+            </ul>
+        </div>
+
+        <style>
+            .extra{
+                position: absolute;
+                bottom: 20px;
+                right: 10px;
+
+            }
+
+            .extra:hover {
+                color: #750c0c;
+                text-decoration: underline;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            .extra:hover .catextra {
+                pointer-events: all;
+                transition: 0.6s;
+                opacity: 1;
+
+            }
+
+            .catextra {
+                bottom: 100%;
+                left: -30px;
+                position: absolute;
+                background-color: #eeeeee;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100px;
+                opacity: 0;
+                transition: 0.8s;
+                pointer-events: none;
+                padding: 0%;
+                z-index: 99999999;
+            }
+
+            .catextra a {
+                color: #292929;
+                font-weight: 400;
+                font-size: 13.5px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            .catextra li:hover {
+                background-color: #750c0c;
+                border: #750c0c;
+                transition: 0.5s;
+            }
+
+            .catextra li:hover a {
+                color: #eeeeee;
+            }
+
+            .catextra li {
+                list-style-type: none;
+                padding: 5px;
+                border: 1px solid #eeeeee;
+                transition: 0.5s;
+            }
+        </style>
+</body>
+
+</html>
