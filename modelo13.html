@@ -6,26 +6,6 @@
     <title>Cardápio Digital</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-
-            <div class="extra">
-            Opções
-            <ul class="catextra">
-                <li><a href="index.html">Pag 1</a></li>
-                <li><a href="modelo2.html">Pag 2</a></li>
-                <li><a href="modelo3.html">Pag 3</a></li>
-                <li><a href="modelo4.html">Pag 4</a></li>
-                <li><a href="modelo5.html">Pag 5</a></li>
-                <li><a href="modelo6.html">Pag 6</a></li>
-                <li><a href="modelo7.html">Pag 7</a></li>
-                <li><a href="modelo8.html">Pag 8</a></li>
-                <li><a href="modelo9.html">Pag 9</a></li>
-                <li><a href="modelo10.html">Pag 10</a></li>
-                <li><a href="modelo11.html">Pag 11</a></li>
-                <li><a href="modelo12.html">Pag 12</a></li>
-                <li><a href="modelo13.html">Pag 13</a></li>
-            </ul>
-        </div>
-
         <style>
             .extra{
                 position: absolute;
@@ -91,7 +71,7 @@
         </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap');
-        
+
         body {
             overflow: hidden;
             font-family: 'Poppins', sans-serif;
@@ -102,26 +82,24 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-image: url('https://images.unsplash.com/photo-1628126131495-2019488b3980?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTUyMjd8MHwxfHNlYXJjaHw3fHxiaXN0cm98ZW58MHx8fHwxNzA4MTkzNzAzfDA&ixlib=rb-4.0.3&q=80&w=1080');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            background-image: url('https://images.unsplash.com/photo-1542838132-9214713c2c77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTUyMjd8MHwxfHNlYXJjaHwxNXx8ZnJ1aXQlMjBhbmQlMjB2ZWdldGFibGVzJTIwbWFya2V0fGVufDB8fHx8MTcwMTg4MzE1NXww&ixlib=rb-4.0.3&q=80&w=1080');
         }
-
+        
         .container-principal {
             width: 100%;
-            /* Aumentando o tamanho do bloco principal */
-            max-width: 1800px; 
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
+            max-width: 1800px;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
             border-radius: 1.5rem;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            /* Alterando o espaçamento interno para o mesmo do modelo 12 */
             padding: 2.5rem;
-            position: relative;
             display: grid;
             gap: 2rem;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            position: relative; /* Adicionado para posicionamento da logo */
         }
 
         .animar-entrada {
@@ -138,7 +116,6 @@
             }
             }
 
-
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -153,18 +130,17 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-
-            
         }
     </style>
 </head>
 <body class="animar-entrada">
+
     <div class="container-principal">
         <div id="logo-container" class="absolute top-8 right-8 flex items-center max-w-xs h-10 rounded-2xl md:h-12 space-x-2">
             </div>
 
         <div class="col-span-full text-center mb-6">
-            <h1 id="titulo-principal" class="text-5xl font-extrabold text-red-800 leading-tight"></h1>
+            <h1 id="titulo-principal" class="text-5xl font-extrabold text-[#1e8838] leading-tight"></h1>
             <p id="legenda-principal" class="text-xl text-gray-700 mt-2"></p>
         </div>
         
@@ -175,45 +151,46 @@
     <script>
         // Objeto de configuração para personalização
         const configuracoes = {
-            nomeEmpresa: "Açougue do Zé",
+            nomeEmpresa: "Mercado Central",
             logoUrl: 'logoexemplo.png', // URL da sua logo
-            titulo: "Cortes Nobres",
-            legenda: "Qualidade e frescor para a sua mesa!",
+            titulo: "Nosso Hortifruti",
+            legenda: "Produtos frescos e de qualidade para sua família",
         };
 
-        // Dados do cardápio do açougue
+        // Dados do cardápio que você pode editar
         const dadosCardapio = {
             categorias: [
                 {
-                    nome: "Carnes Bovinas",
-                    cor: "text-red-800",
+                    nome: "Frutas",
+                    cor: "text-[#d62828]",
                     itens: [
-                        { nome: "Picanha", preco: 79.90, unidade: "kg", imagem: 'carnes.jpg' },
-                        { nome: "Alcatra", preco: 45.50, unidade: "kg", imagem: 'carnes.jpg' },
-                        { nome: "Contrafilé", preco: 52.80, unidade: "kg", imagem: 'carnes.jpg' },
-                        { nome: "Filé Mignon", preco: 85.00, unidade: "kg", imagem: 'carnes.jpg' },
-                        { nome: "Costela Bovina", preco: 38.00, unidade: "kg", imagem: 'carnes.jpg' },
+                        { nome: "Banana", descricao: "Nanica", preco: 5.99, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Morango", descricao: "Bandeja fresca", preco: 8.50, unidade: "unid.", imagem: 'verduras.webp' },
+                        { nome: "Laranja", descricao: "Pera", preco: 3.20, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Maçã", descricao: "Gala", preco: 9.90, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Melancia", descricao: "Doce e suculenta", preco: 2.50, unidade: "kg", imagem: 'verduras.webp' },
                     ]
                 },
                 {
-                    nome: "Carnes Suínas",
-                    cor: "text-red-700",
+                    nome: "Verduras",
+                    cor: "text-[#2e7d32]",
                     itens: [
-                        { nome: "Costelinha", preco: 29.90, unidade: "kg", imagem: 'carnes.jpg' },
-                        { nome: "Pernil", preco: 25.00, unidade: "kg", imagem: 'carnes.jpg' },
-                        { nome: "Lombo", preco: 33.50, unidade: "kg", imagem: 'carnes.jpg' },
-                        { nome: "Toucinho", preco: 21.00, unidade: "kg", imagem: 'carnes.jpg' }
+                        { nome: "Alface", descricao: "Lisa", preco: 2.99, unidade: "unid.", imagem: 'verduras.webp' },
+                        { nome: "Couve", descricao: "Maço", preco: 3.50, unidade: "unid.", imagem: 'verduras.webp' },
+                        { nome: "Brócolis", descricao: "Fresco", preco: 7.80, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Rúcula", descricao: "Maço", preco: 4.00, unidade: "unid.", imagem: 'verduras.webp' },
                     ]
                 },
                 {
-                    nome: "Aves",
-                    cor: "text-red-600",
+                    nome: "Legumes",
+                    cor: "text-[#ff6f00]",
                     itens: [
-                        { nome: "Peito de Frango", preco: 18.90, unidade: "kg", imagem: 'carnes.jpg' },
-                        { nome: "Coxa com Sobrecoxa", preco: 15.50, unidade: "kg", imagem: 'carnes.jpg' },
-                        { nome: "Asa de Frango", preco: 22.00, unidade: "kg", imagem: 'carnes.jpg' }
+                        { nome: "Tomate", descricao: "Maduro", preco: 6.90, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Batata", descricao: "Baking", preco: 4.50, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Cenoura", descricao: "Fresca", preco: 3.80, unidade: "kg", imagem: 'verduras.webp' },
+                        { nome: "Pimentão", descricao: "Verde", preco: 5.20, unidade: "kg", imagem: 'verduras.webp' },
                     ]
-                },
+                }
             ]
         };
 
@@ -227,40 +204,38 @@
 
         // Função para renderizar o cardápio
         const renderizarCardapio = (config) => {
-            document.title = "Cardapio | " + config.nomeEmpresa;
+            document.title = "Cardapio | " +  config.nomeEmpresa;
             document.getElementById('titulo-principal').textContent = config.titulo;
             document.getElementById('legenda-principal').textContent = config.legenda;
 
             // Injetar logo e nome da empresa
             const logoContainer = document.getElementById('logo-container');
-            // Alterado para rounded-lg para corresponder ao modelo 12
             logoContainer.innerHTML = `
                 <img src="${config.logoUrl}" alt="${config.nomeEmpresa} Logo" class="h-10 w-10 rounded-lg">
                 <span class="text-xl font-bold text-gray-800">${config.nomeEmpresa}</span>
             `;
-            
+
             const listaCategorias = document.getElementById('lista-categorias');
             listaCategorias.innerHTML = '';
             
             dadosCardapio.categorias.forEach(categoria => {
                 const categoriaDiv = document.createElement('div');
-                // Alterado para shadow-lg e p-6 para corresponder ao modelo 12
-                categoriaDiv.className = 'bg-white rounded-2xl shadow-lg p-6 animar-fade-in-up categoria-bloco';
+                categoriaDiv.className = 'bg-white rounded-2xl shadow-lg p-6 animar-fade-in-up';
                 
                 categoriaDiv.innerHTML = `
-                    <h2 class="text-4xl font-extrabold ${categoria.cor} mb-4 border-b-4 border-dashed border-red-200 pb-2">
+                    <h2 class="text-4xl font-extrabold ${categoria.cor} mb-4 border-b-4 border-dashed ${categoria.cor.replace('text', 'border')} pb-2">
                         ${categoria.nome}
                     </h2>
                 `;
 
                 categoria.itens.forEach(item => {
                     const itemDiv = document.createElement('div');
-                    // Alterado para py-4 e border-gray-200 para corresponder ao modelo 12
                     itemDiv.className = 'flex items-center py-4 border-b border-gray-200 last:border-b-0';
                     itemDiv.innerHTML = `
                         <img src="${item.imagem}" alt="${item.nome}" class="h-16 w-16 rounded-lg mr-4 object-cover">
                         <div class="flex-grow">
                             <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
+                            <div class="text-lg text-gray-500">${item.descricao}</div>
                         </div>
                         <div id="item-preco" class="text-3xl font-bold ${categoria.cor} whitespace-nowrap">${formatarPreco(item.preco)} / ${item.unidade}</div>
                     `;
@@ -271,37 +246,42 @@
         };
 
         window.onload = () => renderizarCardapio(configuracoes);
+
+            // Função para sair do modo tela cheia
+            function exitFullscreen() {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                }
+            }
+
+            // Adiciona evento de clique para todos elementos com a classe 'sairtc'
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.sairtc').forEach(function(el) {
+                    el.addEventListener('click', exitFullscreen);
+                });
+            });
     </script>
 
 
-            <div class="extra">
-            Opções
-            <ul class="catextra">
-                <li><a href="index.html">Pag 1</a></li>
-                <li><a href="modelo2.html">Pag 2</a></li>
-                <li><a href="modelo3.html">Pag 3</a></li>
-                <li><a href="modelo4.html">Pag 4</a></li>
-                <li><a href="modelo5.html">Pag 5</a></li>
-                <li><a href="modelo6.html">Pag 6</a></li>
-                <li><a href="modelo7.html">Pag 7</a></li>
-                <li><a href="modelo8.html">Pag 8</a></li>
-                <li><a href="modelo9.html">Pag 9</a></li>
-                <li><a href="modelo10.html">Pag 10</a></li>
-                <li><a href="modelo11.html">Pag 11</a></li>
-                <li><a href="modelo12.html">Pag 12</a></li>
-                <li><a href="modelo13.html">Pag 13</a></li>
-            </ul>
+            <div class="botões">
+        
+            <div class="sairtc">Sair do Modo Tela Cheia</div>
+            
         </div>
 
         <style>
-            .extra{
+            .botões{
                 position: absolute;
                 bottom: 20px;
                 right: 10px;
-
             }
 
-            .extra:hover {
+            .extra, .sairtc{
+                display: inline-block;
+                margin: 5px;
+            }
+
+            .extra:hover, .sairtc:hover {
                 color: #750c0c;
                 text-decoration: underline;
                 cursor: pointer;
