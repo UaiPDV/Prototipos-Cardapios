@@ -3,72 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Digital - Layout 7</title>
+    <title>Cardápio Digital - Bebidas Quentes & Salgados</title>
 <script src="https://cdn.tailwindcss.com"></script>
 
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
         
@@ -83,102 +20,17 @@
             overflow: hidden;
         }
         
-        .container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .secao {
-            position: relative;
-            background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(5px);
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            z-index: 10;
-        }
-
         .fundo-imagem {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('fundo3.jpg');
+            background-image: url('img/fundo3.jpg');
             background-size: cover;
             background-position: center;
             filter: blur(10px) brightness(0.8);
             z-index: 0;
-        }
-
-        .cabecalho {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            margin-bottom: 2rem;
-        }
-
-        .logo {
-            width: 80px;
-            height: 80px;
-            background-color: #ddd;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #555;
-            margin-right: 1.5rem;
-        }
-
-        .nome-empresa {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        .categoria-titulo {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #c0392b;
-            margin-bottom: 1rem;
-            border-bottom: 3px dashed #c0392b;
-            padding-bottom: 0.5rem;
-        }
-
-        .item-produto {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .item-produto:last-child {
-            border-bottom: none;
-        }
-
-        .nome-produto {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .descricao-produto {
-            font-size: 1rem;
-            color: #777;
-        }
-
-        .preco {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #c0392b;
         }
         
         .animar-entrada {
@@ -208,12 +60,12 @@
 </head>
 <body class="flex min-h-screen p-4 sm:p-8">
     <div class="fundo-imagem"></div>
-    <main class="w-full flex m-2 sm:m-4 animar-entrada">
+    <main class="w-full max-w-7xl flex m-2 sm:m-4 animar-entrada h-[90vh]">
         <!-- Seção de Menu Esquerda -->
         <div id="secao-esquerda" class="w-1/2 p-4 sm:p-8 bg-white bg-opacity-90 backdrop-blur-sm flex flex-col relative z-10 rounded-l-lg">
             <header class="mb-8 animar-fade-in-up">
                 <div class="flex items-center">
-                    <div id="logo-container" class="max-w-xs mb-8 h-16 rounded-2xl transform transition-transform duration-500 hover:rotate-6 flex items-center justify-center"></div>
+                    <div id="logo-container" class="max-w-xs h-16 rounded-2xl transform transition-transform duration-500 hover:rotate-6 flex items-center justify-center"></div>
                     <h1 id="nome-da-empresa" class="text-4xl font-extrabold text-gray-800"></h1>
                 </div>
             </header>
@@ -230,8 +82,7 @@
 
         <!-- Seção de Menu Direita -->
     <div id="secao-direita" class="w-1/2 p-4 sm:p-8 bg-gray-200 bg-opacity-95 backdrop-blur-sm flex flex-col relative z-10 rounded-r-lg">
-            <header class="mb-8 animar-fade-in-up"></header>
-            <div id="lista-direita" class="flex-grow overflow-y-auto pr-4">
+            <div id="lista-direita" class="flex-grow overflow-y-auto pr-4 pt-28">
                 <div class="flex items-center mb-4">
                     <img id="categoria-direita-imagem" alt="Ícone da Categoria" class="w-20 h-20 mr-4 rounded-lg"/>
                     <h2 id="categoria-direita-titulo" class="text-4xl font-bold text-red-600 border-b-4 border-dashed border-red-600 pb-2 flex-grow"></h2>
@@ -244,57 +95,20 @@
     </main>
 
     <script>
-        // Dados da loja que você pode editar
-        const dadosLoja = {
-            nomeEmpresa: 'Cafeteria & Lanches',
-            logoUrl: 'img/logoexemplo.png',
-            categorias: [
-                {
-                    nome: 'Bebidas Quentes',
-                    imagem: 'img/bebidasgeral.jpg',
-                    itens: [
-                        { nome: 'Café Expresso', descricao: 'O tradicional, forte e encorpado.', preco: 6.00, imagem: 'img/cafe2.jpeg' },
-                        { nome: 'Cappuccino', descricao: 'Com canela e chocolate.', preco: 12.00, imagem: 'img/capu.avif' },
-                        { nome: 'Chá de Ervas', descricao: 'Camomila, hortelã ou cidreira.', preco: 8.00, imagem: 'img/cha.jpg' },
-                    ]
-                },
-                {
-                    nome: 'Salgados',
-                    imagem: 'img/salgados.jpg',
-                    itens: [
-                        { nome: 'Coxinha de Frango', descricao: 'A favorita de todos.', preco: 7.50, imagem: 'img/coxinha.webp' },
-                        { nome: 'Pão de Queijo Recheado', descricao: 'Com requeijão ou catupiry.', preco: 9.00, imagem: 'img/paoqueijo.jpeg' },
-                        { nome: 'Empadinha de Palmito', descricao: 'Massa fina e recheio cremoso.', preco: 8.00, imagem: 'img/empada.jpg' },
-                    ]
-                }
-            ]
-        };
-
         // Função para formatar o preço para BRL
         const formatarPreco = (preco) => {
+            if (typeof preco !== 'number') return 'R$ --,--';
             return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(preco);
         };
 
-        // Função para renderizar o cardápio
-        const renderizarCardapio = () => {
-            document.title = "Cardapio | " + dadosLoja.nomeEmpresa;
-            document.getElementById('nome-da-empresa').textContent = dadosLoja.nomeEmpresa;
-            document.getElementById('logo-container').innerHTML = `<img src="${dadosLoja.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
-
-            const secaoEsquerda = dadosLoja.categorias[0];
-            const secaoDireita = dadosLoja.categorias[1];
-            
-            // Renderiza o título e a imagem da categoria da esquerda
-            document.getElementById('categoria-esquerda-imagem').src = secaoEsquerda.imagem;
-            document.getElementById('categoria-esquerda-titulo').textContent = secaoEsquerda.nome;
-
-            // Renderiza o título e a imagem da categoria da direita
-            document.getElementById('categoria-direita-imagem').src = secaoDireita.imagem;
-            document.getElementById('categoria-direita-titulo').textContent = secaoDireita.nome;
-
-            const listaProdutosEsquerda = document.getElementById('lista-produtos-esquerda');
-            listaProdutosEsquerda.innerHTML = '';
-            secaoEsquerda.itens.forEach(item => {
+        const renderizarColuna = (containerId, produtos) => {
+             const container = document.getElementById(containerId);
+             container.innerHTML = '';
+             if(produtos.length === 0){
+                container.innerHTML = '<div class="text-center py-4 text-gray-500">Nenhum produto encontrado.</div>';
+                return;
+             }
+             produtos.forEach(item => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0';
                 itemDiv.innerHTML = `
@@ -307,97 +121,55 @@
                     </div>
                     <div class="text-3xl font-bold text-red-600">${formatarPreco(item.preco)}</div>
                 `;
-                listaProdutosEsquerda.appendChild(itemDiv);
+                container.appendChild(itemDiv);
             });
+        }
 
-            const listaProdutosDireita = document.getElementById('lista-produtos-direita');
-            listaProdutosDireita.innerHTML = '';
-            secaoDireita.itens.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0';
-                itemDiv.innerHTML = `
-                    <div class="flex items-center">
-                        <img src="${item.imagem}" alt="Imagem de ${item.nome}" class="w-16 h-16 rounded-xl object-cover mr-4"/>
-                        <div>
-                            <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
-                            <div class="text-auto text-gray-500">${item.descricao}</div>
-                        </div>
-                    </div>
-                    <div class="text-3xl font-bold text-red-600">${formatarPreco(item.preco)}</div>
-                `;
-                listaProdutosDireita.appendChild(itemDiv);
-            });
+        window.onload = () => {
+            const dadosLojaFallback = {
+                nomeEmpresa: 'Cafeteria & Lanches',
+                logoUrl: 'img/logoexemplo.png',
+            };
+            document.getElementById('nome-da-empresa').textContent = dadosLojaFallback.nomeEmpresa;
+            document.getElementById('logo-container').innerHTML = `<img src="${dadosLojaFallback.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
+
+            const dadosArmazenados = sessionStorage.getItem('dadosCardapio');
+
+            if(dadosArmazenados){
+                try {
+                    const { categorias, produtos } = JSON.parse(dadosArmazenados);
+
+                    // Definir categorias para cada coluna
+                    const catEsquerdaInfo = categorias.find(c => c.id === 'BEBIDAS_QUENTES');
+                    const catDireitaInfo = categorias.find(c => c.id === 'SALGADOS');
+
+                    if(!catEsquerdaInfo || !catDireitaInfo) {
+                        console.error("Categorias BEBIDAS_QUENTES ou SALGADOS não encontradas.");
+                        return;
+                    }
+                    
+                    // Renderizar cabeçalhos das colunas
+                    document.getElementById('categoria-esquerda-imagem').src = catEsquerdaInfo.imagem;
+                    document.getElementById('categoria-esquerda-titulo').textContent = catEsquerdaInfo.nome;
+                    document.getElementById('categoria-direita-imagem').src = catDireitaInfo.imagem;
+                    document.getElementById('categoria-direita-titulo').textContent = catDireitaInfo.nome;
+
+                    // Filtrar e limitar produtos
+                    const produtosEsquerda = produtos.filter(p => p.categoriaId === 'BEBIDAS_QUENTES').slice(0, 3);
+                    const produtosDireita = produtos.filter(p => p.categoriaId === 'SALGADOS').slice(0, 3);
+
+                    // Renderizar produtos em cada coluna
+                    renderizarColuna('lista-produtos-esquerda', produtosEsquerda);
+                    renderizarColuna('lista-produtos-direita', produtosDireita);
+
+                } catch (error) {
+                    console.error("Erro ao processar dados da API.", error);
+                }
+            } else {
+                 console.log("Nenhum dado da API encontrado na sessão.");
+            }
         };
-
-        // Renderiza o cardápio quando a página carregar
-        window.onload = renderizarCardapio;
     </script>
-
-
-            
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
 </body>
 </html>
+

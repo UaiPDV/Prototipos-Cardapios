@@ -3,72 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Digital - Layout 8</title>
-<script src="https://cdn.tailwindcss.com"></script>
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
+    <title>Cardápio Digital - Salgados e Bebidas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
         
@@ -132,148 +68,121 @@
     </main>
 
     <script>
-        // Dados da loja que você pode editar
-        const dadosLoja = {
+        // Dados estáticos de fallback, com imagens originais
+        const dadosLojaFallback = {
             nomeEmpresa: 'Padaria da Esquina',
             logoUrl: 'img/logoexemplo.png',
             categorias: [
-                {
-                    nome: 'Salgados',
-                    imagem: 'img/salgados.jpg',
-                    itens: [
-                        { nome: 'Coxinha de Frango', descricao: 'Nossa campeã de vendas!', preco: 7.50, imageUrl: 'img/coxinha.webp' },
-                        { nome: 'Quiche de Alho Poró', descricao: 'Feita com massa crocante.', preco: 9.00, imageUrl: 'img/alho.avif' },
-                        { nome: 'Empadão de Frango', descricao: 'Fatias generosas e suculentas.', preco: 12.00, imageUrl: 'img/empada.jpg' },
-                    ]
-                },
-                {
-                    nome: 'Bebidas',
-                    imagem: 'img/bebidasgeral.jpg',
-                    itens: [
-                        { nome: 'Café Coado', descricao: 'O clássico para um bom dia.', preco: 5.00, imageUrl: 'img/cafe2.jpeg' },
-                        { nome: 'Suco de Laranja', descricao: '100% natural, espremido na hora.', preco: 8.50, imageUrl: 'img/suco.webp' },
-                    ]
-                },
+                { nome: 'Salgados', imagem: 'img/salgados.jpg', itens: [] },
+                { nome: 'Bebidas', imagem: 'img/bebidasgeral.jpg', itens: [] }
             ]
         };
 
         // Função para formatar o preço para BRL
         const formatarPreco = (preco) => {
+             if (typeof preco !== 'number') return 'R$ --,--';
             return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(preco);
         };
 
         // Função para renderizar o cardápio
-        const renderizarCardapio = () => {
-            document.title = "Cardapio | " + dadosLoja.nomeEmpresa;
-            document.getElementById('nome-da-empresa').textContent = dadosLoja.nomeEmpresa;
-            document.getElementById('logo-container').innerHTML = `<img src="${dadosLoja.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
+        const renderizarCardapio = (dados) => {
+            document.title = "Cardápio | " + dados.nomeEmpresa;
+            document.getElementById('nome-da-empresa').textContent = dados.nomeEmpresa;
+            document.getElementById('logo-container').innerHTML = `<img src="${dados.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
 
             const listaCategorias = document.getElementById('lista-categorias');
             listaCategorias.innerHTML = '';
 
-            dadosLoja.categorias.forEach(categoria => {
+            dados.categorias.forEach(categoria => {
                 const categoriaDiv = document.createElement('div');
                 categoriaDiv.className = 'mb-8 animar-fade-in-up';
                 categoriaDiv.innerHTML = `
-                    <!-- Adicionamos um novo contêiner flexível para a imagem e o título -->
                     <div class="flex items-center text-red-600 mb-2">
                         <img src="${categoria.imagem}" alt="Ícone da Categoria" class="w-20 h-20 rounded-lg object-cover mr-4"/>
-                        <!-- A classe 'flex-grow' faz o h2 expandir, levando a linha junto -->
                         <h2 class="text-3xl sm:text-4xl font-extrabold pb-2 border-b-4 border-dashed border-red-600 flex-grow">
                             ${categoria.nome}
                         </h2>
                     </div>
                 `;
 
-                categoria.itens.forEach(item => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0';
-                    itemDiv.innerHTML = `
-                        <!-- Contêiner flexível para a imagem e o texto do produto -->
-                        <div class="flex items-center">
-                            <img src="${item.imageUrl}" alt="Imagem de ${item.nome}" class="w-16 h-16 rounded-xl object-cover mr-4">
-                            <div>
-                                <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
-                                <div class="text-lg text-gray-500">${item.descricao}</div>
+                if(categoria.itens.length === 0){
+                    const semItensDiv = document.createElement('div');
+                    semItensDiv.className = 'text-center py-4 text-gray-500';
+                    semItensDiv.textContent = 'Nenhum produto nesta categoria.';
+                    categoriaDiv.appendChild(semItensDiv);
+                } else {
+                    categoria.itens.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0';
+                        itemDiv.innerHTML = `
+                            <div class="flex items-center">
+                                <img src="${item.imageUrl || item.imagem}" alt="Imagem de ${item.nome}" class="w-16 h-16 rounded-xl object-cover mr-4" onerror="this.src='https://placehold.co/64x64/ccc/FFFFFF?text=Item'">
+                                <div>
+                                    <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
+                                    <div class="text-lg text-gray-500">${item.descricao || ''}</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="text-3xl font-bold text-red-600">${formatarPreco(item.preco)}</div>
-                    `;
-                    categoriaDiv.appendChild(itemDiv);
-                });
+                            <div class="text-3xl font-bold text-red-600">${formatarPreco(item.preco)}</div>
+                        `;
+                        categoriaDiv.appendChild(itemDiv);
+                    });
+                }
                 listaCategorias.appendChild(categoriaDiv);
             });
         };
 
-        // Renderiza o cardápio quando a página carregar
-        window.onload = renderizarCardapio;
+        // LÓGICA CORRIGIDA: Carrega Salgados e Bebidas especificamente
+        window.onload = () => {
+            const dadosArmazenados = sessionStorage.getItem('dadosCardapio');
+
+            if (dadosArmazenados) {
+                try {
+                    const { categorias, produtos } = JSON.parse(dadosArmazenados);
+                    
+                    // 1. Encontra as informações das categorias "SALGADOS" e "BEBIDAS"
+                    const categoriaSalgadosInfo = categorias.find(c => c.id === 'SALGADOS');
+                    const categoriaBebidasInfo = categorias.find(c => c.id === 'BEBIDAS');
+
+                    if (!categoriaSalgadosInfo || !categoriaBebidasInfo) {
+                        console.error("Não foi possível encontrar as categorias 'SALGADOS' ou 'BEBIDAS' na lista da API.");
+                        renderizarCardapio(dadosLojaFallback);
+                        return;
+                    }
+                    
+                    // 2. Filtra os produtos para cada categoria e limita a quantidade
+                    const produtosSalgados = produtos.filter(p => p.categoriaId === 'SALGADOS').slice(0, 3);
+                    const produtosBebidas = produtos.filter(p => p.categoriaId === 'BEBIDAS').slice(0, 2);
+
+                    // 3. Monta a estrutura de dados final para renderização
+                    const dadosParaRenderizar = {
+                        nomeEmpresa: 'Padaria da Esquina',
+                        logoUrl: 'img/logoexemplo.png',
+                        categorias: [
+                            {
+                                nome: categoriaSalgadosInfo.nome,
+                                imagem: categoriaSalgadosInfo.imagem,
+                                itens: produtosSalgados,
+                            },
+                            {
+                                nome: categoriaBebidasInfo.nome,
+                                imagem: categoriaBebidasInfo.imagem,
+                                itens: produtosBebidas,
+                            }
+                        ]
+                    };
+                    
+                    renderizarCardapio(dadosParaRenderizar);
+
+                } catch (error) {
+                    console.error("Erro ao processar dados da API. Usando dados de fallback.", error);
+                    renderizarCardapio(dadosLojaFallback);
+                }
+            } else {
+                console.log("Nenhum dado da API encontrado na sessão. Usando dados de fallback.");
+                renderizarCardapio(dadosLojaFallback);
+            }
+        };
     </script>
-
-
-            
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
 </body>
 </html>
+

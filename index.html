@@ -1,138 +1,359 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Cardápio TV</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background: #111;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<title>Cardápio TV</title>
+		<!-- Importa o módulo da API -->
+		<script src="api.js"></script>
+		<style>
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: 100%;
+				background: #111;
+				font-family: Arial, sans-serif;
+				overflow: hidden;
+			}
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+			iframe {
+				width: 100%;
+				height: 100%;
+				border: none;
+			}
 
-        .mensagem {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2rem;
-            z-index: 9999;
-            text-align: center;
-            cursor: pointer;
-            color: white;
-        }
+			.mensagem {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.85);
+				display: flex;
+				flex-direction: column; /* Para alinhar o texto e o loader */
+				justify-content: center;
+				align-items: center;
+				font-size: 2rem;
+				z-index: 9999;
+				text-align: center;
+				cursor: pointer;
+				color: white;
+				transition: opacity 0.3s ease-in-out;
+			}
 
-        #exitFullscreenBtn {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            background-color: #111;
-            border: 2px solid white;
-            opacity: 50%;
-            border-radius: 50%;
-            padding: 8px 10px;
-            align-items: center;
-            font-size: 1.2rem;
-            line-height: 1;
-            text-align: center;
-            cursor: pointer;
-            z-index: 10000;
-            display: none; /* Inicia oculto */
-        }
-    </style>
-</head>
-<body>
+			.mensagem.hidden {
+				opacity: 0;
+				pointer-events: none;
+			}
 
-    <iframe id="frame" src="modelo1.html"></iframe>
+			#exitFullscreenBtn {
+				position: fixed;
+				top: 10px;
+				right: 10px;
+				background-color: rgba(255, 255, 255, 0.2);
+				color: white;
+				background-color: #111;
+				border: 2px solid white;
+				opacity: 50%;
+				border-radius: 50%;
+				padding: 8px 10px;
+				align-items: center;
+				font-size: 1.2rem;
+				line-height: 1;
+				text-align: center;
+				cursor: pointer;
+				z-index: 10000;
+				display: none; /* Inicia oculto */
+			}
 
-    <div id="mensagem" class="mensagem">
-        Clique em qualquer lugar para ativar a tela cheia 📺
-    </div>
+			#seletorPagina {
+				position: fixed;
+				top: 10px;
+				left: 10px;
+				background-color: rgba(0, 0, 0, 0.8);
+				color: white;
+				border: 2px solid white;
+				border-radius: 5px;
+				padding: 8px 12px;
+				font-size: 1rem;
+				cursor: pointer;
+				z-index: 10000;
+				display: none; /* Inicia oculto */
+			}
 
-    <!-- Botão para sair da tela cheia -->
-    <button id="exitFullscreenBtn">✕</button>
+			#seletorPagina option {
+				background-color: #111;
+				color: white;
+			}
+			/* Estilo para o loader */
+			.loader {
+				border: 8px solid #f3f3f3;
+				border-top: 8px solid #c0392b;
+				border-radius: 50%;
+				width: 60px;
+				height: 60px;
+				animation: spin 1s linear infinite;
+				margin-top: 20px;
+				display: none; /* Inicia oculto */
+			}
 
-    <script>
-        const paginas = [
-            "modelo1.html",
-            "modelo2.html",
-            "modelo3.html",
-            "modelo4.html",
-            "modelo5.html",
-            "modelo6.html",
-            "modelo7.html",
-            "modelo8.html",
-            "modelo9.html",
-            "modelo10.html",
-            "modelo11.html",
-            "modelo12.html",
-            "modelo13.html"
-        ];
+			@keyframes spin {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<iframe id="frame"></iframe>
 
-        let indice = 0;
-        let intervalo = null;
-        const tempoTroca = 10000; // 5 segundos
-        const frame = document.getElementById("frame");
-        const mensagem = document.getElementById("mensagem");
-        const exitFullscreenBtn = document.getElementById("exitFullscreenBtn");
+		<div id="mensagem" class="mensagem">
+			<div id="mensagem-texto">
+				Clique em qualquer lugar para carregar o cardápio 📺
+			</div>
+			<div id="loader" class="loader"></div>
+		</div>
 
-        function iniciarSlides() {
-            if (intervalo) clearInterval(intervalo);
-            intervalo = setInterval(() => {
-                indice = (indice + 1) % paginas.length;
-                frame.src = paginas[indice]; // Troca só o conteúdo dentro do iframe
-            }, tempoTroca);
-        }
+		<button id="exitFullscreenBtn">✕</button>
 
-        function pararSlides() {
-            clearInterval(intervalo);
-            intervalo = null;
-        }
+		<select id="seletorPagina">
+			<option value="">Selecione uma página...</option>
+		</select>
 
-        // Detecta saída/entrada do modo tela cheia
-        document.addEventListener("fullscreenchange", () => {
-            if (!document.fullscreenElement) {
-                pararSlides();
-                mensagem.style.display = "flex";
-                exitFullscreenBtn.style.display = "none"; // Oculta o botão
-            } else {
-                mensagem.style.display = "none";
-                exitFullscreenBtn.style.display = "block"; // Mostra o botão
-                iniciarSlides();
-            }
-        });
+		<script>
+			// Lista dos seus arquivos de template.
+			// O sistema vai associar as categorias da API a estes templates.
+			const templatesDisponiveis = [
+				'modelo1.html',
+				'modelo2.html',
+				'modelo3.html',
+				'modelo4.html',
+				'modelo5.html',
+				'modelo6.html',
+				'modelo7.html',
+				'modelo8.html',
+				'modelo9.html',
+				'modelo10.html',
+				'modelo11.html',
+				'modelo12.html',
+				'modelo13.html',
+				'modelo14.html',
+			];
 
-        // Ativar fullscreen ao clicar na mensagem
-        mensagem.addEventListener("click", () => {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            }
-        });
+			let paginasParaExibir = []; // Será preenchido com dados da API
+			let indiceAtual = 0;
+			let intervalo = null;
+			const tempoTroca = 10000; // 10 segundos
 
-        // Evento de clique para o novo botão de saída
-        exitFullscreenBtn.addEventListener("click", () => {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            }
-        });
-    </script>
+			const frame = document.getElementById('frame');
+			const mensagem = document.getElementById('mensagem');
+			const mensagemTexto = document.getElementById('mensagem-texto');
+			const loader = document.getElementById('loader');
+			const exitFullscreenBtn =
+				document.getElementById('exitFullscreenBtn');
+			const seletorPagina = document.getElementById('seletorPagina');
 
-</body>
+			/**
+			 * Inicia a transição de slides, trocando o conteúdo do iframe.
+			 */
+			function iniciarSlides() {
+				if (intervalo) clearInterval(intervalo);
+				if (paginasParaExibir.length === 0) {
+					console.warn(
+						'Nenhuma página para exibir. Verifique os dados da API.'
+					);
+					frame.src = ''; // Limpa o frame se não houver nada
+					return;
+				}
+
+				// Carrega a primeira página imediatamente
+				carregarPagina(indiceAtual);
+
+				intervalo = setInterval(() => {
+					indiceAtual = (indiceAtual + 1) % paginasParaExibir.length;
+					carregarPagina(indiceAtual);
+				}, tempoTroca);
+			}
+
+			/**
+			 * Carrega uma página específica no Iframe com os parâmetros necessários.
+			 */
+			function carregarPagina(indice) {
+				const pagina = paginasParaExibir[indice];
+				// Passa o ID da categoria pela URL para o template saber o que renderizar
+				frame.src = `${pagina.template}?categoriaId=${pagina.categoria.id}`;
+
+				// Atualiza o seletor para mostrar a página atual
+				seletorPagina.value = `categoria_${indice}`;
+			}
+
+			/**
+			 * Popula o seletor com as páginas disponíveis
+			 */
+			function popularSeletor() {
+				seletorPagina.innerHTML =
+					'<option value="">Selecione uma página...</option>';
+
+				// Adiciona todas as páginas de modelo disponíveis
+				templatesDisponiveis.forEach((template, indice) => {
+					const option = document.createElement('option');
+					option.value = `template_${indice}`;
+					option.textContent = template;
+					seletorPagina.appendChild(option);
+				});
+
+				// Se houver dados da API carregados, adiciona as categorias também
+				if (paginasParaExibir.length > 0) {
+					// Adiciona um separador
+					const separator = document.createElement('option');
+					separator.disabled = true;
+					separator.textContent = '--- Categorias da API ---';
+					seletorPagina.appendChild(separator);
+
+					paginasParaExibir.forEach((pagina, indice) => {
+						const option = document.createElement('option');
+						option.value = `categoria_${indice}`;
+						option.textContent = `${pagina.categoria.nome} (${pagina.template})`;
+						seletorPagina.appendChild(option);
+					});
+				}
+			}
+
+			function pararSlides() {
+				clearInterval(intervalo);
+				intervalo = null;
+			}
+
+			// Gerencia a entrada e saída do modo tela cheia
+			document.addEventListener('fullscreenchange', () => {
+				if (!document.fullscreenElement) {
+					pararSlides();
+					mensagem.classList.remove('hidden');
+					exitFullscreenBtn.style.display = 'none';
+					seletorPagina.style.display = 'none';
+				} else {
+					mensagem.classList.add('hidden');
+					exitFullscreenBtn.style.display = 'block';
+					seletorPagina.style.display = 'block';
+					// Popula o seletor sempre que entra em fullscreen
+					popularSeletor();
+					iniciarSlides();
+				}
+			});
+
+			// Ativar fullscreen e buscar dados ao clicar na mensagem
+			mensagem.addEventListener('click', async () => {
+				if (document.fullscreenElement) return;
+
+				// Mostra o loader e atualiza o texto
+				mensagemTexto.textContent = 'Buscando dados do cardápio...';
+				loader.style.display = 'block';
+				mensagem.style.cursor = 'default';
+
+				try {
+					// 1. Busca os dados da API em paralelo
+					const [categorias, produtos] = await Promise.all([
+						api.getCategorias(),
+						api.getProdutos(),
+					]);
+
+					if (!categorias || !produtos) {
+						throw new Error(
+							'Não foi possível obter categorias ou produtos da API.'
+						);
+					}
+
+					// 2. Armazena os dados no sessionStorage para o iframe acessar
+					const dadosCompletos = { categorias, produtos };
+					sessionStorage.setItem(
+						'dadosCardapio',
+						JSON.stringify(dadosCompletos)
+					);
+
+					// 3. Associa as categorias recebidas aos templates disponíveis
+					paginasParaExibir = categorias.map((categoria, index) => ({
+						categoria: categoria,
+						// Usa os templates de forma cíclica caso hajam mais categorias que templates
+						template:
+							templatesDisponiveis[
+								index % templatesDisponiveis.length
+							],
+					}));
+
+					// 3.5. Popula o seletor de páginas
+					popularSeletor();
+
+					// 4. Inicia o modo tela cheia
+					if (document.documentElement.requestFullscreen) {
+						document.documentElement.requestFullscreen();
+					}
+				} catch (error) {
+					// Em caso de erro, exibe uma mensagem
+					console.error('Erro ao carregar dados:', error);
+					mensagemTexto.textContent =
+						'Falha ao carregar dados. Tente novamente.';
+				} finally {
+					// Esconde o loader e restaura o cursor
+					loader.style.display = 'none';
+					mensagem.style.cursor = 'pointer';
+				}
+			});
+
+			// Botão para sair da tela cheia
+			exitFullscreenBtn.addEventListener('click', () => {
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				}
+			});
+
+			// Event listener para o seletor de páginas
+			seletorPagina.addEventListener('change', (e) => {
+				const valorEscolhido = e.target.value;
+
+				if (valorEscolhido.startsWith('template_')) {
+					// Carrega um template diretamente (sem dados da API)
+					const indiceTemplate = parseInt(
+						valorEscolhido.replace('template_', '')
+					);
+					const template = templatesDisponiveis[indiceTemplate];
+
+					if (template) {
+						// Para a rotação automática
+						pararSlides();
+						// Carrega o template diretamente
+						frame.src = template;
+					}
+				} else if (valorEscolhido.startsWith('categoria_')) {
+					// Carrega uma categoria com dados da API
+					const indiceCategoria = parseInt(
+						valorEscolhido.replace('categoria_', '')
+					);
+
+					if (
+						!isNaN(indiceCategoria) &&
+						indiceCategoria >= 0 &&
+						indiceCategoria < paginasParaExibir.length
+					) {
+						// Para a rotação automática temporariamente
+						pararSlides();
+
+						// Carrega a página escolhida
+						indiceAtual = indiceCategoria;
+						carregarPagina(indiceAtual);
+
+						// Reinicia a rotação automática após 2 segundos
+						setTimeout(() => {
+							if (document.fullscreenElement) {
+								iniciarSlides();
+							}
+						}, 2000);
+					}
+				}
+			});
+		</script>
+	</body>
 </html>
