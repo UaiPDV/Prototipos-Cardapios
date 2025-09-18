@@ -3,72 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Digital</title>
+    <title>Cardápio Digital - Hortifruti</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap');
 
@@ -99,7 +35,7 @@
             display: grid;
             gap: 2rem;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            position: relative; /* Adicionado para posicionamento da logo */
+            position: relative;
         }
 
         .animar-entrada {
@@ -112,9 +48,9 @@
 
         @media (max-width: 1455px) {
                 #item-preco {
-                font-size: 1.5rem; /* Tailwind: text-5xl */
+                font-size: 1.5rem;
             }
-            }
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -137,7 +73,7 @@
 
     <div class="container-principal">
         <div id="logo-container" class="absolute top-8 right-8 flex items-center max-w-xs h-10 rounded-2xl md:h-12 space-x-2">
-            </div>
+        </div>
 
         <div class="col-span-full text-center mb-6">
             <h1 id="titulo-principal" class="text-5xl font-extrabold text-[#1e8838] leading-tight"></h1>
@@ -145,57 +81,13 @@
         </div>
         
         <div id="lista-categorias" class="col-span-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            </div>
+        </div>
     </div>
 
     <script>
-        // Objeto de configuração para personalização
-        const configuracoes = {
-            nomeEmpresa: "Mercado Central",
-            logoUrl: 'img/logoexemplo.png', // URL da sua logo
-            titulo: "Nosso Hortifruti",
-            legenda: "Produtos frescos e de qualidade para sua família",
-        };
-
-        // Dados do cardápio que você pode editar
-        const dadosCardapio = {
-            categorias: [
-                {
-                    nome: "Frutas",
-                    cor: "text-[#d62828]",
-                    itens: [
-                        { nome: "Banana", descricao: "Nanica", preco: 5.99, unidade: "kg", imagem: 'img/verduras.webp' },
-                        { nome: "Morango", descricao: "Bandeja fresca", preco: 8.50, unidade: "unid.", imagem: 'img/verduras.webp' },
-                        { nome: "Laranja", descricao: "Pera", preco: 3.20, unidade: "kg", imagem: 'img/verduras.webp' },
-                        { nome: "Maçã", descricao: "Gala", preco: 9.90, unidade: "kg", imagem: 'img/verduras.webp' },
-                        { nome: "Melancia", descricao: "Doce e suculenta", preco: 2.50, unidade: "kg", imagem: 'img/verduras.webp' },
-                    ]
-                },
-                {
-                    nome: "Verduras",
-                    cor: "text-[#2e7d32]",
-                    itens: [
-                        { nome: "Alface", descricao: "Lisa", preco: 2.99, unidade: "unid.", imagem: 'img/verduras.webp' },
-                        { nome: "Couve", descricao: "Maço", preco: 3.50, unidade: "unid.", imagem: 'img/verduras.webp' },
-                        { nome: "Brócolis", descricao: "Fresco", preco: 7.80, unidade: "kg", imagem: 'img/verduras.webp' },
-                        { nome: "Rúcula", descricao: "Maço", preco: 4.00, unidade: "unid.", imagem: 'img/verduras.webp' },
-                    ]
-                },
-                {
-                    nome: "Legumes",
-                    cor: "text-[#ff6f00]",
-                    itens: [
-                        { nome: "Tomate", descricao: "Maduro", preco: 6.90, unidade: "kg", imagem: 'img/verduras.webp' },
-                        { nome: "Batata", descricao: "Baking", preco: 4.50, unidade: "kg", imagem: 'img/verduras.webp' },
-                        { nome: "Cenoura", descricao: "Fresca", preco: 3.80, unidade: "kg", imagem: 'img/verduras.webp' },
-                        { nome: "Pimentão", descricao: "Verde", preco: 5.20, unidade: "kg", imagem: 'img/verduras.webp' },
-                    ]
-                }
-            ]
-        };
-
         // Função para formatar o preço para BRL
         const formatarPreco = (preco) => {
+            if (typeof preco !== 'number') return 'R$ --,--';
             return preco.toLocaleString('pt-BR', {
                 style: 'currency',
                 currency: 'BRL'
@@ -203,22 +95,21 @@
         };
 
         // Função para renderizar o cardápio
-        const renderizarCardapio = (config) => {
-            document.title = "Cardapio | " +  config.nomeEmpresa;
-            document.getElementById('titulo-principal').textContent = config.titulo;
-            document.getElementById('legenda-principal').textContent = config.legenda;
+        const renderizarCardapio = (dados) => {
+            document.title = "Cardapio | " +  dados.nomeEmpresa;
+            document.getElementById('titulo-principal').textContent = dados.titulo;
+            document.getElementById('legenda-principal').textContent = dados.legenda;
 
-            // Injetar logo e nome da empresa
             const logoContainer = document.getElementById('logo-container');
             logoContainer.innerHTML = `
-                <img src="${config.logoUrl}" alt="${config.nomeEmpresa} Logo" class="h-10 w-10 rounded-lg">
-                <span class="text-xl font-bold text-gray-800">${config.nomeEmpresa}</span>
+                <img src="${dados.logoUrl}" alt="${dados.nomeEmpresa} Logo" class="h-10 w-10 rounded-lg">
+                <span class="text-xl font-bold text-gray-800">${dados.nomeEmpresa}</span>
             `;
 
             const listaCategorias = document.getElementById('lista-categorias');
             listaCategorias.innerHTML = '';
             
-            dadosCardapio.categorias.forEach(categoria => {
+            dados.categorias.forEach(categoria => {
                 const categoriaDiv = document.createElement('div');
                 categoriaDiv.className = 'bg-white rounded-2xl shadow-lg p-6 animar-fade-in-up';
                 
@@ -227,114 +118,68 @@
                         ${categoria.nome}
                     </h2>
                 `;
-
-                categoria.itens.forEach(item => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'flex items-center py-4 border-b border-gray-200 last:border-b-0';
-                    itemDiv.innerHTML = `
-                        <img src="${item.imagem}" alt="${item.nome}" class="h-16 w-16 rounded-lg mr-4 object-cover">
-                        <div class="flex-grow">
-                            <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
-                            <div class="text-lg text-gray-500">${item.descricao}</div>
-                        </div>
-                        <div id="item-preco" class="text-3xl font-bold ${categoria.cor} whitespace-nowrap">${formatarPreco(item.preco)} / ${item.unidade}</div>
-                    `;
-                    categoriaDiv.appendChild(itemDiv);
-                });
+                
+                if (categoria.itens.length === 0) {
+                     categoriaDiv.innerHTML += '<div class="text-center py-4 text-gray-500">Nenhum produto nesta categoria.</div>';
+                } else {
+                    categoria.itens.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'flex items-center py-4 border-b border-gray-200 last:border-b-0';
+                        itemDiv.innerHTML = `
+                            <img src="${item.imagem}" alt="${item.nome}" class="h-16 w-16 rounded-lg mr-4 object-cover">
+                            <div class="flex-grow">
+                                <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
+                                <div class="text-lg text-gray-500">${item.descricao}</div>
+                            </div>
+                            <div id="item-preco" class="text-3xl font-bold ${categoria.cor} whitespace-nowrap">${formatarPreco(item.preco)} / kg</div>
+                        `;
+                        categoriaDiv.appendChild(itemDiv);
+                    });
+                }
                 listaCategorias.appendChild(categoriaDiv);
             });
         };
 
-        window.onload = () => renderizarCardapio(configuracoes);
+        window.onload = () => {
+            const dadosFallback = {
+                nomeEmpresa: "Mercado Central",
+                logoUrl: 'img/logoexemplo.png',
+                titulo: "Nosso Hortifruti",
+                legenda: "Produtos frescos e de qualidade para sua família",
+                categorias: [
+                    { nome: "Frutas", cor: "text-[#d62828]", itens: []},
+                    { nome: "Verduras", cor: "text-[#2e7d32]", itens: []},
+                    { nome: "Legumes", cor: "text-[#ff6f00]", itens: []}
+                ]
+            };
 
-            // Função para sair do modo tela cheia
-            function exitFullscreen() {
-                if (document.fullscreenElement) {
-                    document.exitFullscreen();
+            const dadosArmazenados = sessionStorage.getItem('dadosCardapio');
+            if (dadosArmazenados) {
+                try {
+                    const { categorias, produtos } = JSON.parse(dadosArmazenados);
+
+                    const idsCategorias = {
+                        FRUTAS: {nome: "Frutas", cor: "text-[#d62828]"},
+                        VERDURAS: {nome: "Verduras", cor: "text-[#2e7d32]"},
+                        LEGUMES: {nome: "Legumes", cor: "text-[#ff6f00]"}
+                    };
+
+                    const categoriasRenderizar = Object.keys(idsCategorias).map(id => {
+                        const produtosDaCategoria = produtos.filter(p => p.categoriaId === id).slice(0, 5);
+                        return { ...idsCategorias[id], itens: produtosDaCategoria };
+                    });
+
+                    renderizarCardapio({...dadosFallback, categorias: categoriasRenderizar});
+
+                } catch(error) {
+                    console.error("Erro ao processar dados da API.", error);
+                    renderizarCardapio(dadosFallback);
                 }
+            } else {
+                 console.log("Nenhum dado da API encontrado na sessão.");
+                 renderizarCardapio(dadosFallback);
             }
-
-            // Adiciona evento de clique para todos elementos com a classe 'sairtc'
-            document.addEventListener('DOMContentLoaded', function() {
-                document.querySelectorAll('.sairtc').forEach(function(el) {
-                    el.addEventListener('click', exitFullscreen);
-                });
-            });
+        };
     </script>
-
-
-            <div class="botões">
-        
-            <div class="sairtc">Sair do Modo Tela Cheia</div>
-            
-        </div>
-
-        <style>
-            .botões{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-            }
-
-            .extra, .sairtc{
-                display: inline-block;
-                margin: 5px;
-            }
-
-            .extra:hover, .sairtc:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
 </body>
 </html>

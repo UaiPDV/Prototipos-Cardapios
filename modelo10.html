@@ -4,72 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Cardápio Digital - Layout TV (Grid)</title>
+    <title>Cardápio Digital - Bolo de Aniversário</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
@@ -133,7 +69,6 @@
             filter: brightness(0.6);
         }
 
-        /* Posicionamento dos elementos na grade */
         #header-grid {
             grid-area: header;
             justify-self: end;
@@ -161,7 +96,7 @@
         <div id="logo-container"
             class="max-w-xs h-10 rounded-2xl flex items-center justify-center md:h-12">
             </div>
-        <div id="nome-da-empresa" class="text-2xl font-bold text-gray-200 md:text-3xl"></div>
+        <div id="nome-da-empresa" class="text-2xl font-bold text-gray-200 md:text-3xl ml-3"></div>
     </header>
 
     <div id="produto-titulo-grid" class="p-2 rounded-xl bg-red-700 animar-fade-in-up md:p-4">
@@ -175,113 +110,58 @@
     </div>
 
     <script>
-        // Dados da loja que você pode editar
-        const dadosLoja = {
-            nomeEmpresa: 'Loja de Bolos',
-            logoUrl: 'img/logoexemplo.png',
-            produtoUnico: {
-                nome: 'Bolo de Aniversário',
-                preco: 80.00
-            }
-        };
-
         // Função para formatar o preço para BRL
         const formatarPreco = (preco) => {
+             if (typeof preco !== 'number') return 'R$ --,--';
             return new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
                 currency: 'BRL'
             }).format(preco);
         };
 
-        // URL da imagem de fundo
-        const backgroundImageUrl = 'img/bolo_chocolate.jpg';
-
         // Função para renderizar o cardápio
-        const renderizarCardapio = () => {
-            // Insere a imagem de fundo
-            document.getElementById('background-img').src = backgroundImageUrl;
-
-            // Insere os dados nos elementos
-            document.getElementById('nome-da-empresa').textContent = dadosLoja.nomeEmpresa;
-            document.getElementById('logo-container').innerHTML =
-                `<img src="${dadosLoja.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
-            document.getElementById('produto-titulo').textContent = dadosLoja.produtoUnico.nome;
-            document.getElementById('produto-preco').textContent = formatarPreco(dadosLoja.produtoUnico.preco);
-
-            document.title = "Cardapio | " + dadosLoja.nomeEmpresa;
-            
+        const renderizarCardapio = (dados) => {
+            document.getElementById('background-img').src = dados.produtoUnico.imagem;
+            document.getElementById('nome-da-empresa').textContent = dados.nomeEmpresa;
+            document.getElementById('logo-container').innerHTML = `<img src="${dados.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
+            document.getElementById('produto-titulo').textContent = dados.produtoUnico.nome;
+            document.getElementById('produto-preco').textContent = formatarPreco(dados.produtoUnico.preco);
+            document.title = "Cardapio | " + dados.nomeEmpresa;
         };
 
-        // Renderiza o cardápio quando a página carregar
-        window.onload = renderizarCardapio;
+        window.onload = () => {
+             const dadosLojaFallback = {
+                nomeEmpresa: 'Loja de Bolos',
+                logoUrl: 'img/logoexemplo.png',
+                produtoUnico: {
+                    nome: 'Bolo de Aniversário',
+                    preco: 80.00,
+                    imagem: 'img/bolo_chocolate.jpg'
+                }
+            };
+
+            const dadosArmazenados = sessionStorage.getItem('dadosCardapio');
+            if (dadosArmazenados) {
+                try {
+                    const { produtos } = JSON.parse(dadosArmazenados);
+                    const bolo = produtos.find(p => p.nome === 'Bolo de Aniversário');
+
+                    if (bolo) {
+                        dadosLojaFallback.produtoUnico = bolo;
+                    } else {
+                        console.warn("Produto 'Bolo de Aniversário' não encontrado na API.");
+                    }
+                    renderizarCardapio(dadosLojaFallback);
+
+                } catch (error) {
+                    console.error("Erro ao processar dados da API.", error);
+                    renderizarCardapio(dadosLojaFallback);
+                }
+            } else {
+                console.log("Nenhum dado da API encontrado na sessão.");
+                renderizarCardapio(dadosLojaFallback);
+            }
+        };
     </script>
-
-
-            
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
 </body>
-
 </html>

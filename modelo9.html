@@ -3,72 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Categoria</title>
+    <title>Cardápio Digital - Bebidas</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap');
 
@@ -76,7 +12,6 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f7f7f7;
             color: #333;
-            /* Garante que o corpo ocupe a altura total e centraliza o conteúdo */
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -111,23 +46,19 @@
     </style>
 </head>
 <body class="animar-entrada">
-    <!-- O main agora tem uma largura máxima e se centraliza, com espaçamento flexível nas bordas -->
     <main class="w-full lg:max-w-[95%] xl:max-w-[85%] mx-auto animar-fade-in-up">
         <div class="w-full bg-white rounded-3xl p-12 shadow-xl">
-            <!-- Cabeçalho com logo e nome da empresa -->
             <header class="w-full flex justify-end items-center mb-12">
                 <span id="nome-empresa" class="text-xl lg:text-2xl font-bold mr-4"></span>
-                <div id="logo-container" class="max-w-xs mb-8 h-16 rounded-2xl overflow-hidden"></div>
+                <div id="logo-container" class="max-w-xs h-16 rounded-2xl overflow-hidden"></div>
             </header>
 
-            <!-- Título da categoria e imagem -->
             <div class="flex items-center mb-8">
                 <h1 id="categoria-titulo" class="text-6xl lg:text-7xl font-extrabold text-[#c0392b] mr-4"></h1>
                 <div id="categoria-imagem" class="w-20 h-20 rounded-lg overflow-hidden"></div>
             </div>
             <div class="border-b-4 border-dashed border-black mb-12"></div>
 
-            <!-- Grid de produtos que será preenchido pelo JS -->
             <div id="lista-produtos" class="grid grid-cols-1 sm:grid-cols-2 gap-x-20 gap-y-10">
                 <!-- Conteúdo do produto inserido aqui por JS -->
             </div>
@@ -135,71 +66,34 @@
     </main>
 
     <script>
-        // Dados da página que serão carregados via JavaScript
-        const dadosPagina = {
-            nomeEmpresa: 'Cafeteria Aconchego',
-            logoUrl: 'img/logoexemplo.png',
-            backgroundUrl: 'img/fundo2.jpg',
-            categoria: {
-                nome: 'Bebidas Quentes',
-                imagemUrl: 'img/bebidasgeral.jpg',
-                itens: [
-                    { nome: 'Café Expresso', descricao: 'O tradicional, forte e encorpado.', preco: 6.00, fotoUrl: 'img/cafe2.jpeg' },
-                    { nome: 'Latte', descricao: 'Café com leite vaporizado.', preco: 10.00, fotoUrl: 'img/cafe2.jpeg' },
-                    { nome: 'Mocha', descricao: 'Café com chocolate e leite.', preco: 12.00, fotoUrl: 'img/cafe3.jpg' },
-                    { nome: 'Chá Mate', descricao: 'Chá gelado com limão.', preco: 8.00, fotoUrl: 'img/cha.jpg' },
-                    { nome: 'Chocolate Quente', descricao: 'Feito com cacau 100%.', preco: 11.00, fotoUrl: 'img/choco.jpeg' },
-                    { nome: 'Cappuccino', descricao: 'Café, leite vaporizado e espuma.', preco: 14.00, fotoUrl: 'img/capu.avif' },
-                    { nome: 'Cerveja Artesanal', descricao: 'A cerveja da casa, uma delícia.', preco: 22.00, fotoUrl: 'img/paes.webp' },
-                    { nome: 'Refrigerante', descricao: 'Uma variedade de sabores.', preco: 7.00, fotoUrl: 'img/refri.jpg' },
-                    { nome: 'Suco Natural', descricao: 'Suco de fruta fresca do dia.', preco: 9.00, fotoUrl: 'img/suco.webp' },
-                    { nome: 'Água com Gás', descricao: 'Refrescante e pura.', preco: 5.00, fotoUrl: 'img/agua.jpeg' },
-                ]
-            }
-        };
-
         // Função para formatar o preço para BRL
         const formatarPreco = (preco) => {
+            if (typeof preco !== 'number') return 'R$ --,--';
             return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(preco);
-        };
-        
-        // Função para definir o tamanho da fonte com base na quantidade de itens
-        const getFontSizeClass = (count) => {
-            if (count > 8) {
-                return 'text-lg lg:text-xl'; // Menor para mais de 8 itens
-            } else if (count > 6) {
-                return 'text-xl lg:text-2xl'; // Tamanho médio para 7-8 itens
-            } else {
-                return 'text-2xl lg:text-3xl'; // Tamanho padrão para até 6 itens
-            }
         };
 
         // Função para renderizar todo o conteúdo da página
-        const renderizarPagina = () => {
-            // Aplica a imagem de fundo ao corpo da página
-            document.body.style.backgroundImage = `url('${dadosPagina.backgroundUrl}')`;
+        const renderizarPagina = (dados) => {
+            document.body.style.backgroundImage = `url('${dados.backgroundUrl}')`;
+            document.title = "Cardapio | " + dados.nomeEmpresa;
+            document.getElementById('nome-empresa').textContent = dados.nomeEmpresa;
+            document.getElementById('logo-container').innerHTML = `<img src="${dados.logoUrl}" alt="Logo da Empresa" class="w-full h-full object-cover rounded-lg">`;
+            document.getElementById('categoria-titulo').textContent = dados.categoria.nome;
+            document.getElementById('categoria-imagem').innerHTML = `<img src="${dados.categoria.imagem}" alt="Imagem da Categoria" class="w-full h-full object-cover rounded-lg">`;
 
-            // Renderiza os dados da empresa
-            document.title = "Cardapio | " + dadosPagina.nomeEmpresa;
-            document.getElementById('nome-empresa').textContent = dadosPagina.nomeEmpresa;
-            document.getElementById('logo-container').innerHTML = `<img src="${dadosPagina.logoUrl}" alt="Logo da Empresa" class="w-full h-full object-cover rounded-lg">`;
-
-            // Renderiza o título da categoria e a imagem
-            document.getElementById('categoria-titulo').textContent = dadosPagina.categoria.nome;
-            document.getElementById('categoria-imagem').innerHTML = `<img src="${dadosPagina.categoria.imagemUrl}" alt="Imagem da Categoria" class="w-full h-full object-cover rounded-lg">`;
-
-            // Obtém o tamanho da fonte baseado na quantidade de itens
-            const fontSizeClass = getFontSizeClass(dadosPagina.categoria.itens.length);
-
-            // Renderiza a lista de produtos
             const listaProdutos = document.getElementById('lista-produtos');
-            listaProdutos.innerHTML = ''; // Limpa o conteúdo existente
+            listaProdutos.innerHTML = ''; 
+
+            if (dados.categoria.itens.length === 0) {
+                listaProdutos.innerHTML = '<p class="col-span-2 text-center text-2xl text-gray-500">Nenhum produto encontrado.</p>';
+                return;
+            }
             
-            dadosPagina.categoria.itens.forEach(item => {
+            dados.categoria.itens.forEach(item => {
                 const produtoDiv = document.createElement('div');
                 produtoDiv.innerHTML = `
                     <div class="flex items-start">
-                        <img src="${item.fotoUrl}" alt="Imagem de ${item.nome}" class="w-16 h-16 rounded-lg mr-6 object-cover flex-shrink-0">
+                        <img src="${item.imagem}" alt="Imagem de ${item.nome}" class="w-16 h-16 rounded-lg mr-6 object-cover flex-shrink-0">
                         <div class="flex-grow flex justify-between items-center">
                             <div>
                                 <span class="text-2xl font-semibold text-gray-900">${item.nome}</span>
@@ -213,75 +107,55 @@
             });
         };
 
-        // Chama a função de renderização quando a página carregar
-        window.onload = renderizarPagina;
+        window.onload = () => {
+             const dadosPaginaFallback = {
+                nomeEmpresa: 'Cafeteria Aconchego',
+                logoUrl: 'img/logoexemplo.png',
+                backgroundUrl: 'img/fundo2.jpg',
+                categoria: {
+                    nome: 'Bebidas',
+                    imagem: 'img/bebidasgeral.jpg',
+                    itens: []
+                }
+            };
+
+            const dadosArmazenados = sessionStorage.getItem('dadosCardapio');
+            if (dadosArmazenados) {
+                try {
+                    const { categorias, produtos } = JSON.parse(dadosArmazenados);
+                    
+                    const categoriaInfo = categorias.find(c => c.id === 'BEBIDAS_QUENTES') || categorias.find(c => c.id === 'BEBIDAS');
+                    if (!categoriaInfo) {
+                        console.error("Nenhuma categoria de bebidas encontrada.");
+                        renderizarPagina(dadosPaginaFallback);
+                        return;
+                    }
+
+                    const bebidasQuentes = produtos.filter(p => p.categoriaId === 'BEBIDAS_QUENTES');
+                    const bebidasNormais = produtos.filter(p => p.categoriaId === 'BEBIDAS');
+                    
+                    // Junta as duas listas e pega os 10 primeiros
+                    const todasBebidas = [...bebidasQuentes, ...bebidasNormais].slice(0, 10);
+
+                    const dadosParaRenderizar = {
+                        ...dadosPaginaFallback,
+                        categoria: {
+                           ...categoriaInfo, // Usa o nome e imagem da primeira categoria encontrada
+                           nome: 'Bebidas', // Força o título a ser genérico
+                           itens: todasBebidas
+                        }
+                    };
+                    renderizarPagina(dadosParaRenderizar);
+
+                } catch(error) {
+                    console.error("Erro ao processar dados da API.", error);
+                    renderizarPagina(dadosPaginaFallback);
+                }
+            } else {
+                console.log("Nenhum dado da API encontrado na sessão.");
+                renderizarPagina(dadosPaginaFallback);
+            }
+        };
     </script>
-
-
-            
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
 </body>
 </html>

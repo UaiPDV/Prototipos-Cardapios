@@ -3,72 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Digital - Layout 4</title>
+    <title>Cardápio Digital - Sobremesas</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
         
@@ -89,88 +25,6 @@
 
         .text-shadow-outline {
             text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-        }
-
-        .container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .cabecalho-principal {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            margin-bottom: 2rem;
-        }
-
-        #nome-da-empresa{
-            color: #c0392b;
-        }
-
-        .logo {
-            width: 80px;
-            height: 80px;
-            background-color: #ddd;
-            border-radius: 50%;
-            margin-right: 1.5rem;
-            overflow: hidden;
-        }
-        .nome-empresa {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-        .categoria-titulo {
-            width: 100%;
-            font-size: 3rem;
-            font-weight: 700;
-            color: #c0392b;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        .lista-produtos {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-        .card-produto {
-            background-color: #fff;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        .card-produto:hover {
-            transform: translateY(-5px);
-        }
-        .card-imagem {
-            width: 100%;
-            height: 200px;
-            background-color: #ddd;
-            border-radius: 0.75rem;
-            margin-bottom: 1rem;
-            overflow: hidden;
-        }
-        .card-nome {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        .card-descricao {
-            font-size: 1rem;
-            color: #777;
-            margin-bottom: 1rem;
-        }
-        .card-preco {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #c0392b;
-            background-color: #f7f7f7;
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
-            display: inline-block;
         }
         
         .animar-entrada {  
@@ -200,7 +54,7 @@
         <!-- Cabeçalho -->
         <header class="w-full flex justify-between items-center mb-12 animar-fade-in-up">
             <div class="flex items-center">
-                <div id="logo-container" class="max-w-xs mb-8 h-20 rounded-2xl transform transition-transform duration-500 flex items-center justify-center">
+                <div id="logo-container" class="max-w-xs h-20 rounded-2xl transform transition-transform duration-500 flex items-center justify-center">
                     <!-- A imagem da logo será inserida aqui -->
                 </div>
                 <h1 id="nome-da-empresa" class="text-4xl font-extrabold text-white text-shadow-outline "></h1>
@@ -217,47 +71,34 @@
     </div>
 
     <script>
-        // Dados da loja que você pode editar
-        const dadosLoja = {
-            nomeEmpresa: 'Doces da Vovó',
-            logoUrl: 'img/logoexemplo.png',
-            backgroundUrl: 'img/fundo3.jpg',
-            categoria: {
-                nome: 'Sobremesas',
-                itens: [
-                    { nome: 'Bolo de Chocolate', descricao: 'Delicioso e macio.', preco: 15.00, fotoUrl: 'img/bolo_chocolate.jpg' },
-                    { nome: 'Pudim de Leite', descricao: 'A sobremesa clássica.', preco: 12.00, fotoUrl: 'img/pudim.jpg' },
-                    { nome: 'Torta de Morango', descricao: 'Fresca e cheia de sabor.', preco: 18.00, fotoUrl: 'img/torta.jpg' },
-                ]
-            }
-        };
-
         // Função para formatar o preço para BRL
         const formatarPreco = (preco) => {
+            if (typeof preco !== 'number') return 'R$ --,--';
             return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(preco);
         };
 
         // Função para renderizar o cardápio
-        const renderizarCardapio = () => {
-            document.body.style.backgroundImage = `url("${dadosLoja.backgroundUrl}")`;
-            document.body.style.backgroundSize = 'cover';
-            document.body.style.backgroundPosition = 'center';
-            document.body.style.backgroundAttachment = 'fixed';
-            
-            document.getElementById('nome-da-empresa').textContent = dadosLoja.nomeEmpresa;
-            document.title = "Cardapio | " + dadosLoja.nomeEmpresa;
-            document.getElementById('logo-container').innerHTML = `<img src="${dadosLoja.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
-            document.getElementById('categoria-titulo').textContent = dadosLoja.categoria.nome;
+        const renderizarCardapio = (dados) => {
+            document.body.style.backgroundImage = `url("${dados.backgroundUrl}")`;
+            document.getElementById('nome-da-empresa').textContent = dados.nomeEmpresa;
+            document.title = "Cardapio | " + dados.nomeEmpresa;
+            document.getElementById('logo-container').innerHTML = `<img src="${dados.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
+            document.getElementById('categoria-titulo').textContent = dados.categoria.nome;
 
             const listaProdutos = document.getElementById('lista-produtos');
             listaProdutos.innerHTML = '';
 
-            dadosLoja.categoria.itens.forEach(item => {
+            if (dados.categoria.itens.length === 0) {
+                listaProdutos.innerHTML = '<p class="col-span-3 text-center text-2xl text-white text-shadow-outline">Nenhum produto nesta categoria.</p>';
+                return;
+            }
+
+            dados.categoria.itens.forEach(item => {
                 const cardProduto = document.createElement('div');
                 cardProduto.className = 'bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center transition-transform hover:scale-105';
                 cardProduto.innerHTML = `
                     <div class="w-full h-56 rounded-xl bg-gray-300 mb-4 overflow-hidden">
-                        <img src="${item.fotoUrl}" alt="Foto do Produto" class="w-full h-full object-cover">
+                        <img src="${item.imagem}" alt="Foto do Produto" class="w-full h-full object-cover">
                     </div>
                     <div class="text-3xl font-bold text-gray-900 mb-2">${item.nome}</div>
                     <div class="text-lg text-gray-600 mb-4">${item.descricao}</div>
@@ -267,75 +108,52 @@
             });
         };
 
-        // Renderiza o cardápio quando a página carregar
-        window.onload = renderizarCardapio;
-    </script>
-
-
+        window.onload = () => {
+             const dadosLojaFallback = {
+                nomeEmpresa: 'Doces da Vovó',
+                logoUrl: 'img/logoexemplo.png',
+                backgroundUrl: 'img/fundo3.jpg',
+                categoria: {
+                    nome: 'Sobremesas',
+                    itens: []
+                }
+            };
             
+            const dadosArmazenados = sessionStorage.getItem('dadosCardapio');
 
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
+            if (dadosArmazenados) {
+                try {
+                    const { categorias, produtos } = JSON.parse(dadosArmazenados);
 
+                    const categoriaInfo = categorias.find(c => c.id === 'SOBREMESAS');
+
+                    if (!categoriaInfo) {
+                        console.error("Categoria SOBREMESAS não encontrada.");
+                        renderizarCardapio(dadosLojaFallback);
+                        return;
+                    }
+
+                    const produtosDaCategoria = produtos.filter(p => p.categoriaId === 'SOBREMESAS').slice(0, 3);
+                    
+                    const dadosParaRenderizar = {
+                        ...dadosLojaFallback,
+                        categoria: {
+                            ...categoriaInfo,
+                            itens: produtosDaCategoria,
+                        }
+                    };
+
+                    renderizarCardapio(dadosParaRenderizar);
+
+                } catch(error) {
+                    console.error("Erro ao processar dados da API.", error);
+                    renderizarCardapio(dadosLojaFallback);
+                }
+            } else {
+                console.log("Nenhum dado da API encontrado na sessão.");
+                renderizarCardapio(dadosLojaFallback);
             }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
+        };
+    </script>
 </body>
 </html>

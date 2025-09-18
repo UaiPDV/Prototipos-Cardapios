@@ -3,72 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Digital - Layout 2</title>
+    <title>Cardápio Digital - Bebidas Quentes</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
-            }
-
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
-            }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
         
@@ -105,14 +41,12 @@
     <!-- Seção de Menu -->
     <div id="secao-menu" class="flex-1 p-8 md:p-12 bg-white flex flex-col justify-center animar-fade-in-up">
         <header class="mb-6 md:mb-8 flex items-center">
-            <div id="logo-container" class="max-w-xs mb-8 h-16 rounded-2xl flex items-center justify-center md:h-20"></div>
-            <div id="nome-da-empresa" class="text-2xl md:text-5xl font-extrabold text-gray-800"></div>
+            <div id="logo-container" class="max-w-xs h-16 rounded-2xl flex items-center justify-center md:h-20"></div>
+            <div id="nome-da-empresa" class="text-2xl md:text-5xl font-extrabold text-gray-800 ml-4"></div>
         </header>
         <div id="categoria-lista" class="flex-grow overflow-y-auto pr-4">
-            <!-- Adicionada a div para a imagem da categoria -->
             <div class="flex items-center">
                 <h2 id="categoria-titulo" class="text-3xl md:text-4xl font-bold text-red-600 border-b-4 border-dashed border-red-600 pb-2 flex-grow"></h2>
-                <!-- Ajuste no tamanho e centralização da imagem da categoria, com borda menos circular -->
                 <div id="categoria-imagem" class="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden ml-4"></div>
             </div>
             
@@ -124,8 +58,7 @@
 
     <!-- Seção de Oferta do Dia -->
     <div id="secao-oferta" class="flex-1 p-8 md:p-12 bg-red-700 text-white flex flex-col justify-center items-center animar-fade-in-up">
-        <h2 id="oferta-do-dia-titulo" class="text-3xl md:text-5xl font-extrabold mb-6 md:mb-8 text-center"></h2>
-        <!-- Aumentei a altura da imagem para telas pequenas (h-[20rem]) e grandes (md:h-[36rem]) -->
+        <h2 id="oferta-do-dia-titulo" class="text-3xl md:text-5xl font-extrabold mb-6 md:mb-8 text-center">Sugestão do Dia</h2>
         <div id="oferta-foto-container" class="w-full h-[18rem] md:h-[32rem] bg-white rounded-2xl shadow-lg flex items-center justify-center mb-6 md:mb-8 overflow-hidden">
             <!-- A foto da oferta será inserida aqui -->
         </div>
@@ -136,142 +69,101 @@
     </div>
 
     <script>
-        // Dados da loja que você pode editar
-        const dadosLoja = {
-            nomeEmpresa: 'Cafeteria Aconchego',
-            logoUrl: 'img/logoexemplo.png',
-            ofertaDoDia: {
-                nome: 'Cappuccino Gelado',
-                preco: 15.00,
-                fotoUrl: 'img/capu.avif'
-            },
-            categoria: {
-                nome: 'Bebidas Quentes',
-                // Adicionada a URL da imagem da categoria
-                imagemUrl: 'img/bebidasgeral.jpg',
-                itens: [
-                    // A foto de cada item está aqui
-                    { nome: 'Café Expresso', descricao: 'O tradicional, forte e encorpado.', preco: 6.00, fotoUrl: 'img/cafe2.jpeg' },
-                    { nome: 'Latte', descricao: 'Café com leite vaporizado.', preco: 10.00, fotoUrl: 'img/cafe2.jpeg' },
-                    { nome: 'Mocha', descricao: 'Café com chocolate e leite.', preco: 12.00, fotoUrl: 'img/cafe3.jpg' },
-                    { nome: 'Chá Mate', descricao: 'Chá gelado com limão.', preco: 8.00, fotoUrl: 'img/cha.jpg' },
-                    { nome: 'Chocolate Quente', descricao: 'Feito com cacau 100%.', preco: 11.00, fotoUrl: 'img/choco.jpeg' },
-                ]
-            }
-        };
-
         // Função para formatar o preço para BRL
         const formatarPreco = (preco) => {
+            if (typeof preco !== 'number') return 'R$ --,--';
             return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(preco);
         };
 
         // Função para renderizar o cardápio
-        const renderizarCardapio = () => {
-            // Renderiza o cabeçalho
-            document.getElementById('nome-da-empresa').textContent = dadosLoja.nomeEmpresa;
-            document.title = "Cardapio | " + dadosLoja.nomeEmpresa;
-            document.getElementById('logo-container').innerHTML = `<img src="${dadosLoja.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
+        const renderizarCardapio = (dados) => {
+            document.getElementById('nome-da-empresa').textContent = dados.nomeEmpresa;
+            document.title = "Cardapio | " + dados.nomeEmpresa;
+            document.getElementById('logo-container').innerHTML = `<img src="${dados.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
 
-            // Renderiza a oferta do dia
-            document.getElementById('oferta-do-dia-titulo').textContent = 'Oferta do Dia';
-            document.getElementById('oferta-foto-container').innerHTML = `<img src="${dadosLoja.ofertaDoDia.fotoUrl}" alt="Foto da Oferta" class="w-full h-full object-cover rounded-2xl">`;
-            document.getElementById('oferta-nome-produto').textContent = dadosLoja.ofertaDoDia.nome;
-            document.getElementById('oferta-preco').textContent = formatarPreco(dadosLoja.ofertaDoDia.preco);
+            const { itemDestaque, categoria } = dados;
 
-            // Renderiza a categoria de produtos
-            document.getElementById('categoria-titulo').textContent = dadosLoja.categoria.nome;
-            // Adicionando a imagem da categoria
-            document.getElementById('categoria-imagem').innerHTML = `<img src="${dadosLoja.categoria.imagemUrl}" alt="Imagem da Categoria" class="rounded-lg w-full h-full object-cover">`;
+            if (itemDestaque) {
+                document.getElementById('oferta-foto-container').innerHTML = `<img src="${itemDestaque.imagem}" alt="Foto da Oferta" class="w-full h-full object-cover rounded-2xl">`;
+                document.getElementById('oferta-nome-produto').textContent = itemDestaque.nome;
+                document.getElementById('oferta-preco').textContent = formatarPreco(itemDestaque.preco);
+            } else {
+                 document.getElementById('secao-oferta').innerHTML = '<p class="text-2xl">Nenhum item em destaque hoje.</p>';
+            }
+
+            document.getElementById('categoria-titulo').textContent = categoria.nome;
+            document.getElementById('categoria-imagem').innerHTML = `<img src="${categoria.imagem}" alt="Imagem da Categoria" class="rounded-lg w-full h-full object-cover">`;
 
             const listaProdutos = document.getElementById('lista-produtos');
             listaProdutos.innerHTML = '';
-            dadosLoja.categoria.itens.forEach(item => {
-                const itemDiv = document.createElement('div');
-                // Alteração na classe para incluir a imagem ao lado do texto e centralizar os elementos
-                itemDiv.className = 'flex items-center py-4 border-b border-gray-200 last:border-b-0';
-                itemDiv.innerHTML = `
-                    <img src="${item.fotoUrl}" alt="Foto de ${item.nome}" class="w-16 h-16 rounded-xl object-cover mr-4">
-                    <div class="flex-grow flex justify-between items-center">
-                        <div>
-                            <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
-                            <div class="text-lg text-gray-500">${item.descricao}</div>
-                        </div>
-                        <div class="text-3xl font-bold text-red-600 bg-gray-100 rounded-lg px-4 py-2 shadow-sm">${formatarPreco(item.preco)}</div>
-                    </div>
-                `;
-                listaProdutos.appendChild(itemDiv);
-            });
-        };
-
-        // Renderiza o cardápio quando a página carregar
-        window.onload = renderizarCardapio;
-    </script>
-
-
             
-
-        <style>
-            .extra{
-                position: absolute;
-                bottom: 20px;
-                right: 10px;
-
+            if (categoria.itens.length === 0) {
+                 listaProdutos.innerHTML = '<div class="text-center py-4 text-gray-500">Nenhum outro produto nesta categoria.</div>';
+            } else {
+                categoria.itens.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex items-center py-4 border-b border-gray-200 last:border-b-0';
+                    itemDiv.innerHTML = `
+                        <img src="${item.imagem}" alt="Foto de ${item.nome}" class="w-16 h-16 rounded-xl object-cover mr-4">
+                        <div class="flex-grow flex justify-between items-center">
+                            <div>
+                                <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
+                                <div class="text-lg text-gray-500">${item.descricao}</div>
+                            </div>
+                            <div class="text-3xl font-bold text-red-600 bg-gray-100 rounded-lg px-4 py-2 shadow-sm">${formatarPreco(item.preco)}</div>
+                        </div>
+                    `;
+                    listaProdutos.appendChild(itemDiv);
+                });
             }
+        };
+        
+        window.onload = () => {
+             const dadosLojaFallback = {
+                nomeEmpresa: 'Cafeteria Aconchego',
+                logoUrl: 'img/logoexemplo.png',
+                itemDestaque: null,
+                categoria: { nome: 'Bebidas Quentes', imagem: 'img/bebidasgeral.jpg', itens: [] }
+            };
 
-            .extra:hover {
-                color: #750c0c;
-                text-decoration: underline;
-                cursor: pointer;
-                transition: 0.5s;
+            const dadosArmazenados = sessionStorage.getItem('dadosCardapio');
+
+            if(dadosArmazenados) {
+                try {
+                    const { categorias, produtos } = JSON.parse(dadosArmazenados);
+
+                    const categoriaInfo = categorias.find(c => c.id === 'BEBIDAS_QUENTES');
+                    if (!categoriaInfo) {
+                        console.error("Categoria BEBIDAS_QUENTES não encontrada.");
+                        renderizarCardapio(dadosLojaFallback);
+                        return;
+                    }
+                    
+                    const produtosDaCategoria = produtos.filter(p => p.categoriaId === 'BEBIDAS_QUENTES');
+                    
+                    const itemDestaque = produtosDaCategoria.length > 0 ? produtosDaCategoria[0] : null;
+                    const outrosItens = produtosDaCategoria.slice(1, 6); // Pega do segundo ao sexto item (5 itens)
+
+                    const dadosParaRenderizar = {
+                        ...dadosLojaFallback,
+                        itemDestaque: itemDestaque,
+                        categoria: {
+                            ...categoriaInfo,
+                            itens: outrosItens
+                        }
+                    };
+
+                    renderizarCardapio(dadosParaRenderizar);
+
+                } catch(error) {
+                    console.error("Erro ao processar dados da API.", error);
+                    renderizarCardapio(dadosLojaFallback);
+                }
+            } else {
+                console.log("Nenhum dado da API encontrado na sessão.");
+                renderizarCardapio(dadosLojaFallback);
             }
-
-            .extra:hover .catextra {
-                pointer-events: all;
-                transition: 0.6s;
-                opacity: 1;
-
-            }
-
-            .catextra {
-                bottom: 100%;
-                left: -30px;
-                position: absolute;
-                background-color: #eeeeee;
-                display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                width: 100px;
-                opacity: 0;
-                transition: 0.8s;
-                pointer-events: none;
-                padding: 0%;
-                z-index: 99999999;
-            }
-
-            .catextra a {
-                color: #292929;
-                font-weight: 400;
-                font-size: 13.5px;
-                text-transform: uppercase;
-                text-decoration: none;
-            }
-
-            .catextra li:hover {
-                background-color: #750c0c;
-                border: #750c0c;
-                transition: 0.5s;
-            }
-
-            .catextra li:hover a {
-                color: #eeeeee;
-            }
-
-            .catextra li {
-                list-style-type: none;
-                padding: 5px;
-                border: 1px solid #eeeeee;
-                transition: 0.5s;
-            }
-        </style>
+        };
+    </script>
 </body>
 </html>
