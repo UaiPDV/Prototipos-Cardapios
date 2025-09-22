@@ -168,7 +168,7 @@
 
     <script>
         // --- CONFIGURAÇÕES ---
-        const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJuYW1lIjoiUGVkcm8iLCJlbWFpbCI6InBlZHJvbHVjYXNtb3RhMjAwNS5wbEBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwic3ViIjoiNSIsImV4cCI6MTc1ODM4OTQxNCwiaWF0IjoxNzU4MzAzMDE0fQ.M5th1FThZ0lPyaYN27c7MRh7USfdJH6MVol2UUkiE6A';
+        const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJuYW1lIjoiUGVkcm8iLCJlbWFpbCI6InBlZHJvbHVjYXNtb3RhMjAwNS5wbEBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwic3ViIjoiNSIsImV4cCI6MTc1ODY0NTI2OCwiaWF0IjoxNzU4NTU4ODY4fQ.nGPXFElrknEwP_N62oRYf3s7wIHRCqYn7hxudRn-4aI';
         const apiUrlBase = 'https://sup.bixs.com.br/v1/api/products';
         const sourceQuery = '?source=uai_pdv_mais';
         const placeholderImgUrl = 'https://placehold.co/64x64/e2e8f0/cbd5e1?text=Sem+Foto';
@@ -405,6 +405,8 @@
                         <div class="min-w-0">
                             <p class="font-bold text-gray-800 truncate">${product.name}</p>
                             <p class="text-sm text-gray-600">ID: ${product.id} | Código: ${product.product_code || 'N/A'}</p>
+                            <p class="text-sm text-blue-600">Preço: R$ ${(product.price || product.base_price || 0).toFixed(2)}</p>
+                            <p class="text-sm text-green-600">Grupo: ${product.group?.name || product.group_code || 'Sem grupo'}</p>
                         </div>
                     </div>
                     <div class="space-x-2 flex-shrink-0">

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Teste Debug - API</title>
+		<script src="api.js"></script>
+	</head>
+	<body>
+		<h1>Teste de Debug da API</h1>
+
+		<div id="status">Carregando...</div>
+
+		<h2>Dados do SessionStorage:</h2>
+		<pre id="sessionData">-</pre>
+
+		<h2>Produtos da API:</h2>
+		<pre id="apiData">-</pre>
+
+		<h2>Categorização dos Produtos:</h2>
+		<pre id="categorizacao">-</pre>
+
+		<script>
+			async function testarAPI() {
+				const statusDiv = document.getElementById('status');
+				const sessionDiv = document.getElementById('sessionData');
+				const apiDiv = document.getElementById('apiData');
+				const categorizacaoDiv =
+					document.getElementById('categorizacao');
+
+				try {
+					statusDiv.textContent = 'Buscando dados da API...';
+
+					// 1. Testa a API diretamente
+					console.log('=== TESTE DIRETO DA API ===');
+					const categorias = await api.getCategorias();
+					const produtos = await api.getProdutos();
+
+					console.log('Categorias:', categorias);
+					console.log('Produtos:', produtos);
+
+					// 2. Armazena no sessionStorage
+					const dadosCompletos = { categorias, produtos };
+					sessionStorage.setItem(
+						'dadosCardapio',
+						JSON.stringify(dadosCompletos)
+					);
+
+					// 3. Recupera do sessionStorage para testar
+					const dadosArmazenados =
+						sessionStorage.getItem('dadosCardapio');
+					const dadosParsed = JSON.parse(dadosArmazenados);
+
+					// 4. Atualiza a interface
+					statusDiv.textContent = 'Teste concluído!';
+					sessionDiv.textContent = JSON.stringify(
+						dadosParsed,
+						null,
+						2
+					);
+					apiDiv.textContent = JSON.stringify(
+						{ categorias, produtos },
+						null,
+						2
+					);
+
+					// 5. Testa categorização específica
+					const salgados = produtos.filter(
+						(p) => p.categoriaId === 'SALGADOS'
+					);
+					const bebidas = produtos.filter(
+						(p) => p.categoriaId === 'BEBIDAS'
+					);
+					const bebidasQuentes = produtos.filter(
+						(p) => p.categoriaId === 'BEBIDAS_QUENTES'
+					);
+
+					categorizacaoDiv.textContent = JSON.stringify(
+						{
+							totalProdutos: produtos.length,
+							salgados:
+								produtos.filter(
+									(p) => p.categoriaId === 'SALGADOS'
+								).length + ' produtos',
+							bebidas:
+								produtos.filter(
+									(p) => p.categoriaId === 'BEBIDAS'
+								).length + ' produtos',
+							bebidasQuentes:
+								produtos.filter(
+									(p) => p.categoriaId === 'BEBIDAS_QUENTES'
+								).length + ' produtos',
+							massas:
+								produtos.filter(
+									(p) => p.categoriaId === 'MASSAS'
+								).length + ' produtos',
+							carnes:
+								produtos.filter(
+									(p) => p.categoriaId === 'CARNES'
+								).length + ' produtos',
+							carnesBovinas:
+								produtos.filter(
+									(p) => p.categoriaId === 'CARNES_BOVINAS'
+								).length + ' produtos',
+							carnesSuinas:
+								produtos.filter(
+									(p) => p.categoriaId === 'CARNES_SUINAS'
+								).length + ' produtos',
+							aves:
+								produtos.filter((p) => p.categoriaId === 'AVES')
+									.length + ' produtos',
+							verduras:
+								produtos.filter(
+									(p) => p.categoriaId === 'VERDURAS'
+								).length + ' produtos',
+							legumes:
+								produtos.filter(
+									(p) => p.categoriaId === 'LEGUMES'
+								).length + ' produtos',
+							frutas:
+								produtos.filter(
+									(p) => p.categoriaId === 'FRUTAS'
+								).length + ' produtos',
+							sobremesas:
+								produtos.filter(
+									(p) => p.categoriaId === 'SOBREMESAS'
+								).length + ' produtos',
+							padaria:
+								produtos.filter(
+									(p) => p.categoriaId === 'PADARIA'
+								).length + ' produtos',
+							lanches:
+								produtos.filter(
+									(p) => p.categoriaId === 'LANCHES'
+								).length + ' produtos',
+							porcoes:
+								produtos.filter(
+									(p) => p.categoriaId === 'PORCOES'
+								).length + ' produtos',
+							precoExemplo:
+								produtos[0]?.preco + ' (deve ser > 0)',
+							usingGroupCode:
+								produtos[0]?.categoriaId === produtos[0]?.nome
+									? 'FALSE - usando fallback'
+									: 'TRUE - usando group_code da API',
+							exemploSalgados: produtos
+								.filter((p) => p.categoriaId === 'SALGADOS')
+								.slice(0, 2)
+								.map((p) => p.nome),
+							exemploCarnes: produtos
+								.filter((p) => p.categoriaId === 'CARNES')
+								.slice(0, 2)
+								.map((p) => p.nome),
+							exemploVerduras: produtos
+								.filter((p) => p.categoriaId === 'VERDURAS')
+								.slice(0, 2)
+								.map((p) => p.nome),
+						},
+						null,
+						2
+					);
+				} catch (error) {
+					statusDiv.textContent = 'Erro: ' + error.message;
+					console.error('Erro no teste:', error);
+				}
+			}
+
+			// Executa o teste quando a página carregar
+			window.onload = testarAPI;
+		</script>
+	</body>
+</html>

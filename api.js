@@ -12,7 +12,7 @@ const config = {
 	source: 'uai_pdv_mais',
 	// ATENÇÃO: Token de autenticação Bearer.
 	authToken:
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJuYW1lIjoiUGVkcm8iLCJlbWFpbCI6InBlZHJvbHVjYXNtb3RhMjAwNS5wbEBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwic3ViIjoiNSIsImV4cCI6MTc1ODM4OTQxNCwiaWF0IjoxNzU4MzAzMDE0fQ.M5th1FThZ0lPyaYN27c7MRh7USfdJH6MVol2UUkiE6A',
+		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJuYW1lIjoiUGVkcm8iLCJlbWFpbCI6InBlZHJvbHVjYXNtb3RhMjAwNS5wbEBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwic3ViIjoiNSIsImV4cCI6MTc1ODY0NTI2OCwiaWF0IjoxNzU4NTU4ODY4fQ.nGPXFElrknEwP_N62oRYf3s7wIHRCqYn7hxudRn-4aI',
 };
 
 /**
