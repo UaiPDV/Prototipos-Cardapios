@@ -1,453 +1,661 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Gerenciador de Produtos Otimizado</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador de Produtos Otimizado</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+			body {
+				font-family: 'Inter', sans-serif;
+			}
 
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+			.log-item {
+				padding: 8px 12px;
+				border-radius: 6px;
+				margin-bottom: 8px;
+				font-size: 0.875rem;
+				animation: fadeIn 0.3s ease-in-out;
+			}
 
-        .log-item {
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            font-size: 0.875rem;
-            animation: fadeIn 0.3s ease-in-out;
-        }
+			.log-success {
+				background-color: #dcfce7;
+				color: #166534;
+				border-left: 4px solid #22c55e;
+			}
 
-        .log-success {
-            background-color: #dcfce7;
-            color: #166534;
-            border-left: 4px solid #22c55e;
-        }
+			.log-error {
+				background-color: #fee2e2;
+				color: #991b1b;
+				border-left: 4px solid #ef4444;
+			}
 
-        .log-error {
-            background-color: #fee2e2;
-            color: #991b1b;
-            border-left: 4px solid #ef4444;
-        }
+			.log-info {
+				background-color: #e0f2fe;
+				color: #0369a1;
+				border-left: 4px solid #0ea5e9;
+			}
 
-        .log-info {
-            background-color: #e0f2fe;
-            color: #0369a1;
-            border-left: 4px solid #0ea5e9;
-        }
-        
-        /* Estilos para abas */
-        .tab-button.active {
-            border-color: #4f46e5;
-            color: #4f46e5;
-            background-color: #eef2ff;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
+			/* Estilos para abas */
+			.tab-button {
+				border-bottom-width: 2px;
+				border-color: transparent;
+			}
+			.tab-button.active {
+				border-color: #4f46e5;
+				color: #4f46e5;
+				background-color: #eef2ff;
+			}
+			.tab-content {
+				display: none;
+			}
+			.tab-content.active {
+				display: block;
+			}
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-</head>
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(-10px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+		</style>
+	</head>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+	<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+		<div class="w-full max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+			<header class="mb-6 text-center">
+				<h1 class="text-3xl font-bold text-gray-800">
+					Gerenciador de Produtos
+				</h1>
+				<p class="text-gray-500 mt-1">
+					Ferramenta completa para gerenciar (CRUD) os produtos via
+					API.
+				</p>
+			</header>
 
-    <div class="w-full max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-        <header class="mb-6 text-center">
-            <h1 class="text-3xl font-bold text-gray-800">Gerenciador de Produtos</h1>
-            <p class="text-gray-500 mt-1">Ferramenta completa para gerenciar (CRUD) os produtos via API.</p>
-        </header>
+			<!-- Abas de Navegação -->
+			<div class="mb-6 border-b border-gray-200">
+				<nav class="-mb-px flex space-x-6" aria-label="Tabs">
+					<button
+						onclick="changeTab('tab-create')"
+						class="tab-button active whitespace-nowrap py-4 px-1 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300"
+					>
+						Cadastrar em Massa
+					</button>
+					<button
+						onclick="changeTab('tab-update')"
+						class="tab-button whitespace-nowrap py-4 px-1 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300"
+					>
+						Corrigir em Massa
+					</button>
+					<button
+						onclick="changeTab('tab-list')"
+						class="tab-button whitespace-nowrap py-4 px-1 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300"
+					>
+						Listar / Editar Produtos
+					</button>
+					<button
+						onclick="changeTab('tab-search')"
+						class="tab-button whitespace-nowrap py-4 px-1 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300"
+					>
+						Buscar Produto
+					</button>
+				</nav>
+			</div>
 
-        <!-- Abas de Navegação -->
-        <div class="mb-6 border-b border-gray-200">
-            <nav class="-mb-px flex space-x-6" aria-label="Tabs">
-                <button onclick="changeTab('tab-create')" class="tab-button active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300">
-                    Cadastrar em Massa
-                </button>
-                <button onclick="changeTab('tab-list')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300">
-                    Listar / Editar Produtos
-                </button>
-                 <button onclick="changeTab('tab-search')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300">
-                    Buscar Produto
-                </button>
-            </nav>
-        </div>
+			<main>
+				<!-- Conteúdo da Aba: Cadastrar em Massa -->
+				<div id="tab-create" class="tab-content active">
+					<div class="mb-6">
+						<label
+							for="json-input"
+							class="block text-sm font-medium text-gray-700 mb-2"
+							>Cole aqui o JSON da lista de produtos para CADASTRAR:</label
+						>
+						<textarea
+							id="json-input"
+							rows="10"
+							class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+							placeholder="Cole o array de produtos aqui..."
+						></textarea>
+					</div>
+					<div class="flex justify-center mb-6">
+						<button
+							id="start-button"
+							class="w-full md:w-auto px-8 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+						>
+							Iniciar Cadastro
+						</button>
+					</div>
+				</div>
 
-        <main>
-            <!-- Conteúdo da Aba: Cadastrar em Massa -->
-            <div id="tab-create" class="tab-content active">
-                <div class="mb-6">
-                    <label for="json-input" class="block text-sm font-medium text-gray-700 mb-2">Cole aqui o JSON da lista de produtos:</label>
-                    <textarea id="json-input" rows="10"
-                        class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-                        placeholder="Cole o array de produtos aqui..."></textarea>
-                </div>
-                <div class="flex justify-center mb-6">
-                    <button id="start-button"
-                        class="w-full md:w-auto px-8 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition disabled:bg-gray-400 disabled:cursor-not-allowed">
-                        Iniciar Cadastro
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Conteúdo da Aba: Listar Produtos -->
-            <div id="tab-list" class="tab-content">
-                <button id="fetch-products-button" class="mb-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700">Carregar Produtos</button>
-                <div id="product-list" class="space-y-2"></div>
-            </div>
+				<!-- Conteúdo da Aba: Corrigir em Massa -->
+				<div id="tab-update" class="tab-content">
+					<div class="mb-6">
+						<label
+							for="json-input-update"
+							class="block text-sm font-medium text-gray-700 mb-2"
+						>
+							Cole aqui o JSON da lista de produtos para ATUALIZAR (cada
+							produto deve ter um "id"):
+						</label>
+						<textarea
+							id="json-input-update"
+							rows="10"
+							class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+							placeholder="Cole o array de produtos com IDs aqui..."
+						></textarea>
+					</div>
+					<div class="flex justify-center mb-6">
+						<button
+							id="start-update-button"
+							class="w-full md:w-auto px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+						>
+							Iniciar Correção em Massa
+						</button>
+					</div>
+				</div>
 
-            <!-- Conteúdo da Aba: Buscar Produto -->
-            <div id="tab-search" class="tab-content">
-                 <div class="flex space-x-4 mb-4">
-                    <input type="text" id="search-input" class="flex-grow p-2 border rounded-lg" placeholder="Digite o nome ou ID do produto">
-                    <button id="search-button" class="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700">Buscar</button>
-                </div>
-                <div id="search-results"></div>
-            </div>
+				<!-- Conteúdo da Aba: Listar Produtos -->
+				<div id="tab-list" class="tab-content">
+					<button
+						id="fetch-products-button"
+						class="mb-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700"
+					>
+						Carregar Produtos
+					</button>
+					<div id="product-list" class="space-y-2"></div>
+				</div>
 
-            <!-- Modal de Edição (escondido por padrão) -->
-            <div id="edit-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-                 <div class="relative top-10 mx-auto p-5 border w-full max-w-3xl shadow-lg rounded-md bg-white">
-                     <h3 class="text-xl font-medium leading-6 text-gray-900 mb-4">Editar Produto</h3>
-                     <form id="edit-form">
-                         <input type="hidden" id="edit-product-id">
-                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                             <!-- Campos de Texto -->
-                             <div class="md:col-span-2"><label for="edit-name" class="block text-sm font-medium text-gray-700">Nome</label><input type="text" id="edit-name" class="mt-1 p-2 w-full border rounded-md"></div>
-                             <div><label for="edit-product_code" class="block text-sm font-medium text-gray-700">Código do Produto</label><input type="text" id="edit-product_code" class="mt-1 p-2 w-full border rounded-md"></div>
-                             <div><label for="edit-group_code" class="block text-sm font-medium text-gray-700">Código do Grupo</label><input type="text" id="edit-group_code" class="mt-1 p-2 w-full border rounded-md"></div>
-                             <div><label for="edit-price" class="block text-sm font-medium text-gray-700">Preço</label><input type="number" step="0.01" id="edit-price" class="mt-1 p-2 w-full border rounded-md"></div>
-                             <div><label for="edit-ean_code" class="block text-sm font-medium text-gray-700">EAN</label><input type="text" id="edit-ean_code" class="mt-1 p-2 w-full border rounded-md"></div>
-                             
-                             <!-- Descrição -->
-                             <div class="md:col-span-2"><label for="edit-description" class="block text-sm font-medium text-gray-700">Descrição</label><textarea id="edit-description" rows="3" class="mt-1 p-2 w-full border rounded-md"></textarea></div>
-                             
-                             <!-- Seção da Imagem com Preview -->
-                             <div class="md:col-span-2 p-4 border border-gray-200 rounded-lg bg-gray-50">
-                                <label for="edit-image_url" class="block text-sm font-medium text-gray-700 mb-2">URL da Imagem</label>
-                                <div class="flex flex-col sm:flex-row items-start gap-4">
-                                     <input type="text" id="edit-image_url" placeholder="https://exemplo.com/imagem.png" class="flex-grow p-2 border border-gray-300 rounded-md w-full">
-                                     <img id="edit-image-preview" src="https://placehold.co/128x128/e2e8f0/cbd5e1?text=Preview"
-                                          onerror="this.onerror=null;this.src='https://placehold.co/128x128/fecaca/991b1b?text=Inválida';"
-                                          alt="Preview da Imagem" class="w-32 h-32 object-cover rounded-md bg-gray-200 border flex-shrink-0">
-                                </div>
-                            </div>
-                         </div>
-                         <div class="mt-6 flex justify-end space-x-3">
-                             <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 font-medium">Cancelar</button>
-                             <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-semibold">Salvar Alterações</button>
-                         </div>
-                     </form>
-                 </div>
-            </div>
+				<!-- Conteúdo da Aba: Buscar Produto -->
+				<div id="tab-search" class="tab-content">
+					<div class="flex space-x-4 mb-4">
+						<input
+							type="text"
+							id="search-input"
+							class="flex-grow p-2 border rounded-lg"
+							placeholder="Digite o nome ou ID do produto"
+						/>
+						<button
+							id="search-button"
+							class="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700"
+						>
+							Buscar
+						</button>
+					</div>
+					<div id="search-results"></div>
+				</div>
 
-            <!-- Logs Unificados -->
-            <div id="status-container" class="mt-6">
-                <h2 class="text-lg font-semibold text-gray-700 mb-2">Status do Processo:</h2>
-                <div id="logs" class="w-full h-64 bg-gray-50 p-4 border border-gray-200 rounded-lg overflow-y-auto text-sm text-gray-600">
-                    Aguardando início...
-                </div>
-            </div>
-        </main>
-    </div>
+				<!-- Modal de Edição (escondido por padrão) -->
+				<div
+					id="edit-modal"
+					class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50"
+				>
+					<div
+						class="relative top-10 mx-auto p-5 border w-full max-w-3xl shadow-lg rounded-md bg-white"
+					>
+						<h3
+							class="text-xl font-medium leading-6 text-gray-900 mb-4"
+						>
+							Editar Produto
+						</h3>
+						<form id="edit-form">
+							<input type="hidden" id="edit-product-id" />
+							<div
+								class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4"
+							>
+								<div class="md:col-span-2">
+									<label
+										for="edit-name"
+										class="block text-sm font-medium text-gray-700"
+										>Nome</label
+									><input
+										type="text"
+										id="edit-name"
+										class="mt-1 p-2 w-full border rounded-md"
+									/>
+								</div>
+								<div>
+									<label
+										for="edit-product_code"
+										class="block text-sm font-medium text-gray-700"
+										>Código do Produto</label
+									><input
+										type="text"
+										id="edit-product_code"
+										class="mt-1 p-2 w-full border rounded-md"
+									/>
+								</div>
+								<div>
+									<label
+										for="edit-group_code"
+										class="block text-sm font-medium text-gray-700"
+										>Código do Grupo</label
+									><input
+										type="text"
+										id="edit-group_code"
+										class="mt-1 p-2 w-full border rounded-md"
+									/>
+								</div>
+								<div>
+									<label
+										for="edit-price"
+										class="block text-sm font-medium text-gray-700"
+										>Preço</label
+									><input
+										type="number"
+										step="0.01"
+										id="edit-price"
+										class="mt-1 p-2 w-full border rounded-md"
+									/>
+								</div>
+								<div>
+									<label
+										for="edit-ean_code"
+										class="block text-sm font-medium text-gray-700"
+										>EAN</label
+									><input
+										type="text"
+										id="edit-ean_code"
+										class="mt-1 p-2 w-full border rounded-md"
+									/>
+								</div>
 
-    <script>
-        // --- CONFIGURAÇÕES ---
-        const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJuYW1lIjoiUGVkcm8iLCJlbWFpbCI6InBlZHJvbHVjYXNtb3RhMjAwNS5wbEBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwic3ViIjoiNSIsImV4cCI6MTc1ODY0NTI2OCwiaWF0IjoxNzU4NTU4ODY4fQ.nGPXFElrknEwP_N62oRYf3s7wIHRCqYn7hxudRn-4aI';
-        const apiUrlBase = 'https://sup.bixs.com.br/v1/api/products';
-        const sourceQuery = '?source=uai_pdv_mais';
-        const placeholderImgUrl = 'https://placehold.co/64x64/e2e8f0/cbd5e1?text=Sem+Foto';
-        const errorImgUrl = 'https://placehold.co/64x64/fecaca/991b1b?text=Erro';
-        const previewPlaceholderUrl = 'https://placehold.co/128x128/e2e8f0/cbd5e1?text=Preview';
-        const previewErrorUrl = 'https://placehold.co/128x128/fecaca/991b1b?text=Inválida';
+								<div class="md:col-span-2">
+									<label
+										for="edit-description"
+										class="block text-sm font-medium text-gray-700"
+										>Descrição</label
+									><textarea
+										id="edit-description"
+										rows="3"
+										class="mt-1 p-2 w-full border rounded-md"
+									></textarea>
+								</div>
 
+								<div
+									class="md:col-span-2 p-4 border border-gray-200 rounded-lg bg-gray-50"
+								>
+									<label
+										for="edit-image_url"
+										class="block text-sm font-medium text-gray-700 mb-2"
+										>URL da Imagem</label
+									>
+									<div
+										class="flex flex-col sm:flex-row items-start gap-4"
+									>
+										<input
+											type="text"
+											id="edit-image_url"
+											placeholder="https://exemplo.com/imagem.png"
+											class="flex-grow p-2 border border-gray-300 rounded-md w-full"
+										/>
+										<img
+											id="edit-image-preview"
+											src="https://placehold.co/128x128/e2e8f0/cbd5e1?text=Preview"
+											onerror="this.onerror=null;this.src='https://placehold.co/128x128/fecaca/991b1b?text=Inválida';"
+											alt="Preview da Imagem"
+											class="w-32 h-32 object-cover rounded-md bg-gray-200 border flex-shrink-0"
+										/>
+									</div>
+								</div>
+							</div>
+							<div class="mt-6 flex justify-end space-x-3">
+								<button
+									type="button"
+									onclick="closeModal()"
+									class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 font-medium"
+								>
+									Cancelar
+								</button>
+								<button
+									type="submit"
+									class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-semibold"
+								>
+									Salvar Alterações
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
 
-        // --- ELEMENTOS DO DOM ---
-        const logsContainer = document.getElementById('logs');
-        const startButton = document.getElementById('start-button');
-        const jsonInput = document.getElementById('json-input');
-        const fetchProductsButton = document.getElementById('fetch-products-button');
-        const productListContainer = document.getElementById('product-list');
-        const searchInput = document.getElementById('search-input');
-        const searchButton = document.getElementById('search-button');
-        const searchResultsContainer = document.getElementById('search-results');
-        const modal = document.getElementById('edit-modal');
-        const editForm = document.getElementById('edit-form');
-        const imageUrlInput = document.getElementById('edit-image_url');
-        const imagePreview = document.getElementById('edit-image-preview');
+				<!-- Logs Unificados -->
+				<div id="status-container" class="mt-6">
+					<h2 class="text-lg font-semibold text-gray-700 mb-2">
+						Status do Processo:
+					</h2>
+					<div
+						id="logs"
+						class="w-full h-64 bg-gray-50 p-4 border border-gray-200 rounded-lg overflow-y-auto text-sm text-gray-600"
+					>
+						Aguardando início...
+					</div>
+				</div>
+			</main>
+		</div>
 
+		<script>
+			// --- CONFIGURAÇÕES ---
+			const authToken =
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJuYW1lIjoiUGVkcm8iLCJlbWFpbCI6InBlZHJvbHVjYXNtb3RhMjAwNS5wbEBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwic3ViIjoiNSIsImV4cCI6MTc1ODgwMzk1OCwiaWF0IjoxNzU4NzE3NTU4fQ.xI26HjU_e5pY79a0o3UWFmCMU-hrY_tQ40oCW5u5e0g';
+			const apiUrlBase = 'https://sup.bixs.com.br/v1/api/products';
+			const sourceName = 'uai_pdv_mais';
+			const sourceQuery = `?source=${sourceName}`;
+			const placeholderImgUrl =
+				'https://placehold.co/64x64/e2e8f0/cbd5e1?text=Sem+Foto';
+			const errorImgUrl =
+				'https://placehold.co/64x64/fecaca/991b1b?text=Erro';
+			const previewPlaceholderUrl =
+				'https://placehold.co/128x128/e2e8f0/cbd5e1?text=Preview';
 
-        // --- FUNÇÕES DE LOG E UTILIDADES ---
-        function logMessage(message, type = 'info') {
-            if(logsContainer.innerHTML === 'Aguardando início...') {
-                logsContainer.innerHTML = '';
-            }
-            const logItem = document.createElement('div');
-            logItem.innerHTML = message;
-            const typeClasses = {
-                info: 'log-info', success: 'log-success', error: 'log-error'
-            };
-            logItem.className = `log-item ${typeClasses[type]}`;
-            logsContainer.appendChild(logItem);
-            logsContainer.scrollTop = logsContainer.scrollHeight;
-        }
-        
-        function clearLogs() {
-            logsContainer.innerHTML = 'Aguardando início...';
-        }
+			// --- ELEMENTOS DO DOM ---
+			const logsContainer = document.getElementById('logs');
+			const startButton = document.getElementById('start-button');
+			const jsonInput = document.getElementById('json-input');
+			const startUpdateButton = document.getElementById('start-update-button');
+			const jsonInputUpdate = document.getElementById('json-input-update');
+			const fetchProductsButton = document.getElementById('fetch-products-button');
+			const productListContainer = document.getElementById('product-list');
+			const searchInput = document.getElementById('search-input');
+			const searchButton = document.getElementById('search-button');
+			const searchResultsContainer = document.getElementById('search-results');
+			const modal = document.getElementById('edit-modal');
+			const editForm = document.getElementById('edit-form');
+			const imageUrlInput = document.getElementById('edit-image_url');
+			const imagePreview = document.getElementById('edit-image-preview');
 
-        // --- LÓGICA DAS ABAS ---
-        function changeTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-            clearLogs();
-        }
+			// --- FUNÇÕES DE LOG E UTILIDADES ---
+			function logMessage(message, type = 'info') {
+				if (logsContainer.innerHTML === 'Aguardando início...') {
+					logsContainer.innerHTML = '';
+				}
+				const logItem = document.createElement('div');
+				logItem.textContent = message; // Use textContent for security
+				const typeClasses = {
+					info: 'log-info',
+					success: 'log-success',
+					error: 'log-error',
+				};
+				logItem.className = `log-item ${typeClasses[type]}`;
+				logsContainer.appendChild(logItem);
+				logsContainer.scrollTop = logsContainer.scrollHeight;
+			}
 
-        // --- FUNÇÕES DA API (CRUD) ---
+			function clearLogs() {
+				logsContainer.innerHTML = 'Aguardando início...';
+			}
 
-        // CREATE (em massa)
-        async function handleCadastro() {
-             startButton.disabled = true;
-             clearLogs();
-             let produtos;
-             try {
-                 produtos = JSON.parse(jsonInput.value);
-                 if (!Array.isArray(produtos)) throw new Error('O JSON não é uma lista (array).');
-             } catch (error) {
-                 logMessage(`Erro ao processar o JSON: ${error.message}`, 'error');
-                 startButton.disabled = false;
-                 return;
-             }
-             logMessage(`Encontrados ${produtos.length} produtos. Iniciando cadastro...`);
+			// --- LÓGICA DAS ABAS ---
+			function changeTab(tabId) {
+				document.querySelectorAll('.tab-content').forEach((tab) => tab.classList.remove('active'));
+				document.querySelectorAll('.tab-button').forEach((button) => button.classList.remove('active'));
+				document.getElementById(tabId).classList.add('active');
+				event.currentTarget.classList.add('active');
+				clearLogs();
+			}
 
-             for (let i = 0; i < produtos.length; i++) {
-                 const produto = produtos[i];
-                 logMessage(`[${i + 1}/${produtos.length}] Enviando: ${produto.name || produto.product_code}...`);
-                 try {
-                     const response = await fetch(`${apiUrlBase}${sourceQuery}`, {
-                         method: 'POST',
-                         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
-                         body: JSON.stringify(produto)
-                     });
-                     if (!response.ok) {
-                        const errorData = await response.json().catch(() => ({}));
-                        throw new Error(errorData.details || `Erro ${response.status}`);
-                     }
-                     logMessage(`[${i + 1}/${produtos.length}] Sucesso: "${produto.name}" cadastrado.`, 'success');
-                 } catch (error) {
-                     logMessage(`[${i + 1}/${produtos.length}] FALHA ao cadastrar "${produto.name}". Motivo: ${error.message}`, 'error');
-                     logMessage('Processo interrompido.', 'error');
-                     startButton.disabled = false;
-                     return;
-                 }
-                 await new Promise(resolve => setTimeout(resolve, 300));
-             }
-             logMessage('🎉 Processo finalizado com sucesso!', 'success');
-             startButton.disabled = false;
-        }
+			// --- FUNÇÃO DE TRANSFORMAÇÃO DE DADOS ---
+			function transformProductForApi(product) {
+				return {
+					description: product.description || '',
+					ean_code: product.ean_code || '',
+					group_code: product.group_code || product.group?.group_code || '',
+					image_url: product.image_url || '',
+					name: product.name || '',
+					price: parseFloat(product.base_price || product.price || 0),
+					product_code: product.product_code || '',
+                    source_name: product.source_name || sourceName
+				};
+			}
 
-        // READ (todos)
-        async function fetchAllProducts() {
-            clearLogs();
-            logMessage('Buscando produtos na API...');
-            productListContainer.innerHTML = '<div class="text-center p-4">Carregando...</div>';
-            try {
-                const response = await fetch(`${apiUrlBase}${sourceQuery}`, {
-                     headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                if (!response.ok) throw new Error(`Erro ${response.status}`);
-                const products = await response.json();
-                renderProductList(products);
-                logMessage(`${products.length} produtos carregados com sucesso.`, 'success');
-            } catch (error) {
-                logMessage(`Falha ao buscar produtos: ${error.message}`, 'error');
-                productListContainer.innerHTML = '<div class="text-center p-4 text-red-600">Falha ao carregar.</div>';
-            }
-        }
+			// --- FUNÇÕES DA API (GERAIS E CRUD) ---
+			async function processMassAction(produtos, method) {
+				const button = method === 'POST' ? startButton : startUpdateButton;
+				button.disabled = true;
+				const actionName = method === 'POST' ? 'cadastro' : 'atualização';
+				logMessage(`Encontrados ${produtos.length} produtos. Iniciando processo de ${actionName}...`);
 
-        // UPDATE
-        async function handleUpdateProduct(event) {
-            event.preventDefault();
-            const id = document.getElementById('edit-product-id').value;
-            const productData = {
-                name: document.getElementById('edit-name').value,
-                product_code: document.getElementById('edit-product_code').value,
-                group_code: document.getElementById('edit-group_code').value,
-                price: parseFloat(document.getElementById('edit-price').value),
-                ean_code: document.getElementById('edit-ean_code').value,
-                description: document.getElementById('edit-description').value,
-                image_url: document.getElementById('edit-image_url').value,
-            };
-            
-            logMessage(`Atualizando produto ID: ${id}...`);
-            try {
-                const response = await fetch(`${apiUrlBase}/${id}${sourceQuery}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
-                    body: JSON.stringify(productData)
-                });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.details || `Erro ${response.status}`);
-                }
-                logMessage(`Produto "${productData.name}" atualizado com sucesso!`, 'success');
-                closeModal();
-                // Recarrega a lista da aba ativa (seja a geral ou a de busca)
-                if (document.getElementById('tab-list').classList.contains('active')) {
-                   fetchAllProducts(); 
-                } else if (document.getElementById('tab-search').classList.contains('active')) {
-                    handleSearch();
-                }
-            } catch (error) {
-                logMessage(`Erro ao atualizar: ${error.message}`, 'error');
-            }
-        }
-        
-        // DELETE
-        async function deleteProduct(id, name) {
-            // Usando um modal customizado em vez do confirm() padrão
-            if (!await showConfirm(`Tem certeza que deseja excluir o produto "${name}" (ID: ${id})?`)) return;
+				for (let i = 0; i < produtos.length; i++) {
+					const produtoOriginal = produtos[i];
+                    const payload = transformProductForApi(produtoOriginal);
+					const produtoIdentifier = payload.name || `ID ${produtoOriginal.id}`;
+					logMessage(`[${i + 1}/${produtos.length}] Processando: ${produtoIdentifier}...`);
 
-            logMessage(`Excluindo produto ID: ${id}...`);
-            try {
-                const response = await fetch(`${apiUrlBase}/${id}${sourceQuery}`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.details || `Erro ${response.status}`);
-                }
-                logMessage(`Produto "${name}" excluído com sucesso.`, 'success');
-                // Recarrega a lista da aba ativa
-                if (document.getElementById('tab-list').classList.contains('active')) {
-                   fetchAllProducts(); 
-                } else if (document.getElementById('tab-search').classList.contains('active')) {
-                    handleSearch();
-                }
-            } catch (error) {
-                logMessage(`Falha ao excluir produto: ${error.message}`, 'error');
-            }
-        }
+					try {
+						let url;
+						if (method === 'PUT') {
+							if (!produtoOriginal.id) {
+								throw new Error('Produto sem "id". A atualização em massa requer um "id" para cada item.');
+							}
+							url = `${apiUrlBase}/${produtoOriginal.id}${sourceQuery}`;
+						} else {
+							url = `${apiUrlBase}${sourceQuery}`;
+						}
 
-        // SEARCH
-        async function handleSearch() {
-            const query = searchInput.value.trim();
-            if (!query) {
-                logMessage("Digite um termo para buscar.", "info");
-                return;
-            }
-            clearLogs();
-            logMessage(`Buscando por "${query}"...`);
-            searchResultsContainer.innerHTML = 'Carregando...';
-            
-            const isIdSearch = /^\d+$/.test(query); 
-            const searchUrl = isIdSearch 
-                ? `${apiUrlBase}/${query}${sourceQuery}` 
-                : `${apiUrlBase}/search${sourceQuery}&name=${encodeURIComponent(query)}`;
-            
-            try {
-                const response = await fetch(searchUrl, {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                 if (response.status === 404) {
-                    searchResultsContainer.innerHTML = '<div class="text-center p-4">Nenhum produto encontrado.</div>';
-                    logMessage(`Nenhum resultado para "${query}".`, 'info');
-                    return;
-                }
-                if (!response.ok) throw new Error(`Erro na API: ${response.statusText}`);
-                let results = await response.json();
-                
-                if (!Array.isArray(results)) {
-                    results = [results];
-                }
-                renderProductList(results, searchResultsContainer);
-                logMessage(`Busca por "${query}" retornou ${results.length} resultado(s).`, 'success');
-            } catch (error) {
-                 logMessage(`Erro na busca: ${error.message}`, 'error');
-                 searchResultsContainer.innerHTML = `<div class="text-red-600 p-4">Falha na busca. Detalhes: ${error.message}</div>`;
-            }
-        }
+						const response = await fetch(url, {
+							method: method,
+							headers: {
+								'Content-Type': 'application/json',
+								Authorization: `Bearer ${authToken}`,
+							},
+							body: JSON.stringify(payload),
+						});
 
+						if (!response.ok) {
+							const errorData = await response.json().catch(() => ({}));
+							const errorMessage = errorData.details || errorData.message || `Erro HTTP ${response.status}`;
+							throw new Error(errorMessage);
+						}
 
-        // --- FUNÇÕES DE RENDERIZAÇÃO E MODAL ---
-        function renderProductList(products, container = productListContainer) {
-            container.innerHTML = '';
-            if (!products || products.length === 0) {
-                container.innerHTML = '<div class="text-center p-4">Nenhum produto encontrado.</div>';
-                return;
-            }
-            products.forEach(product => {
-                const productDiv = document.createElement('div');
-                productDiv.className = 'p-3 bg-white border rounded-lg flex items-center justify-between gap-4';
-                productDiv.innerHTML = `
-                    <div class="flex items-center space-x-4 flex-grow">
-                        <img src="${product.image_url || placeholderImgUrl}"
-                             onerror="this.onerror=null;this.src='${errorImgUrl}';"
-                             alt="Imagem de ${product.name}" class="w-16 h-16 object-cover rounded-md bg-gray-200 flex-shrink-0">
-                        <div class="min-w-0">
-                            <p class="font-bold text-gray-800 truncate">${product.name}</p>
-                            <p class="text-sm text-gray-600">ID: ${product.id} | Código: ${product.product_code || 'N/A'}</p>
-                            <p class="text-sm text-blue-600">Preço: R$ ${(product.price || product.base_price || 0).toFixed(2)}</p>
-                            <p class="text-sm text-green-600">Grupo: ${product.group?.name || product.group_code || 'Sem grupo'}</p>
-                        </div>
-                    </div>
-                    <div class="space-x-2 flex-shrink-0">
-                        <button onclick='openModal(${JSON.stringify(product)})' class="px-3 py-1 bg-yellow-500 text-white text-xs font-semibold rounded hover:bg-yellow-600">Editar</button>
-                        <button onclick='deleteProduct(${JSON.stringify(product.id)}, ${JSON.stringify(product.name)})' class="px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded hover:bg-red-700">Excluir</button>
-                    </div>
-                `;
-                container.appendChild(productDiv);
-            });
-        }
-        
-        function openModal(product) {
-            document.getElementById('edit-product-id').value = product.id;
-            document.getElementById('edit-name').value = product.name || '';
-            document.getElementById('edit-product_code').value = product.product_code || '';
-            document.getElementById('edit-group_code').value = product.group_code || '';
-            document.getElementById('edit-price').value = product.price || 0;
-            document.getElementById('edit-ean_code').value = product.ean_code || '';
-            document.getElementById('edit-description').value = product.description || '';
-            
-            const imageUrl = product.image_url || '';
-            imageUrlInput.value = imageUrl;
-            imagePreview.src = imageUrl || previewPlaceholderUrl;
+						logMessage(`[${i + 1}/${produtos.length}] Sucesso: "${produtoIdentifier}" ${actionName === 'cadastrado' ? 'cadastrado' : 'atualizado'}.`, 'success');
+					} catch (error) {
+						logMessage(`[${i + 1}/${produtos.length}] FALHA ao processar "${produtoIdentifier}". Motivo: ${error.message}`, 'error');
+						logMessage('Processo interrompido. Verifique os dados do produto e a API.', 'error');
+						button.disabled = false;
+						return; 
+					}
+					await new Promise((resolve) => setTimeout(resolve, 300));
+				}
+				logMessage('🎉 Processo finalizado com sucesso!', 'success');
+				button.disabled = false;
+			}
 
-            modal.classList.remove('hidden');
-        }
+			async function handleCadastro() {
+				clearLogs();
+				try {
+					const produtos = JSON.parse(jsonInput.value);
+					if (!Array.isArray(produtos)) throw new Error('O JSON não é uma lista (array).');
+					await processMassAction(produtos, 'POST');
+				} catch (error) {
+					logMessage(`Erro ao processar o JSON: ${error.message}`, 'error');
+				}
+			}
 
-        function closeModal() {
-            modal.classList.add('hidden');
-        }
+			async function handleUpdateMass() {
+				clearLogs();
+				try {
+					const produtos = JSON.parse(jsonInputUpdate.value);
+					if (!Array.isArray(produtos)) throw new Error('O JSON não é uma lista (array).');
+					await processMassAction(produtos, 'PUT');
+				} catch (error) {
+					logMessage(`Erro ao processar o JSON: ${error.message}`, 'error');
+				}
+			}
+			
+			async function fetchAllProducts() {
+				clearLogs();
+				logMessage('Buscando produtos na API...');
+				productListContainer.innerHTML = '<div class="text-center p-4">Carregando...</div>';
+				try {
+					const response = await fetch(`${apiUrlBase}${sourceQuery}`, {
+						headers: { Authorization: `Bearer ${authToken}` },
+					});
+					if (!response.ok) throw new Error(`Erro ${response.status}`);
+					const products = await response.json();
+					renderProductList(products);
+					logMessage(`${products.length} produtos carregados com sucesso.`, 'success');
+				} catch (error) {
+					logMessage(`Falha ao buscar produtos: ${error.message}`, 'error');
+					productListContainer.innerHTML = '<div class="text-center p-4 text-red-600">Falha ao carregar.</div>';
+				}
+			}
 
-        function showConfirm(message) {
-            return new Promise(resolve => {
-                // Remove qualquer modal de confirmação existente
-                const existingModal = document.getElementById('confirm-modal');
-                if (existingModal) existingModal.remove();
+			async function handleUpdateProduct(event) {
+				event.preventDefault();
+				const id = document.getElementById('edit-product-id').value;
+				const payload = {
+					description: document.getElementById('edit-description').value,
+					ean_code: document.getElementById('edit-ean_code').value,
+					group_code: document.getElementById('edit-group_code').value,
+					image_url: document.getElementById('edit-image_url').value,
+					name: document.getElementById('edit-name').value,
+					price: parseFloat(document.getElementById('edit-price').value),
+					product_code: document.getElementById('edit-product_code').value
+				};
 
-                const confirmModal = document.createElement('div');
-                confirmModal.id = 'confirm-modal';
-                confirmModal.className = 'fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50';
-                confirmModal.innerHTML = `
+				logMessage(`Atualizando produto ID: ${id}...`);
+				try {
+					const response = await fetch(`${apiUrlBase}/${id}${sourceQuery}`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${authToken}`,
+						},
+						body: JSON.stringify(payload),
+					});
+					if (!response.ok) {
+						const errorData = await response.json().catch(() => ({}));
+						const errorMessage = errorData.details || errorData.message || `Erro HTTP ${response.status}`;
+						throw new Error(errorMessage);
+					}
+					logMessage(`Produto "${payload.name}" atualizado com sucesso!`, 'success');
+					closeModal();
+					if (document.getElementById('tab-list').classList.contains('active')) {
+						fetchAllProducts();
+					} else if (document.getElementById('tab-search').classList.contains('active')) {
+						handleSearch();
+					}
+				} catch (error) {
+					logMessage(`Erro ao atualizar: ${error.message}`, 'error');
+				}
+			}
+
+			async function deleteProduct(id, name) {
+				if (!(await showConfirm(`Tem certeza que deseja excluir o produto "${name}" (ID: ${id})?`))) return;
+				logMessage(`Excluindo produto ID: ${id}...`);
+				try {
+					const response = await fetch(`${apiUrlBase}/${id}${sourceQuery}`, { 
+						method: 'DELETE',
+						headers: { Authorization: `Bearer ${authToken}` },
+					});
+					if (!response.ok) {
+						const errorData = await response.json().catch(() => ({}));
+						const errorMessage = errorData.details || errorData.message || `Erro HTTP ${response.status}`;
+						throw new Error(errorMessage);
+					}
+					logMessage(`Produto "${name}" excluído com sucesso.`, 'success');
+					if (document.getElementById('tab-list').classList.contains('active')) {
+						fetchAllProducts();
+					} else if (document.getElementById('tab-search').classList.contains('active')) {
+						handleSearch();
+					}
+				} catch (error) {
+					logMessage(`Falha ao excluir produto: ${error.message}`, 'error');
+				}
+			}
+
+			async function handleSearch() {
+				const query = searchInput.value.trim();
+				if (!query) return;
+				clearLogs();
+				logMessage(`Buscando por "${query}"...`);
+				searchResultsContainer.innerHTML = 'Carregando...';
+				const isIdSearch = /^\d+$/.test(query);
+				const searchUrl = isIdSearch
+					? `${apiUrlBase}/${query}${sourceQuery}`
+					: `${apiUrlBase}/search${sourceQuery}&name=${encodeURIComponent(query)}`;
+				try {
+					const response = await fetch(searchUrl, {
+						headers: { Authorization: `Bearer ${authToken}` },
+					});
+					if (response.status === 404) {
+						searchResultsContainer.innerHTML = '<div class="text-center p-4">Nenhum produto encontrado.</div>';
+						logMessage(`Nenhum resultado para "${query}".`, 'info');
+						return;
+					}
+					if (!response.ok) throw new Error(`Erro na API: ${response.statusText}`);
+					let results = await response.json();
+					if (!Array.isArray(results)) results = [results];
+					renderProductList(results, searchResultsContainer);
+					logMessage(`Busca por "${query}" retornou ${results.length} resultado(s).`, 'success');
+				} catch (error) {
+					logMessage(`Erro na busca: ${error.message}`, 'error');
+					searchResultsContainer.innerHTML = `<div class="text-red-600 p-4">Falha na busca. Detalhes: ${error.message}</div>`;
+				}
+			}
+			
+			function renderProductList(products, container = productListContainer) {
+				container.innerHTML = '';
+				if (!products || products.length === 0) {
+					container.innerHTML = '<div class="text-center p-4">Nenhum produto encontrado.</div>';
+					return;
+				}
+				products.forEach((product) => {
+					const productDiv = document.createElement('div');
+					productDiv.className = 'p-3 bg-white border rounded-lg flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap';
+					productDiv.innerHTML = `
+						<div class="flex items-center space-x-4 flex-grow min-w-0">
+							<img src="${product.image_url || placeholderImgUrl}"
+								 onerror="this.onerror=null;this.src='${errorImgUrl}';"
+								 alt="Imagem de ${product.name}" class="w-16 h-16 object-cover rounded-md bg-gray-200 flex-shrink-0">
+							<div class="min-w-0">
+								<p class="font-bold text-gray-800 truncate" title="${product.name}">${product.name}</p>
+								<p class="text-sm text-gray-600">ID: ${product.id} | Código: ${product.product_code || 'N/A'}</p>
+								<p class="text-sm text-blue-600 font-semibold">Preço: R$ ${(product.base_price || 0).toFixed(2)}</p>
+							</div>
+						</div>
+						<div class="space-x-2 flex-shrink-0">
+							<button onclick='openModal(${JSON.stringify(product)})' class="px-3 py-1 bg-yellow-500 text-white text-xs font-semibold rounded hover:bg-yellow-600">Editar</button>
+							<button onclick='deleteProduct(${JSON.stringify(product.id)}, ${JSON.stringify(product.name)})' class="px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded hover:bg-red-700">Excluir</button>
+						</div>
+					`;
+					container.appendChild(productDiv);
+				});
+			}
+
+			function openModal(product) {
+				document.getElementById('edit-product-id').value = product.id;
+				document.getElementById('edit-name').value = product.name || '';
+				document.getElementById('edit-product_code').value = product.product_code || '';
+				document.getElementById('edit-group_code').value = product.group?.group_code || product.group_code || '';
+				document.getElementById('edit-price').value = product.base_price || 0;
+				document.getElementById('edit-ean_code').value = product.ean_code || '';
+				document.getElementById('edit-description').value = product.description || '';
+				const imageUrl = product.image_url || '';
+				imageUrlInput.value = imageUrl;
+				imagePreview.src = imageUrl || previewPlaceholderUrl;
+				modal.classList.remove('hidden');
+			}
+
+			function closeModal() {
+				modal.classList.add('hidden');
+			}
+
+			function showConfirm(message) {
+				return new Promise((resolve) => {
+					const existingModal = document.getElementById('confirm-modal');
+					if (existingModal) existingModal.remove();
+					const confirmModal = document.createElement('div');
+					confirmModal.id = 'confirm-modal';
+					confirmModal.className = 'fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50';
+					confirmModal.innerHTML = `
                     <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm mx-4">
                         <p class="text-lg text-gray-800 mb-4">${message}</p>
                         <div class="flex justify-end space-x-3">
@@ -456,36 +664,32 @@
                         </div>
                     </div>
                 `;
-                document.body.appendChild(confirmModal);
+					document.body.appendChild(confirmModal);
+					document.getElementById('confirm-ok').onclick = () => {
+						confirmModal.remove();
+						resolve(true);
+					};
+					document.getElementById('confirm-cancel').onclick = () => {
+						confirmModal.remove();
+						resolve(false);
+					};
+				});
+			}
 
-                document.getElementById('confirm-ok').onclick = () => {
-                    confirmModal.remove();
-                    resolve(true);
-                };
-                document.getElementById('confirm-cancel').onclick = () => {
-                    confirmModal.remove();
-                    resolve(false);
-                };
-            });
-        }
-
-
-        // --- EVENT LISTENERS ---
-        startButton.addEventListener('click', handleCadastro);
-        fetchProductsButton.addEventListener('click', fetchAllProducts);
-        searchButton.addEventListener('click', handleSearch);
-        searchInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') handleSearch();
-        });
-        editForm.addEventListener('submit', handleUpdateProduct);
-
-        // Event listener para a pré-visualização da imagem em tempo real
-        imageUrlInput.addEventListener('input', (e) => {
-            const url = e.target.value.trim();
-            imagePreview.src = url || previewPlaceholderUrl;
-        });
-
-    </script>
-</body>
-
+			// --- EVENT LISTENERS ---
+			startButton.addEventListener('click', handleCadastro);
+			startUpdateButton.addEventListener('click', handleUpdateMass);
+			fetchProductsButton.addEventListener('click', fetchAllProducts);
+			searchButton.addEventListener('click', handleSearch);
+			searchInput.addEventListener('keydown', (e) => {
+				if (e.key === 'Enter') handleSearch();
+			});
+			editForm.addEventListener('submit', handleUpdateProduct);
+			imageUrlInput.addEventListener('input', (e) => {
+				const url = e.target.value.trim();
+				imagePreview.src = url || previewPlaceholderUrl;
+			});
+		</script>
+	</body>
 </html>
+

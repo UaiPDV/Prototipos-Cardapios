@@ -1,175 +1,263 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Digital - Bebidas Quentes & Salgados</title>
-<script src="https://cdn.tailwindcss.com"></script>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Cardápio Digital - Bebidas Quentes & Salgados</title>
+		<script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-        
-        .fundo-imagem {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('img/fundo3.jpg');
-            background-size: cover;
-            background-position: center;
-            filter: blur(10px) brightness(0.8);
-            z-index: 0;
-        }
-        
-        .animar-entrada {
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        
-        .animar-fade-in-up {
-            animation: fadeInUp 1.5s ease-in-out;
-        }
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+			body {
+				font-family: 'Poppins', sans-serif;
+				background-color: #f7f7f7;
+				color: #333;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				overflow: hidden;
+			}
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-</head>
-<body class="flex min-h-screen p-4 sm:p-8">
-    <div class="fundo-imagem"></div>
-    <main class="w-full max-w-7xl flex m-2 sm:m-4 animar-entrada h-[90vh]">
-        <!-- Seção de Menu Esquerda -->
-        <div id="secao-esquerda" class="w-1/2 p-4 sm:p-8 bg-white bg-opacity-90 backdrop-blur-sm flex flex-col relative z-10 rounded-l-lg">
-            <header class="mb-8 animar-fade-in-up">
-                <div class="flex items-center">
-                    <div id="logo-container" class="max-w-xs h-16 rounded-2xl transform transition-transform duration-500 hover:rotate-6 flex items-center justify-center"></div>
-                    <h1 id="nome-da-empresa" class="text-4xl font-extrabold text-gray-800"></h1>
-                </div>
-            </header>
-            <div id="lista-esquerda" class="flex-grow overflow-y-auto pr-4">
-                <div class="flex items-center mb-4">
-                    <img id="categoria-esquerda-imagem" alt="Ícone da Categoria" class="w-20 h-20 mr-4 rounded-lg"/>
-                    <h2 id="categoria-esquerda-titulo" class="text-4xl font-bold text-red-600 border-b-4 border-dashed border-red-600 pb-2 flex-grow"></h2>
-                </div>
-                <div id="lista-produtos-esquerda">
-                    <!-- Lista de produtos esquerda será inserida aqui -->
-                </div>
-            </div>
-        </div>
+			.fundo-imagem {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-image: url('img/fundo3.jpg');
+				background-size: cover;
+				background-position: center;
+				filter: blur(10px) brightness(0.8);
+				z-index: 0;
+			}
 
-        <!-- Seção de Menu Direita -->
-    <div id="secao-direita" class="w-1/2 p-4 sm:p-8 bg-gray-200 bg-opacity-95 backdrop-blur-sm flex flex-col relative z-10 rounded-r-lg">
-            <div id="lista-direita" class="flex-grow overflow-y-auto pr-4 pt-28">
-                <div class="flex items-center mb-4">
-                    <img id="categoria-direita-imagem" alt="Ícone da Categoria" class="w-20 h-20 mr-4 rounded-lg"/>
-                    <h2 id="categoria-direita-titulo" class="text-4xl font-bold text-red-600 border-b-4 border-dashed border-red-600 pb-2 flex-grow"></h2>
-                </div>
-                <div id="lista-produtos-direita">
-                    <!-- Lista de produtos direita será inserida aqui -->
-                </div>
-            </div>
-        </div>
-    </main>
+			.animar-entrada {
+				animation: fadeIn 1.5s ease-in-out;
+			}
 
-    <script>
-        // Função para formatar o preço para BRL
-        const formatarPreco = (preco) => {
-            if (typeof preco !== 'number') return 'R$ --,--';
-            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(preco);
-        };
+			.animar-fade-in-up {
+				animation: fadeInUp 1.5s ease-in-out;
+			}
 
-        const renderizarColuna = (containerId, produtos) => {
-             const container = document.getElementById(containerId);
-             container.innerHTML = '';
-             if(produtos.length === 0){
-                container.innerHTML = '<div class="text-center py-4 text-gray-500">Nenhum produto encontrado.</div>';
-                return;
-             }
-             produtos.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0';
-                itemDiv.innerHTML = `
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+				}
+				to {
+					opacity: 1;
+				}
+			}
+
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+		</style>
+	</head>
+	<body class="flex min-h-screen p-4 sm:p-8">
+		<div class="fundo-imagem"></div>
+		<main class="w-full max-w-7xl flex m-2 sm:m-4 animar-entrada h-[90vh]">
+			<!-- Seção de Menu Esquerda -->
+			<div
+				id="secao-esquerda"
+				class="w-1/2 p-4 sm:p-8 bg-white bg-opacity-90 backdrop-blur-sm flex flex-col relative z-10 rounded-l-lg"
+			>
+				<header class="mb-8 animar-fade-in-up">
+					<div class="flex items-center">
+						<div
+							id="logo-container"
+							class="max-w-xs h-16 rounded-2xl transform transition-transform duration-500 hover:rotate-6 flex items-center justify-center"
+						></div>
+						<h1
+							id="nome-da-empresa"
+							class="text-4xl font-extrabold text-gray-800"
+						></h1>
+					</div>
+				</header>
+				<div id="lista-esquerda" class="flex-grow overflow-y-auto pr-4">
+					<div class="flex items-center mb-4">
+						<img
+							id="categoria-esquerda-imagem"
+							alt="Ícone da Categoria"
+							class="w-20 h-20 mr-4 rounded-lg"
+						/>
+						<h2
+							id="categoria-esquerda-titulo"
+							class="text-4xl font-bold text-red-600 border-b-4 border-dashed border-red-600 pb-2 flex-grow"
+						></h2>
+					</div>
+					<div id="lista-produtos-esquerda">
+						<!-- Lista de produtos esquerda será inserida aqui -->
+					</div>
+				</div>
+			</div>
+
+			<!-- Seção de Menu Direita -->
+			<div
+				id="secao-direita"
+				class="w-1/2 p-4 sm:p-8 bg-gray-200 bg-opacity-95 backdrop-blur-sm flex flex-col relative z-10 rounded-r-lg"
+			>
+				<div
+					id="lista-direita"
+					class="flex-grow overflow-y-auto pr-4 pt-28"
+				>
+					<div class="flex items-center mb-4">
+						<img
+							id="categoria-direita-imagem"
+							alt="Ícone da Categoria"
+							class="w-20 h-20 mr-4 rounded-lg"
+						/>
+						<h2
+							id="categoria-direita-titulo"
+							class="text-4xl font-bold text-red-600 border-b-4 border-dashed border-red-600 pb-2 flex-grow"
+						></h2>
+					</div>
+					<div id="lista-produtos-direita">
+						<!-- Lista de produtos direita será inserida aqui -->
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<script>
+			// Função para formatar o preço para BRL
+			const formatarPreco = (preco) => {
+				if (typeof preco !== 'number') return 'R$ --,--';
+				return new Intl.NumberFormat('pt-BR', {
+					style: 'currency',
+					currency: 'BRL',
+				}).format(preco);
+			};
+
+			const renderizarColuna = (containerId, produtos) => {
+				const container = document.getElementById(containerId);
+				container.innerHTML = '';
+				if (produtos.length === 0) {
+					container.innerHTML =
+						'<div class="text-center py-4 text-gray-500">Nenhum produto encontrado.</div>';
+					return;
+				}
+				produtos.forEach((item) => {
+					const itemDiv = document.createElement('div');
+					itemDiv.className =
+						'flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0';
+					itemDiv.innerHTML = `
                     <div class="flex items-center">
-                        <img src="${item.imagem}" alt="Imagem de ${item.nome}" class="w-16 h-16 rounded-xl object-cover mr-4"/>
+                        <img src="${item.imagem}" alt="Imagem de ${
+						item.nome
+					}" class="w-16 h-16 rounded-xl object-cover mr-4"/>
                         <div>
-                            <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
-                            <div class="text-auto text-gray-500">${item.descricao}</div>
+                            <div class="text-2xl font-semibold text-gray-900">${
+								item.nome
+							}</div>
+                            <div class="text-auto text-gray-500">${
+								item.descricao
+							}</div>
                         </div>
                     </div>
-                    <div class="text-3xl font-bold text-red-600">${formatarPreco(item.preco)}</div>
+                    <div class="text-3xl font-bold text-red-600">${formatarPreco(
+						item.preco
+					)}</div>
                 `;
-                container.appendChild(itemDiv);
-            });
-        }
+					container.appendChild(itemDiv);
+				});
+			};
 
-        window.onload = () => {
-            const dadosLojaFallback = {
-                nomeEmpresa: 'Cafeteria & Lanches',
-                logoUrl: 'img/logoexemplo.png',
-            };
-            document.getElementById('nome-da-empresa').textContent = dadosLojaFallback.nomeEmpresa;
-            document.getElementById('logo-container').innerHTML = `<img src="${dadosLojaFallback.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
+			window.onload = () => {
+				const dadosLojaFallback = {
+					nomeEmpresa: 'Cafeteria & Lanches',
+					logoUrl: 'img/logoexemplo.png',
+				};
+				document.getElementById('nome-da-empresa').textContent =
+					dadosLojaFallback.nomeEmpresa;
+				document.getElementById(
+					'logo-container'
+				).innerHTML = `<img src="${dadosLojaFallback.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
 
-            const dadosArmazenados = sessionStorage.getItem('dadosCardapio');
+				const dadosArmazenados =
+					sessionStorage.getItem('dadosCardapio');
 
-            if(dadosArmazenados){
-                try {
-                    const { categorias, produtos } = JSON.parse(dadosArmazenados);
+				if (dadosArmazenados) {
+					try {
+						const { categorias, produtos } =
+							JSON.parse(dadosArmazenados);
 
-                    // Definir categorias para cada coluna
-                    const catEsquerdaInfo = categorias.find(c => c.id === 'BEBIDAS_QUENTES');
-                    const catDireitaInfo = categorias.find(c => c.id === 'SALGADOS');
+						// DEBUG: Vamos ver o que estamos recebendo
+						console.log('=== DEBUG MODELO 3 ===');
+						console.log('Categorias:', categorias);
+						console.log('Produtos:', produtos);
+						console.log(
+							'Produtos com BEBIDAS_QUENTES:',
+							produtos.filter(
+								(p) => p.categoriaId === 'BEBIDAS_QUENTES'
+							)
+						);
+						console.log(
+							'Produtos com SALGADOS:',
+							produtos.filter((p) => p.categoriaId === 'SALGADOS')
+						);
 
-                    if(!catEsquerdaInfo || !catDireitaInfo) {
-                        console.error("Categorias BEBIDAS_QUENTES ou SALGADOS não encontradas.");
-                        return;
-                    }
-                    
-                    // Renderizar cabeçalhos das colunas
-                    document.getElementById('categoria-esquerda-imagem').src = catEsquerdaInfo.imagem;
-                    document.getElementById('categoria-esquerda-titulo').textContent = catEsquerdaInfo.nome;
-                    document.getElementById('categoria-direita-imagem').src = catDireitaInfo.imagem;
-                    document.getElementById('categoria-direita-titulo').textContent = catDireitaInfo.nome;
+						// Definir categorias para cada coluna
+						const catEsquerdaInfo = categorias.find(
+							(c) => c.id === 'BEBIDAS_QUENTES'
+						);
+						const catDireitaInfo = categorias.find(
+							(c) => c.id === 'SALGADOS'
+						);
 
-                    // Filtrar e limitar produtos
-                    const produtosEsquerda = produtos.filter(p => p.categoriaId === 'BEBIDAS_QUENTES').slice(0, 3);
-                    const produtosDireita = produtos.filter(p => p.categoriaId === 'SALGADOS').slice(0, 3);
+						if (!catEsquerdaInfo || !catDireitaInfo) {
+							console.error(
+								'Categorias BEBIDAS_QUENTES ou SALGADOS não encontradas.'
+							);
+							return;
+						}
 
-                    // Renderizar produtos em cada coluna
-                    renderizarColuna('lista-produtos-esquerda', produtosEsquerda);
-                    renderizarColuna('lista-produtos-direita', produtosDireita);
+						// Renderizar cabeçalhos das colunas
+						document.getElementById(
+							'categoria-esquerda-imagem'
+						).src = catEsquerdaInfo.imagem;
+						document.getElementById(
+							'categoria-esquerda-titulo'
+						).textContent = catEsquerdaInfo.nome;
+						document.getElementById(
+							'categoria-direita-imagem'
+						).src = catDireitaInfo.imagem;
+						document.getElementById(
+							'categoria-direita-titulo'
+						).textContent = catDireitaInfo.nome;
 
-                } catch (error) {
-                    console.error("Erro ao processar dados da API.", error);
-                }
-            } else {
-                 console.log("Nenhum dado da API encontrado na sessão.");
-            }
-        };
-    </script>
-</body>
+						// Filtrar e limitar produtos
+						const produtosEsquerda = produtos
+							.filter((p) => p.categoriaId === 'BEBIDAS_QUENTES')
+							.slice(0, 3);
+						const produtosDireita = produtos
+							.filter((p) => p.categoriaId === 'SALGADOS')
+							.slice(0, 3);
+
+						// Renderizar produtos em cada coluna
+						renderizarColuna(
+							'lista-produtos-esquerda',
+							produtosEsquerda
+						);
+						renderizarColuna(
+							'lista-produtos-direita',
+							produtosDireita
+						);
+					} catch (error) {
+						console.error('Erro ao processar dados da API.', error);
+					}
+				} else {
+					console.log('Nenhum dado da API encontrado na sessão.');
+				}
+			};
+		</script>
+	</body>
 </html>
-

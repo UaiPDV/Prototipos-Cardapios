@@ -1,102 +1,130 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Digital - Salgados e Bebidas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Cardápio Digital - Salgados e Bebidas</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-        /* Animações de entrada */
-        .animar-entrada {
-            animation: fadeIn 1.5s ease-in-out;
-        }
+			body {
+				font-family: 'Poppins', sans-serif;
+				background-color: #f7f7f7;
+				color: #333;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				overflow: hidden;
+			}
 
-        .animar-fade-in-up {
-            animation: fadeInUp 1.5s ease-in-out;
-        }
+			/* Animações de entrada */
+			.animar-entrada {
+				animation: fadeIn 1.5s ease-in-out;
+			}
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+			.animar-fade-in-up {
+				animation: fadeInUp 1.5s ease-in-out;
+			}
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-</head>
-<body class="flex flex-col sm:flex-row justify-center items-center min-h-screen p-4 sm:p-8 overflow-hidden">
-    <main class="w-full max-w-6xl h-full flex rounded-2xl shadow-xl overflow-hidden animar-entrada">
-        <!-- Faixa Lateral (visível apenas em telas maiores) -->
-        <div class="hidden sm:w-1/12 sm:block bg-red-700"></div>
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+				}
+				to {
+					opacity: 1;
+				}
+			}
 
-        <!-- Conteúdo Principal -->
-        <div id="secao-principal" class="w-full sm:w-11/12 p-4 sm:p-12 bg-white flex flex-col overflow-y-auto">
-            <!-- Cabeçalho -->
-            <header class="flex items-center mb-8 animar-fade-in-up">
-                <div id="logo-container" class="max-w-xs mb-8 h-20 rounded-2xl transform transition-transform duration-500 hover:rotate-6 flex items-center justify-center">
-                    <!-- A imagem da logo será inserida aqui -->
-                </div>
-                <h1 id="nome-da-empresa" class="text-2xl sm:text-4xl font-extrabold text-gray-800"></h1>
-            </header>
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+		</style>
+	</head>
+	<body
+		class="flex flex-col sm:flex-row justify-center items-center min-h-screen p-4 sm:p-8 overflow-hidden"
+	>
+		<main
+			class="w-full max-w-6xl h-full flex rounded-2xl shadow-xl overflow-hidden animar-entrada"
+		>
+			<!-- Faixa Lateral (visível apenas em telas maiores) -->
+			<div class="hidden sm:w-1/12 sm:block bg-red-700"></div>
 
-            <!-- Lista de Categorias -->
-            <div id="lista-categorias" class="flex-grow">
-                <!-- Categorias e produtos serão inseridos aqui -->
-            </div>
-        </div>
-    </main>
+			<!-- Conteúdo Principal -->
+			<div
+				id="secao-principal"
+				class="w-full sm:w-11/12 p-4 sm:p-12 bg-white flex flex-col overflow-y-auto"
+			>
+				<!-- Cabeçalho -->
+				<header class="flex items-center mb-8 animar-fade-in-up">
+					<div
+						id="logo-container"
+						class="max-w-xs mb-8 h-20 rounded-2xl transform transition-transform duration-500 hover:rotate-6 flex items-center justify-center"
+					>
+						<!-- A imagem da logo será inserida aqui -->
+					</div>
+					<h1
+						id="nome-da-empresa"
+						class="text-2xl sm:text-4xl font-extrabold text-gray-800"
+					></h1>
+				</header>
 
-    <script>
-        // Dados estáticos de fallback, com imagens originais
-        const dadosLojaFallback = {
-            nomeEmpresa: 'Padaria da Esquina',
-            logoUrl: 'img/logoexemplo.png',
-            categorias: [
-                { nome: 'Salgados', imagem: 'img/salgados.jpg', itens: [] },
-                { nome: 'Bebidas', imagem: 'img/bebidasgeral.jpg', itens: [] }
-            ]
-        };
+				<!-- Lista de Categorias -->
+				<div id="lista-categorias" class="flex-grow">
+					<!-- Categorias e produtos serão inseridos aqui -->
+				</div>
+			</div>
+		</main>
 
-        // Função para formatar o preço para BRL
-        const formatarPreco = (preco) => {
-             if (typeof preco !== 'number') return 'R$ --,--';
-            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(preco);
-        };
+		<script>
+			// Dados estáticos de fallback, com imagens originais
+			const dadosLojaFallback = {
+				nomeEmpresa: 'Padaria da Esquina',
+				logoUrl: 'img/logoexemplo.png',
+				categorias: [
+					{ nome: 'Salgados', imagem: 'img/salgados.jpg', itens: [] },
+					{
+						nome: 'Bebidas',
+						imagem: 'img/bebidasgeral.jpg',
+						itens: [],
+					},
+				],
+			};
 
-        // Função para renderizar o cardápio
-        const renderizarCardapio = (dados) => {
-            document.title = "Cardápio | " + dados.nomeEmpresa;
-            document.getElementById('nome-da-empresa').textContent = dados.nomeEmpresa;
-            document.getElementById('logo-container').innerHTML = `<img src="${dados.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
+			// Função para formatar o preço para BRL
+			const formatarPreco = (preco) => {
+				if (typeof preco !== 'number') return 'R$ --,--';
+				return new Intl.NumberFormat('pt-BR', {
+					style: 'currency',
+					currency: 'BRL',
+				}).format(preco);
+			};
 
-            const listaCategorias = document.getElementById('lista-categorias');
-            listaCategorias.innerHTML = '';
+			// Função para renderizar o cardápio
+			const renderizarCardapio = (dados) => {
+				document.title = 'Cardápio | ' + dados.nomeEmpresa;
+				document.getElementById('nome-da-empresa').textContent =
+					dados.nomeEmpresa;
+				document.getElementById(
+					'logo-container'
+				).innerHTML = `<img src="${dados.logoUrl}" alt="Logo da Empresa" class="rounded-full w-full h-full object-cover">`;
 
-            dados.categorias.forEach(categoria => {
-                const categoriaDiv = document.createElement('div');
-                categoriaDiv.className = 'mb-8 animar-fade-in-up';
-                categoriaDiv.innerHTML = `
+				const listaCategorias =
+					document.getElementById('lista-categorias');
+				listaCategorias.innerHTML = '';
+
+				dados.categorias.forEach((categoria) => {
+					const categoriaDiv = document.createElement('div');
+					categoriaDiv.className = 'mb-8 animar-fade-in-up';
+					categoriaDiv.innerHTML = `
                     <div class="flex items-center text-red-600 mb-2">
                         <img src="${categoria.imagem}" alt="Ícone da Categoria" class="w-20 h-20 rounded-lg object-cover mr-4"/>
                         <h2 class="text-3xl sm:text-4xl font-extrabold pb-2 border-b-4 border-dashed border-red-600 flex-grow">
@@ -105,84 +133,125 @@
                     </div>
                 `;
 
-                if(categoria.itens.length === 0){
-                    const semItensDiv = document.createElement('div');
-                    semItensDiv.className = 'text-center py-4 text-gray-500';
-                    semItensDiv.textContent = 'Nenhum produto nesta categoria.';
-                    categoriaDiv.appendChild(semItensDiv);
-                } else {
-                    categoria.itens.forEach(item => {
-                        const itemDiv = document.createElement('div');
-                        itemDiv.className = 'flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0';
-                        itemDiv.innerHTML = `
+					if (categoria.itens.length === 0) {
+						const semItensDiv = document.createElement('div');
+						semItensDiv.className =
+							'text-center py-4 text-gray-500';
+						semItensDiv.textContent =
+							'Nenhum produto nesta categoria.';
+						categoriaDiv.appendChild(semItensDiv);
+					} else {
+						categoria.itens.forEach((item) => {
+							const itemDiv = document.createElement('div');
+							itemDiv.className =
+								'flex justify-between items-center py-4 border-b border-gray-200 last:border-b-0';
+							itemDiv.innerHTML = `
                             <div class="flex items-center">
-                                <img src="${item.imageUrl || item.imagem}" alt="Imagem de ${item.nome}" class="w-16 h-16 rounded-xl object-cover mr-4" onerror="this.src='https://placehold.co/64x64/ccc/FFFFFF?text=Item'">
+                                <img src="${
+									item.imageUrl || item.imagem
+								}" alt="Imagem de ${
+								item.nome
+							}" class="w-16 h-16 rounded-xl object-cover mr-4" onerror="this.src='https://placehold.co/64x64/ccc/FFFFFF?text=Item'">
                                 <div>
-                                    <div class="text-2xl font-semibold text-gray-900">${item.nome}</div>
-                                    <div class="text-lg text-gray-500">${item.descricao || ''}</div>
+                                    <div class="text-2xl font-semibold text-gray-900">${
+										item.nome
+									}</div>
+                                    <div class="text-lg text-gray-500">${
+										item.descricao || ''
+									}</div>
                                 </div>
                             </div>
-                            <div class="text-3xl font-bold text-red-600">${formatarPreco(item.preco)}</div>
+                            <div class="text-3xl font-bold text-red-600">${formatarPreco(
+								item.preco
+							)}</div>
                         `;
-                        categoriaDiv.appendChild(itemDiv);
-                    });
-                }
-                listaCategorias.appendChild(categoriaDiv);
-            });
-        };
+							categoriaDiv.appendChild(itemDiv);
+						});
+					}
+					listaCategorias.appendChild(categoriaDiv);
+				});
+			};
 
-        // LÓGICA CORRIGIDA: Carrega Salgados e Bebidas especificamente
-        window.onload = () => {
-            const dadosArmazenados = sessionStorage.getItem('dadosCardapio');
+			// LÓGICA CORRIGIDA: Carrega Salgados e Bebidas especificamente
+			window.onload = () => {
+				const dadosArmazenados =
+					sessionStorage.getItem('dadosCardapio');
 
-            if (dadosArmazenados) {
-                try {
-                    const { categorias, produtos } = JSON.parse(dadosArmazenados);
-                    
-                    // 1. Encontra as informações das categorias "SALGADOS" e "BEBIDAS"
-                    const categoriaSalgadosInfo = categorias.find(c => c.id === 'SALGADOS');
-                    const categoriaBebidasInfo = categorias.find(c => c.id === 'BEBIDAS');
+				if (dadosArmazenados) {
+					try {
+						const { categorias, produtos } =
+							JSON.parse(dadosArmazenados);
 
-                    if (!categoriaSalgadosInfo || !categoriaBebidasInfo) {
-                        console.error("Não foi possível encontrar as categorias 'SALGADOS' ou 'BEBIDAS' na lista da API.");
-                        renderizarCardapio(dadosLojaFallback);
-                        return;
-                    }
-                    
-                    // 2. Filtra os produtos para cada categoria e limita a quantidade
-                    const produtosSalgados = produtos.filter(p => p.categoriaId === 'SALGADOS').slice(0, 3);
-                    const produtosBebidas = produtos.filter(p => p.categoriaId === 'BEBIDAS').slice(0, 2);
+						// DEBUG: Vamos ver o que estamos recebendo
+						console.log('=== DEBUG MODELO 2 ===');
+						console.log('Categorias:', categorias);
+						console.log('Produtos:', produtos);
+						console.log(
+							'Produtos com SALGADOS:',
+							produtos.filter((p) => p.categoriaId === 'SALGADOS')
+						);
+						console.log(
+							'Produtos com BEBIDAS:',
+							produtos.filter((p) => p.categoriaId === 'BEBIDAS')
+						);
 
-                    // 3. Monta a estrutura de dados final para renderização
-                    const dadosParaRenderizar = {
-                        nomeEmpresa: 'Padaria da Esquina',
-                        logoUrl: 'img/logoexemplo.png',
-                        categorias: [
-                            {
-                                nome: categoriaSalgadosInfo.nome,
-                                imagem: categoriaSalgadosInfo.imagem,
-                                itens: produtosSalgados,
-                            },
-                            {
-                                nome: categoriaBebidasInfo.nome,
-                                imagem: categoriaBebidasInfo.imagem,
-                                itens: produtosBebidas,
-                            }
-                        ]
-                    };
-                    
-                    renderizarCardapio(dadosParaRenderizar);
+						// 1. Encontra as informações das categorias "SALGADOS" e "BEBIDAS"
+						const categoriaSalgadosInfo = categorias.find(
+							(c) => c.id === 'SALGADOS'
+						);
+						const categoriaBebidasInfo = categorias.find(
+							(c) => c.id === 'BEBIDAS'
+						);
 
-                } catch (error) {
-                    console.error("Erro ao processar dados da API. Usando dados de fallback.", error);
-                    renderizarCardapio(dadosLojaFallback);
-                }
-            } else {
-                console.log("Nenhum dado da API encontrado na sessão. Usando dados de fallback.");
-                renderizarCardapio(dadosLojaFallback);
-            }
-        };
-    </script>
-</body>
+						if (!categoriaSalgadosInfo || !categoriaBebidasInfo) {
+							console.error(
+								"Não foi possível encontrar as categorias 'SALGADOS' ou 'BEBIDAS' na lista da API."
+							);
+							renderizarCardapio(dadosLojaFallback);
+							return;
+						}
+
+						// 2. Filtra os produtos para cada categoria e limita a quantidade
+						const produtosSalgados = produtos
+							.filter((p) => p.categoriaId === 'SALGADOS')
+							.slice(0, 3);
+						const produtosBebidas = produtos
+							.filter((p) => p.categoriaId === 'BEBIDAS')
+							.slice(0, 2);
+
+						// 3. Monta a estrutura de dados final para renderização
+						const dadosParaRenderizar = {
+							nomeEmpresa: 'Padaria da Esquina',
+							logoUrl: 'img/logoexemplo.png',
+							categorias: [
+								{
+									nome: categoriaSalgadosInfo.nome,
+									imagem: categoriaSalgadosInfo.imagem,
+									itens: produtosSalgados,
+								},
+								{
+									nome: categoriaBebidasInfo.nome,
+									imagem: categoriaBebidasInfo.imagem,
+									itens: produtosBebidas,
+								},
+							],
+						};
+
+						renderizarCardapio(dadosParaRenderizar);
+					} catch (error) {
+						console.error(
+							'Erro ao processar dados da API. Usando dados de fallback.',
+							error
+						);
+						renderizarCardapio(dadosLojaFallback);
+					}
+				} else {
+					console.log(
+						'Nenhum dado da API encontrado na sessão. Usando dados de fallback.'
+					);
+					renderizarCardapio(dadosLojaFallback);
+				}
+			};
+		</script>
+	</body>
 </html>
-
