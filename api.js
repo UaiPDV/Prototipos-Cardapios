@@ -20,11 +20,14 @@ const config = {
 		email: 'pedrolucasmota2005.pl@gmail.com',
 		mac: '00000',
 		password: 'plm200510',
-		source_app: 'bixs',
+		source_app: 'teste_app',
 	},
 	// O token permanente pode ser usado em uma lógica de "refresh token" se a API suportar.
 	// Por enquanto, usaremos o login/senha que é garantido pela rota /auth/login.
-	permanentToken: 'db34b6ee-a6c5-4c7c-88e5-ecc70cc88e23',
+	permanentToken: 'c437d95b4be4725b3890a891e6492bb5a51128d777af73df6d7f5753480dfb9b',
+	// Token JWT inicial fornecido (opcional) — será pré-carregado no storage para testes.
+	initialToken:
+		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJuYW1lIjoiUGVkcm8iLCJlbWFpbCI6InBlZHJvbHVjYXNtb3RhMjAwNS5wbEBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwic3ViIjoiNSIsImV4cCI6MTc2MTE1ODE0NCwiaWF0IjoxNzYxMDcxNzQ0fQ.z_Ot2QqU0HO5kva_uLyocp7ywne6cfsmXMyGg_BjHQs',
 };
 
 /**
@@ -36,6 +39,16 @@ const tokenStorage = {
 	get: () => localStorage.getItem('authToken'),
 	clear: () => localStorage.removeItem('authToken'),
 };
+
+// Se houver um token inicial fornecido na configuração (útil para testes), salva-o no storage.
+if (config && config.initialToken) {
+	try {
+		tokenStorage.save(config.initialToken);
+		console.log('[API] Token inicial pré-carregado no storage para testes.');
+	} catch (e) {
+		console.warn('[API] Não foi possível pré-carregar o token inicial:', e);
+	}
+}
 
 /**
  * Realiza o login na API para obter um novo token de acesso.
