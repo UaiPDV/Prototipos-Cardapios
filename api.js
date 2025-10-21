@@ -58,9 +58,25 @@ async function loginAndGetNewToken() {
 		});
 
 		if (!response.ok) {
-			// Lança um erro mais detalhado para facilitar a depuração.
+			// Tenta ler o corpo da resposta para obter detalhes do erro
+			const text = await response.text();
+			let body;
+			try {
+				body = JSON.parse(text);
+			} catch (e) {
+				body = text;
+			}
+			console.error(
+				'[API AUTENTICAÇÃO] resposta de erro ao logar:',
+				response.status,
+				response.statusText,
+				body
+			);
+			// Lança um erro mais detalhado incluindo o corpo retornado pela API
 			throw new Error(
-				`Falha na autenticação: ${response.status} ${response.statusText}`
+				`Falha na autenticação: ${response.status} ${
+					response.statusText
+				} - ${typeof body === 'string' ? body : JSON.stringify(body)}`
 			);
 		}
 
