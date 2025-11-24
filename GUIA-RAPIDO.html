@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Guia Rápido - Sistema Atualizado</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
+		<div class="max-w-6xl mx-auto">
+			<!-- Header -->
+			<div class="bg-white rounded-lg shadow-xl p-8 mb-8">
+				<h1 class="text-4xl font-bold text-indigo-600 mb-2">
+					🎉 Sistema Atualizado com Sucesso!
+				</h1>
+				<p class="text-gray-600 text-lg">
+					Todas as URLs, credenciais e funcionalidades foram
+					atualizadas.
+				</p>
+				<div
+					class="mt-4 p-4 bg-green-50 border-l-4 border-green-500 rounded"
+				>
+					<p class="text-green-800 font-semibold">
+						✅ Novo servidor: dev.bixs.com.br
+					</p>
+					<p class="text-green-800 font-semibold">
+						✅ Nova funcionalidade: Gerenciamento de Categorias
+					</p>
+				</div>
+			</div>
+
+			<!-- Grid de Cards -->
+			<div class="grid md:grid-cols-2 gap-6 mb-8">
+				<!-- Card: API -->
+				<div
+					class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition"
+				>
+					<h2
+						class="text-2xl font-bold text-gray-800 mb-4 flex items-center"
+					>
+						<span class="text-3xl mr-3">🔗</span> API Atualizada
+					</h2>
+					<div class="space-y-3">
+						<div>
+							<p class="text-sm font-semibold text-gray-600">
+								Base URL:
+							</p>
+							<code
+								class="text-xs bg-gray-100 px-2 py-1 rounded block"
+								>https://dev.bixs.com.br/v1</code
+							>
+						</div>
+						<div>
+							<p class="text-sm font-semibold text-gray-600">
+								Produtos:
+							</p>
+							<code
+								class="text-xs bg-gray-100 px-2 py-1 rounded block"
+								>/api/products?source=uai_pdv_mais</code
+							>
+						</div>
+						<div>
+							<p class="text-sm font-semibold text-gray-600">
+								Categorias:
+							</p>
+							<code
+								class="text-xs bg-gray-100 px-2 py-1 rounded block"
+								>/api/groups?source=uai_pdv_mais</code
+							>
+						</div>
+						<div>
+							<p class="text-sm font-semibold text-gray-600">
+								Login Admin:
+							</p>
+							<code
+								class="text-xs bg-gray-100 px-2 py-1 rounded block"
+								>/auth/admin/login</code
+							>
+						</div>
+					</div>
+				</div>
+
+				<!-- Card: Credenciais -->
+				<div
+					class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition"
+				>
+					<h2
+						class="text-2xl font-bold text-gray-800 mb-4 flex items-center"
+					>
+						<span class="text-3xl mr-3">🔑</span> Credenciais
+					</h2>
+					<div class="space-y-3">
+						<div>
+							<p class="text-sm font-semibold text-gray-600">
+								Email:
+							</p>
+							<code
+								class="text-xs bg-gray-100 px-2 py-1 rounded block"
+								>pedro@bixs.com.br</code
+							>
+						</div>
+						<div>
+							<p class="text-sm font-semibold text-gray-600">
+								Senha:
+							</p>
+							<code
+								class="text-xs bg-gray-100 px-2 py-1 rounded block"
+								>Pedro@2005</code
+							>
+						</div>
+						<div>
+							<p class="text-sm font-semibold text-gray-600">
+								É Admin?
+							</p>
+							<span
+								class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded font-bold"
+								>✅ SIM</span
+							>
+						</div>
+						<div class="pt-2">
+							<p class="text-xs text-yellow-600">
+								⚠️ Token expira em: 17 de Maio de 2025
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Funcionalidades -->
+			<div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+				<h2
+					class="text-2xl font-bold text-gray-800 mb-6 flex items-center"
+				>
+					<span class="text-3xl mr-3">⚡</span> Funcionalidades
+					Disponíveis
+				</h2>
+
+				<div class="grid md:grid-cols-3 gap-4">
+					<!-- Categorias -->
+					<div
+						class="p-4 bg-indigo-50 rounded-lg border-2 border-indigo-200"
+					>
+						<h3 class="font-bold text-indigo-800 mb-2">
+							📁 Gerenciar Categorias
+						</h3>
+						<ul class="text-sm text-gray-700 space-y-1">
+							<li>✓ Adicionar categoria</li>
+							<li>✓ Listar todas</li>
+							<li>✓ Editar categoria</li>
+							<li>✓ Excluir categoria</li>
+						</ul>
+					</div>
+
+					<!-- Produtos -->
+					<div
+						class="p-4 bg-purple-50 rounded-lg border-2 border-purple-200"
+					>
+						<h3 class="font-bold text-purple-800 mb-2">
+							📦 Gerenciar Produtos
+						</h3>
+						<ul class="text-sm text-gray-700 space-y-1">
+							<li>✓ Cadastro em massa</li>
+							<li>✓ Atualização em massa</li>
+							<li>✓ Listar produtos</li>
+							<li>✓ Buscar produtos</li>
+							<li>✓ Editar/Excluir</li>
+						</ul>
+					</div>
+
+					<!-- Sistema -->
+					<div
+						class="p-4 bg-green-50 rounded-lg border-2 border-green-200"
+					>
+						<h3 class="font-bold text-green-800 mb-2">
+							🖥️ Sistema
+						</h3>
+						<ul class="text-sm text-gray-700 space-y-1">
+							<li>✓ Auto-login com token</li>
+							<li>✓ Logs detalhados</li>
+							<li>✓ Validação de dados</li>
+							<li>✓ Preview de imagens</li>
+							<li>✓ Interface responsiva</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Arquivos Atualizados -->
+			<div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+				<h2
+					class="text-2xl font-bold text-gray-800 mb-6 flex items-center"
+				>
+					<span class="text-3xl mr-3">📝</span> Arquivos Atualizados
+				</h2>
+
+				<div class="grid md:grid-cols-2 gap-4">
+					<div
+						class="flex items-start space-x-3 p-3 bg-gray-50 rounded"
+					>
+						<span class="text-2xl">✅</span>
+						<div>
+							<p class="font-bold text-gray-800">api.js</p>
+							<p class="text-sm text-gray-600">
+								URLs, credenciais e token atualizados
+							</p>
+						</div>
+					</div>
+
+					<div
+						class="flex items-start space-x-3 p-3 bg-gray-50 rounded"
+					>
+						<span class="text-2xl">✅</span>
+						<div>
+							<p class="font-bold text-gray-800">
+								teste-conexao.html
+							</p>
+							<p class="text-sm text-gray-600">
+								Testes de conexão atualizados
+							</p>
+						</div>
+					</div>
+
+					<div
+						class="flex items-start space-x-3 p-3 bg-gray-50 rounded"
+					>
+						<span class="text-2xl">✅</span>
+						<div>
+							<p class="font-bold text-gray-800">
+								admin/cadProduto.html
+							</p>
+							<p class="text-sm text-gray-600">
+								Token atualizado + gerenciamento de categorias
+							</p>
+						</div>
+					</div>
+
+					<div
+						class="flex items-start space-x-3 p-3 bg-gray-50 rounded"
+					>
+						<span class="text-2xl">🆕</span>
+						<div>
+							<p class="font-bold text-gray-800">
+								ATUALIZACOES.md
+							</p>
+							<p class="text-sm text-gray-600">
+								Documentação completa das alterações
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Links Rápidos -->
+			<div
+				class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-lg p-8 text-white"
+			>
+				<h2 class="text-2xl font-bold mb-6 flex items-center">
+					<span class="text-3xl mr-3">🚀</span> Acesso Rápido
+				</h2>
+
+				<div class="grid md:grid-cols-3 gap-4">
+					<a
+						href="index.html"
+						class="block p-4 bg-white/10 hover:bg-white/20 rounded-lg transition text-center"
+					>
+						<div class="text-3xl mb-2">📺</div>
+						<div class="font-bold">Cardápio TV</div>
+						<div class="text-sm opacity-80">
+							Visualizar cardápio
+						</div>
+					</a>
+
+					<a
+						href="admin/cadProduto.html"
+						class="block p-4 bg-white/10 hover:bg-white/20 rounded-lg transition text-center"
+					>
+						<div class="text-3xl mb-2">⚙️</div>
+						<div class="font-bold">Admin - Produtos</div>
+						<div class="text-sm opacity-80">Gerenciar tudo</div>
+					</a>
+
+					<a
+						href="teste-conexao.html"
+						class="block p-4 bg-white/10 hover:bg-white/20 rounded-lg transition text-center"
+					>
+						<div class="text-3xl mb-2">🔍</div>
+						<div class="font-bold">Teste de Conexão</div>
+						<div class="text-sm opacity-80">Diagnóstico da API</div>
+					</a>
+				</div>
+			</div>
+
+			<!-- Próximos Passos -->
+			<div
+				class="bg-yellow-50 border-l-4 border-yellow-400 rounded-lg p-6 mt-8"
+			>
+				<h3 class="text-lg font-bold text-yellow-800 mb-3">
+					📋 Próximos Passos Recomendados:
+				</h3>
+				<ol class="list-decimal list-inside space-y-2 text-yellow-900">
+					<li>
+						Abra
+						<code class="bg-yellow-100 px-2 py-1 rounded"
+							>teste-conexao.html</code
+						>
+						para verificar a conectividade
+					</li>
+					<li>
+						Acesse
+						<code class="bg-yellow-100 px-2 py-1 rounded"
+							>admin/cadProduto.html</code
+						>
+						e teste a aba "Gerenciar Categorias"
+					</li>
+					<li>Adicione algumas categorias de teste</li>
+					<li>Cadastre produtos vinculados às categorias</li>
+					<li>
+						Teste o cardápio TV em
+						<code class="bg-yellow-100 px-2 py-1 rounded"
+							>index.html</code
+						>
+					</li>
+				</ol>
+			</div>
+
+			<!-- Footer -->
+			<div class="text-center mt-8 text-gray-600">
+				<p>📅 Atualizado em: <strong>11 de Novembro de 2025</strong></p>
+				<p class="text-sm mt-2">
+					Sistema de Gerenciamento de Cardápios - v2.0.0
+				</p>
+			</div>
+		</div>
+	</body>
+</html>

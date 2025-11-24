@@ -38,6 +38,12 @@
 				border-left: 4px solid #0ea5e9;
 			}
 
+			.log-warning {
+				background-color: #fef9c3;
+				color: #854d0e;
+				border-left: 4px solid #eab308;
+			}
+
 			/* Estilos para abas */
 			.tab-button {
 				border-bottom-width: 2px;
@@ -72,47 +78,130 @@
 		<div class="w-full max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-lg">
 			<header class="mb-6 text-center">
 				<h1 class="text-3xl font-bold text-gray-800">
-					Gerenciador de Produtos
+					Gerenciador de Produtos & Categorias
 				</h1>
 				<p class="text-gray-500 mt-1">
-					Ferramenta completa para gerenciar (CRUD) os produtos via
-					API.
+					Ferramenta completa para gerenciar (CRUD) via API.
 				</p>
 			</header>
 
 			<!-- Abas de Navegação -->
 			<div class="mb-6 border-b border-gray-200">
-				<nav class="-mb-px flex space-x-6" aria-label="Tabs">
+				<nav
+					class="-mb-px flex space-x-6 overflow-x-auto"
+					aria-label="Tabs"
+				>
 					<button
-						onclick="changeTab('tab-create')"
+						onclick="changeTab('tab-categories')"
 						class="tab-button active whitespace-nowrap py-4 px-1 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300"
 					>
-						Cadastrar em Massa
+						Gerenciar Categorias
+					</button>
+					<button
+						onclick="changeTab('tab-create')"
+						class="tab-button whitespace-nowrap py-4 px-1 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300"
+					>
+						Cadastrar Produtos (Massa)
 					</button>
 					<button
 						onclick="changeTab('tab-update')"
 						class="tab-button whitespace-nowrap py-4 px-1 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300"
 					>
-						Corrigir em Massa
+						Corrigir Produtos (Massa)
 					</button>
 					<button
 						onclick="changeTab('tab-list')"
 						class="tab-button whitespace-nowrap py-4 px-1 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300"
 					>
-						Listar / Editar Produtos
+						Listar / Editar
 					</button>
 					<button
 						onclick="changeTab('tab-search')"
 						class="tab-button whitespace-nowrap py-4 px-1 font-medium text-sm text-gray-500 hover:text-indigo-600 hover:border-indigo-300"
 					>
-						Buscar Produto
+						Buscar
 					</button>
 				</nav>
 			</div>
 
 			<main>
-				<!-- Conteúdo da Aba: Cadastrar em Massa -->
-				<div id="tab-create" class="tab-content active">
+				<!-- Conteúdo da Aba: Gerenciar Categorias -->
+				<div id="tab-categories" class="tab-content active">
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						
+						<!-- Coluna da Esquerda: Cadastro Individual e Massa -->
+						<div class="space-y-6">
+							<!-- Adicionar Nova Categoria (Individual) -->
+							<div class="bg-gray-50 p-6 rounded-lg border">
+								<h3 class="text-lg font-semibold text-gray-800 mb-4">
+									Adicionar Nova Categoria (Individual)
+								</h3>
+								<form id="add-category-form" class="space-y-4">
+									<div>
+										<label for="new-group-code" class="block text-sm font-medium text-gray-700 mb-1">Código da Categoria</label>
+										<input type="text" id="new-group-code" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="Ex: SALGADOS" />
+									</div>
+									<div>
+										<label for="new-group-name" class="block text-sm font-medium text-gray-700 mb-1">Nome da Categoria</label>
+										<input type="text" id="new-group-name" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="Ex: Salgados" />
+									</div>
+									<button type="submit" class="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700">
+										Adicionar Categoria
+									</button>
+								</form>
+							</div>
+
+							<!-- Cadastrar Categorias em Massa (NOVO) -->
+							<div class="bg-indigo-50 p-6 rounded-lg border border-indigo-100">
+								<h3 class="text-lg font-semibold text-indigo-900 mb-2">
+									Cadastrar Categorias em Massa
+								</h3>
+								<p class="text-xs text-indigo-600 mb-2">Cole o JSON das categorias aqui.</p>
+								<textarea
+									id="json-input-categories"
+									rows="5"
+									class="w-full p-3 border border-indigo-200 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 text-sm mb-3"
+									placeholder='[{"group_code": "BEBIDAS", "name": "Bebidas", "image_url": "..."}]'
+								></textarea>
+								<button
+									id="start-categories-mass-button"
+									class="w-full px-4 py-2 bg-indigo-700 text-white font-semibold rounded-lg hover:bg-indigo-800 transition"
+								>
+									Processar Lote de Categorias
+								</button>
+							</div>
+						</div>
+
+						<!-- Lista de Categorias -->
+						<div class="bg-gray-50 p-6 rounded-lg border flex flex-col h-full">
+							<div class="flex justify-between items-center mb-4">
+								<h3 class="text-lg font-semibold text-gray-800">
+									Categorias Cadastradas
+								</h3>
+								<button
+									id="refresh-categories-button"
+									class="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700"
+								>
+									🔄 Atualizar Lista
+								</button>
+							</div>
+							<div
+								id="categories-list"
+								class="space-y-2 flex-grow overflow-y-auto max-h-[500px]"
+							>
+								<div class="text-center text-gray-500 py-4">
+									Carregue as categorias para visualizar
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Conteúdo da Aba: Cadastrar Produtos em Massa -->
+				<div id="tab-create" class="tab-content">
+					<div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+						<p class="text-sm text-green-700 font-bold">Use esta aba para CADASTRAR NOVOS produtos (que ainda não têm ID).</p>
+					</div>
 					<div class="mb-6">
 						<label
 							for="json-input"
@@ -122,35 +211,37 @@
 						<textarea
 							id="json-input"
 							rows="10"
-							class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+							class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
 							placeholder="Cole o array de produtos aqui..."
 						></textarea>
 					</div>
 					<div class="flex justify-center mb-6">
 						<button
 							id="start-button"
-							class="w-full md:w-auto px-8 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+							class="w-full md:w-auto px-8 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
 						>
-							Iniciar Cadastro
+							Iniciar Cadastro de Produtos
 						</button>
 					</div>
 				</div>
 
 				<!-- Conteúdo da Aba: Corrigir em Massa -->
 				<div id="tab-update" class="tab-content">
+					<div class="bg-purple-50 border-l-4 border-purple-500 p-4 mb-4">
+						<p class="text-sm text-purple-700 font-bold">Use esta aba APENAS para ATUALIZAR produtos que já existem (obrigatório ter "id").</p>
+					</div>
 					<div class="mb-6">
 						<label
 							for="json-input-update"
 							class="block text-sm font-medium text-gray-700 mb-2"
 						>
-							Cole aqui o JSON da lista de produtos para ATUALIZAR (cada
-							produto deve ter um "id"):
+							Cole aqui o JSON da lista de produtos para ATUALIZAR:
 						</label>
 						<textarea
 							id="json-input-update"
 							rows="10"
 							class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
-							placeholder="Cole o array de produtos com IDs aqui..."
+							placeholder='[{"id": 123, "name": "Nome Novo", ...}]'
 						></textarea>
 					</div>
 					<div class="flex justify-center mb-6">
@@ -169,7 +260,7 @@
 						id="fetch-products-button"
 						class="mb-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700"
 					>
-						Carregar Produtos
+						Carregar Todos os Produtos
 					</button>
 					<div id="product-list" class="space-y-2"></div>
 				</div>
@@ -193,7 +284,69 @@
 					<div id="search-results"></div>
 				</div>
 
-				<!-- Modal de Edição (escondido por padrão) -->
+				<!-- Modal de Edição de Categoria -->
+				<div
+					id="edit-category-modal"
+					class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50"
+				>
+					<div
+						class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white"
+					>
+						<h3
+							class="text-xl font-medium leading-6 text-gray-900 mb-4"
+						>
+							Editar Categoria
+						</h3>
+						<form id="edit-category-form">
+							<input type="hidden" id="edit-category-id" />
+							<div class="space-y-4">
+								<div>
+									<label
+										for="edit-category-code"
+										class="block text-sm font-medium text-gray-700"
+										>Código da Categoria</label
+									>
+									<input
+										type="text"
+										id="edit-category-code"
+										required
+										class="mt-1 p-2 w-full border rounded-md"
+									/>
+								</div>
+								<div>
+									<label
+										for="edit-category-name"
+										class="block text-sm font-medium text-gray-700"
+										>Nome da Categoria</label
+									>
+									<input
+										type="text"
+										id="edit-category-name"
+										required
+										class="mt-1 p-2 w-full border rounded-md"
+									/>
+								</div>
+							</div>
+							<div class="mt-6 flex justify-end space-x-3">
+								<button
+									type="button"
+									onclick="closeCategoryModal()"
+									class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 font-medium"
+								>
+									Cancelar
+								</button>
+								<button
+									type="submit"
+									class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-semibold"
+								>
+									Salvar Alterações
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<!-- Modal de Edição de Produto (escondido por padrão) -->
 				<div
 					id="edit-modal"
 					class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50"
@@ -329,13 +482,13 @@
 				<!-- Logs Unificados -->
 				<div id="status-container" class="mt-6">
 					<h2 class="text-lg font-semibold text-gray-700 mb-2">
-						Status do Processo:
+						Log de Operações:
 					</h2>
 					<div
 						id="logs"
-						class="w-full h-64 bg-gray-50 p-4 border border-gray-200 rounded-lg overflow-y-auto text-sm text-gray-600"
+						class="w-full h-64 bg-gray-900 text-gray-100 p-4 border border-gray-700 rounded-lg overflow-y-auto font-mono text-sm shadow-inner"
 					>
-						Aguardando início...
+						> Aguardando comandos...
 					</div>
 				</div>
 			</main>
@@ -344,8 +497,9 @@
 		<script>
 			// --- CONFIGURAÇÕES ---
 			const authToken =
-				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJuYW1lIjoiUGVkcm8iLCJlbWFpbCI6InBlZHJvbHVjYXNtb3RhMjAwNS5wbEBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwic3ViIjoiNSIsImV4cCI6MTc1ODgwMzk1OCwiaWF0IjoxNzU4NzE3NTU4fQ.xI26HjU_e5pY79a0o3UWFmCMU-hrY_tQ40oCW5u5e0g';
-			const apiUrlBase = 'https://sup.bixs.com.br/v1/api/products';
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJ1c2VybmFtZSI6IlBlZHJvIiwiY3BmQ25waiI6IiIsImVtYWlsIjoicGVkcm9AYml4cy5jb20uYnIiLCJpc0FkbWluIjp0cnVlLCJzdWIiOiIxMiIsImV4cCI6MTc2NDA4MDMzMywiaWF0IjoxNzYzOTkzOTMzfQ.MQBt1LQYA7JBejZAjVtX51s2YYH0uz37WJGiODYujwE';
+			const apiUrlBase = 'https://dev.bixs.com.br/v1/api/products';
+			const apiGroupsUrl = 'https://dev.bixs.com.br/v1/api/groups';
 			const sourceName = 'uai_pdv_mais';
 			const sourceQuery = `?source=${sourceName}`;
 			const placeholderImgUrl =
@@ -359,46 +513,82 @@
 			const logsContainer = document.getElementById('logs');
 			const startButton = document.getElementById('start-button');
 			const jsonInput = document.getElementById('json-input');
-			const startUpdateButton = document.getElementById('start-update-button');
-			const jsonInputUpdate = document.getElementById('json-input-update');
-			const fetchProductsButton = document.getElementById('fetch-products-button');
-			const productListContainer = document.getElementById('product-list');
+			const startUpdateButton = document.getElementById(
+				'start-update-button'
+			);
+			const jsonInputUpdate =
+				document.getElementById('json-input-update');
+			const fetchProductsButton = document.getElementById(
+				'fetch-products-button'
+			);
+			const productListContainer =
+				document.getElementById('product-list');
 			const searchInput = document.getElementById('search-input');
 			const searchButton = document.getElementById('search-button');
-			const searchResultsContainer = document.getElementById('search-results');
+			const searchResultsContainer =
+				document.getElementById('search-results');
 			const modal = document.getElementById('edit-modal');
 			const editForm = document.getElementById('edit-form');
 			const imageUrlInput = document.getElementById('edit-image_url');
 			const imagePreview = document.getElementById('edit-image-preview');
 
+			// Elementos de Categoria
+			const addCategoryForm =
+				document.getElementById('add-category-form');
+			const refreshCategoriesButton = document.getElementById(
+				'refresh-categories-button'
+			);
+			const categoriesListContainer =
+				document.getElementById('categories-list');
+			const categoryModal = document.getElementById(
+				'edit-category-modal'
+			);
+			const editCategoryForm =
+				document.getElementById('edit-category-form');
+			
+			// Novos Elementos para Categorias em Massa
+			const startCategoriesMassButton = document.getElementById('start-categories-mass-button');
+			const jsonInputCategories = document.getElementById('json-input-categories');
+
 			// --- FUNÇÕES DE LOG E UTILIDADES ---
 			function logMessage(message, type = 'info') {
-				if (logsContainer.innerHTML === 'Aguardando início...') {
+				if (logsContainer.innerHTML.includes('> Aguardando comandos...')) {
 					logsContainer.innerHTML = '';
 				}
 				const logItem = document.createElement('div');
-				logItem.textContent = message; // Use textContent for security
+				logItem.textContent = `> ${message}`; 
 				const typeClasses = {
-					info: 'log-info',
-					success: 'log-success',
-					error: 'log-error',
+					info: 'text-blue-300',
+					success: 'text-green-400 font-bold',
+					error: 'text-red-400 font-bold',
+					warning: 'text-yellow-300'
 				};
-				logItem.className = `log-item ${typeClasses[type]}`;
+				// Aplicar classes do tailwind baseadas no tipo
+				if (typeClasses[type]) {
+					logItem.className = `mb-1 ${typeClasses[type]}`;
+				} else {
+					logItem.className = "mb-1 text-gray-300";
+				}
+				
 				logsContainer.appendChild(logItem);
 				logsContainer.scrollTop = logsContainer.scrollHeight;
 			}
 
 			function clearLogs() {
-				logsContainer.innerHTML = 'Aguardando início...';
+				logsContainer.innerHTML = '> Aguardando comandos...';
 			}
 
 			// --- LÓGICA DAS ABAS ---
 			function changeTab(tabId) {
-				document.querySelectorAll('.tab-content').forEach((tab) => tab.classList.remove('active'));
-				document.querySelectorAll('.tab-button').forEach((button) => button.classList.remove('active'));
+				document
+					.querySelectorAll('.tab-content')
+					.forEach((tab) => tab.classList.remove('active'));
+				document
+					.querySelectorAll('.tab-button')
+					.forEach((button) => button.classList.remove('active'));
 				document.getElementById(tabId).classList.add('active');
 				event.currentTarget.classList.add('active');
-				clearLogs();
+				// Não limpa logs automaticamente para não perder histórico de processos longos
 			}
 
 			// --- FUNÇÃO DE TRANSFORMAÇÃO DE DADOS ---
@@ -406,34 +596,51 @@
 				return {
 					description: product.description || '',
 					ean_code: product.ean_code || '',
-					group_code: product.group_code || product.group?.group_code || '',
+					group_code:
+						product.group_code || product.group?.group_code || '',
 					image_url: product.image_url || '',
 					name: product.name || '',
 					price: parseFloat(product.base_price || product.price || 0),
 					product_code: product.product_code || '',
-                    source_name: product.source_name || sourceName
+					source_name: product.source_name || sourceName,
 				};
 			}
 
 			// --- FUNÇÕES DA API (GERAIS E CRUD) ---
 			async function processMassAction(produtos, method) {
-				const button = method === 'POST' ? startButton : startUpdateButton;
+				const button =
+					method === 'POST' ? startButton : startUpdateButton;
 				button.disabled = true;
-				const actionName = method === 'POST' ? 'cadastro' : 'atualização';
-				logMessage(`Encontrados ${produtos.length} produtos. Iniciando processo de ${actionName}...`);
+				button.textContent = "Processando...";
+				const actionName =
+					method === 'POST' ? 'CADASTRO' : 'ATUALIZAÇÃO';
+				logMessage(
+					`=== INICIANDO ${actionName} EM MASSA DE ${produtos.length} PRODUTOS ===`, 'info'
+				);
+
+				let successCount = 0;
+				let errorCount = 0;
 
 				for (let i = 0; i < produtos.length; i++) {
 					const produtoOriginal = produtos[i];
-                    const payload = transformProductForApi(produtoOriginal);
-					const produtoIdentifier = payload.name || `ID ${produtoOriginal.id}`;
-					logMessage(`[${i + 1}/${produtos.length}] Processando: ${produtoIdentifier}...`);
+					const payload = transformProductForApi(produtoOriginal);
+					const produtoIdentifier =
+						payload.name || `ID ${produtoOriginal.id}`;
+					
+					// Verifica erro comum: tentar atualizar sem ID
+					if (method === 'PUT' && !produtoOriginal.id) {
+						logMessage(`[${i + 1}/${produtos.length}] PULADO: "${produtoIdentifier}" não tem ID. Para cadastrar novos, use a aba "Cadastrar".`, 'warning');
+						errorCount++;
+						continue;
+					}
+
+					logMessage(
+						`[${i + 1}/${produtos.length}] Processando: ${produtoIdentifier}...`
+					);
 
 					try {
 						let url;
 						if (method === 'PUT') {
-							if (!produtoOriginal.id) {
-								throw new Error('Produto sem "id". A atualização em massa requer um "id" para cada item.');
-							}
 							url = `${apiUrlBase}/${produtoOriginal.id}${sourceQuery}`;
 						} else {
 							url = `${apiUrlBase}${sourceQuery}`;
@@ -449,32 +656,48 @@
 						});
 
 						if (!response.ok) {
-							const errorData = await response.json().catch(() => ({}));
-							const errorMessage = errorData.details || errorData.message || `Erro HTTP ${response.status}`;
+							const errorData = await response
+								.json()
+								.catch(() => ({}));
+							const errorMessage =
+								errorData.details ||
+								errorData.message ||
+								`Erro HTTP ${response.status}`;
 							throw new Error(errorMessage);
 						}
 
-						logMessage(`[${i + 1}/${produtos.length}] Sucesso: "${produtoIdentifier}" ${actionName === 'cadastrado' ? 'cadastrado' : 'atualizado'}.`, 'success');
+						logMessage(
+							`[${i + 1}/${produtos.length}] SUCESSO: "${produtoIdentifier}" OK.`,
+							'success'
+						);
+						successCount++;
 					} catch (error) {
-						logMessage(`[${i + 1}/${produtos.length}] FALHA ao processar "${produtoIdentifier}". Motivo: ${error.message}`, 'error');
-						logMessage('Processo interrompido. Verifique os dados do produto e a API.', 'error');
-						button.disabled = false;
-						return; 
+						logMessage(
+							`[${i + 1}/${produtos.length}] ERRO em "${produtoIdentifier}": ${error.message}`,
+							'error'
+						);
+						errorCount++;
 					}
-					await new Promise((resolve) => setTimeout(resolve, 300));
+					// Pequeno delay para não sobrecarregar
+					await new Promise((resolve) => setTimeout(resolve, 200));
 				}
-				logMessage('🎉 Processo finalizado com sucesso!', 'success');
+				logMessage(`=== FINALIZADO: ${successCount} Sucessos | ${errorCount} Falhas ===`, successCount > 0 ? 'success' : 'error');
 				button.disabled = false;
+				button.textContent = method === 'POST' ? "Iniciar Cadastro de Produtos" : "Iniciar Correção em Massa";
 			}
 
 			async function handleCadastro() {
 				clearLogs();
 				try {
 					const produtos = JSON.parse(jsonInput.value);
-					if (!Array.isArray(produtos)) throw new Error('O JSON não é uma lista (array).');
+					if (!Array.isArray(produtos))
+						throw new Error('O JSON não é uma lista (array).');
 					await processMassAction(produtos, 'POST');
 				} catch (error) {
-					logMessage(`Erro ao processar o JSON: ${error.message}`, 'error');
+					logMessage(
+						`Erro ao processar o JSON: ${error.message}`,
+						'error'
+					);
 				}
 			}
 
@@ -482,28 +705,43 @@
 				clearLogs();
 				try {
 					const produtos = JSON.parse(jsonInputUpdate.value);
-					if (!Array.isArray(produtos)) throw new Error('O JSON não é uma lista (array).');
+					if (!Array.isArray(produtos))
+						throw new Error('O JSON não é uma lista (array).');
 					await processMassAction(produtos, 'PUT');
 				} catch (error) {
-					logMessage(`Erro ao processar o JSON: ${error.message}`, 'error');
+					logMessage(
+						`Erro ao processar o JSON: ${error.message}`,
+						'error'
+					);
 				}
 			}
-			
+
 			async function fetchAllProducts() {
-				clearLogs();
 				logMessage('Buscando produtos na API...');
-				productListContainer.innerHTML = '<div class="text-center p-4">Carregando...</div>';
+				productListContainer.innerHTML =
+					'<div class="text-center p-4">Carregando...</div>';
 				try {
-					const response = await fetch(`${apiUrlBase}${sourceQuery}`, {
-						headers: { Authorization: `Bearer ${authToken}` },
-					});
-					if (!response.ok) throw new Error(`Erro ${response.status}`);
+					const response = await fetch(
+						`${apiUrlBase}${sourceQuery}`,
+						{
+							headers: { Authorization: `Bearer ${authToken}` },
+						}
+					);
+					if (!response.ok)
+						throw new Error(`Erro ${response.status}`);
 					const products = await response.json();
 					renderProductList(products);
-					logMessage(`${products.length} produtos carregados com sucesso.`, 'success');
+					logMessage(
+						`${products.length} produtos carregados com sucesso.`,
+						'success'
+					);
 				} catch (error) {
-					logMessage(`Falha ao buscar produtos: ${error.message}`, 'error');
-					productListContainer.innerHTML = '<div class="text-center p-4 text-red-600">Falha ao carregar.</div>';
+					logMessage(
+						`Falha ao buscar produtos: ${error.message}`,
+						'error'
+					);
+					productListContainer.innerHTML =
+						'<div class="text-center p-4 text-red-600">Falha ao carregar.</div>';
 				}
 			}
 
@@ -511,35 +749,59 @@
 				event.preventDefault();
 				const id = document.getElementById('edit-product-id').value;
 				const payload = {
-					description: document.getElementById('edit-description').value,
+					description:
+						document.getElementById('edit-description').value,
 					ean_code: document.getElementById('edit-ean_code').value,
-					group_code: document.getElementById('edit-group_code').value,
+					group_code:
+						document.getElementById('edit-group_code').value,
 					image_url: document.getElementById('edit-image_url').value,
 					name: document.getElementById('edit-name').value,
-					price: parseFloat(document.getElementById('edit-price').value),
-					product_code: document.getElementById('edit-product_code').value
+					price: parseFloat(
+						document.getElementById('edit-price').value
+					),
+					product_code:
+						document.getElementById('edit-product_code').value,
 				};
 
 				logMessage(`Atualizando produto ID: ${id}...`);
 				try {
-					const response = await fetch(`${apiUrlBase}/${id}${sourceQuery}`, {
-						method: 'PUT',
-						headers: {
-							'Content-Type': 'application/json',
-							Authorization: `Bearer ${authToken}`,
-						},
-						body: JSON.stringify(payload),
-					});
+					const response = await fetch(
+						`${apiUrlBase}/${id}${sourceQuery}`,
+						{
+							method: 'PUT',
+							headers: {
+								'Content-Type': 'application/json',
+								Authorization: `Bearer ${authToken}`,
+							},
+							body: JSON.stringify(payload),
+						}
+					);
 					if (!response.ok) {
-						const errorData = await response.json().catch(() => ({}));
-						const errorMessage = errorData.details || errorData.message || `Erro HTTP ${response.status}`;
+						const errorData = await response
+							.json()
+							.catch(() => ({}));
+						const errorMessage =
+							errorData.details ||
+							errorData.message ||
+							`Erro HTTP ${response.status}`;
 						throw new Error(errorMessage);
 					}
-					logMessage(`Produto "${payload.name}" atualizado com sucesso!`, 'success');
+					logMessage(
+						`Produto "${payload.name}" atualizado com sucesso!`,
+						'success'
+					);
 					closeModal();
-					if (document.getElementById('tab-list').classList.contains('active')) {
+					if (
+						document
+							.getElementById('tab-list')
+							.classList.contains('active')
+					) {
 						fetchAllProducts();
-					} else if (document.getElementById('tab-search').classList.contains('active')) {
+					} else if (
+						document
+							.getElementById('tab-search')
+							.classList.contains('active')
+					) {
 						handleSearch();
 					}
 				} catch (error) {
@@ -548,82 +810,133 @@
 			}
 
 			async function deleteProduct(id, name) {
-				if (!(await showConfirm(`Tem certeza que deseja excluir o produto "${name}" (ID: ${id})?`))) return;
+				if (
+					!(await showConfirm(
+						`Tem certeza que deseja excluir o produto "${name}" (ID: ${id})?`
+					))
+				)
+					return;
 				logMessage(`Excluindo produto ID: ${id}...`);
 				try {
-					const response = await fetch(`${apiUrlBase}/${id}${sourceQuery}`, { 
-						method: 'DELETE',
-						headers: { Authorization: `Bearer ${authToken}` },
-					});
+					const response = await fetch(
+						`${apiUrlBase}/${id}${sourceQuery}`,
+						{
+							method: 'DELETE',
+							headers: { Authorization: `Bearer ${authToken}` },
+						}
+					);
 					if (!response.ok) {
-						const errorData = await response.json().catch(() => ({}));
-						const errorMessage = errorData.details || errorData.message || `Erro HTTP ${response.status}`;
+						const errorData = await response
+							.json()
+							.catch(() => ({}));
+						const errorMessage =
+							errorData.details ||
+							errorData.message ||
+							`Erro HTTP ${response.status}`;
 						throw new Error(errorMessage);
 					}
-					logMessage(`Produto "${name}" excluído com sucesso.`, 'success');
-					if (document.getElementById('tab-list').classList.contains('active')) {
+					logMessage(
+						`Produto "${name}" excluído com sucesso.`,
+						'success'
+					);
+					if (
+						document
+							.getElementById('tab-list')
+							.classList.contains('active')
+					) {
 						fetchAllProducts();
-					} else if (document.getElementById('tab-search').classList.contains('active')) {
+					} else if (
+						document
+							.getElementById('tab-search')
+							.classList.contains('active')
+					) {
 						handleSearch();
 					}
 				} catch (error) {
-					logMessage(`Falha ao excluir produto: ${error.message}`, 'error');
+					logMessage(
+						`Falha ao excluir produto: ${error.message}`,
+						'error'
+					);
 				}
 			}
 
 			async function handleSearch() {
 				const query = searchInput.value.trim();
 				if (!query) return;
-				clearLogs();
+				// clearLogs();
 				logMessage(`Buscando por "${query}"...`);
 				searchResultsContainer.innerHTML = 'Carregando...';
 				const isIdSearch = /^\d+$/.test(query);
 				const searchUrl = isIdSearch
 					? `${apiUrlBase}/${query}${sourceQuery}`
-					: `${apiUrlBase}/search${sourceQuery}&name=${encodeURIComponent(query)}`;
+					: `${apiUrlBase}/search${sourceQuery}&name=${encodeURIComponent(
+							query
+					  )}`;
 				try {
 					const response = await fetch(searchUrl, {
 						headers: { Authorization: `Bearer ${authToken}` },
 					});
 					if (response.status === 404) {
-						searchResultsContainer.innerHTML = '<div class="text-center p-4">Nenhum produto encontrado.</div>';
+						searchResultsContainer.innerHTML =
+							'<div class="text-center p-4">Nenhum produto encontrado.</div>';
 						logMessage(`Nenhum resultado para "${query}".`, 'info');
 						return;
 					}
-					if (!response.ok) throw new Error(`Erro na API: ${response.statusText}`);
+					if (!response.ok)
+						throw new Error(`Erro na API: ${response.statusText}`);
 					let results = await response.json();
 					if (!Array.isArray(results)) results = [results];
 					renderProductList(results, searchResultsContainer);
-					logMessage(`Busca por "${query}" retornou ${results.length} resultado(s).`, 'success');
+					logMessage(
+						`Busca por "${query}" retornou ${results.length} resultado(s).`,
+						'success'
+					);
 				} catch (error) {
 					logMessage(`Erro na busca: ${error.message}`, 'error');
 					searchResultsContainer.innerHTML = `<div class="text-red-600 p-4">Falha na busca. Detalhes: ${error.message}</div>`;
 				}
 			}
-			
-			function renderProductList(products, container = productListContainer) {
+
+			function renderProductList(
+				products,
+				container = productListContainer
+			) {
 				container.innerHTML = '';
 				if (!products || products.length === 0) {
-					container.innerHTML = '<div class="text-center p-4">Nenhum produto encontrado.</div>';
+					container.innerHTML =
+						'<div class="text-center p-4">Nenhum produto encontrado.</div>';
 					return;
 				}
 				products.forEach((product) => {
 					const productDiv = document.createElement('div');
-					productDiv.className = 'p-3 bg-white border rounded-lg flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap';
+					productDiv.className =
+						'p-3 bg-white border rounded-lg flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap hover:bg-gray-50 transition';
 					productDiv.innerHTML = `
 						<div class="flex items-center space-x-4 flex-grow min-w-0">
 							<img src="${product.image_url || placeholderImgUrl}"
 								 onerror="this.onerror=null;this.src='${errorImgUrl}';"
-								 alt="Imagem de ${product.name}" class="w-16 h-16 object-cover rounded-md bg-gray-200 flex-shrink-0">
+								 alt="Imagem de ${
+										product.name
+									}" class="w-16 h-16 object-cover rounded-md bg-gray-200 flex-shrink-0">
 							<div class="min-w-0">
-								<p class="font-bold text-gray-800 truncate" title="${product.name}">${product.name}</p>
-								<p class="text-sm text-gray-600">ID: ${product.id} | Código: ${product.product_code || 'N/A'}</p>
-								<p class="text-sm text-blue-600 font-semibold">Preço: R$ ${(product.base_price || 0).toFixed(2)}</p>
+								<p class="font-bold text-gray-800 truncate" title="${product.name}">${
+						product.name
+					}</p>
+								<p class="text-xs text-gray-500">ID: ${product.id} | Código: ${
+						product.product_code || 'N/A'
+					} | Grupo: ${product.group?.group_code || 'N/A'}</p>
+								<p class="text-sm text-blue-600 font-semibold">R$ ${(
+									product.base_price || 0
+								).toFixed(2)}</p>
 							</div>
 						</div>
 						<div class="space-x-2 flex-shrink-0">
-							<button onclick='openModal(${JSON.stringify(product)})' class="px-3 py-1 bg-yellow-500 text-white text-xs font-semibold rounded hover:bg-yellow-600">Editar</button>
-							<button onclick='deleteProduct(${JSON.stringify(product.id)}, ${JSON.stringify(product.name)})' class="px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded hover:bg-red-700">Excluir</button>
+							<button onclick='openModal(${JSON.stringify(
+								product
+							)})' class="px-3 py-1 bg-yellow-500 text-white text-xs font-semibold rounded hover:bg-yellow-600">Editar</button>
+							<button onclick='deleteProduct(${JSON.stringify(product.id)}, ${JSON.stringify(
+						product.name
+					)})' class="px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded hover:bg-red-700">Excluir</button>
 						</div>
 					`;
 					container.appendChild(productDiv);
@@ -633,11 +946,16 @@
 			function openModal(product) {
 				document.getElementById('edit-product-id').value = product.id;
 				document.getElementById('edit-name').value = product.name || '';
-				document.getElementById('edit-product_code').value = product.product_code || '';
-				document.getElementById('edit-group_code').value = product.group?.group_code || product.group_code || '';
-				document.getElementById('edit-price').value = product.base_price || 0;
-				document.getElementById('edit-ean_code').value = product.ean_code || '';
-				document.getElementById('edit-description').value = product.description || '';
+				document.getElementById('edit-product_code').value =
+					product.product_code || '';
+				document.getElementById('edit-group_code').value =
+					product.group?.group_code || product.group_code || '';
+				document.getElementById('edit-price').value =
+					product.base_price || 0;
+				document.getElementById('edit-ean_code').value =
+					product.ean_code || '';
+				document.getElementById('edit-description').value =
+					product.description || '';
 				const imageUrl = product.image_url || '';
 				imageUrlInput.value = imageUrl;
 				imagePreview.src = imageUrl || previewPlaceholderUrl;
@@ -650,11 +968,13 @@
 
 			function showConfirm(message) {
 				return new Promise((resolve) => {
-					const existingModal = document.getElementById('confirm-modal');
+					const existingModal =
+						document.getElementById('confirm-modal');
 					if (existingModal) existingModal.remove();
 					const confirmModal = document.createElement('div');
 					confirmModal.id = 'confirm-modal';
-					confirmModal.className = 'fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50';
+					confirmModal.className =
+						'fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50';
 					confirmModal.innerHTML = `
                     <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm mx-4">
                         <p class="text-lg text-gray-800 mb-4">${message}</p>
@@ -676,6 +996,266 @@
 				});
 			}
 
+			// --- FUNÇÕES DE GERENCIAMENTO DE CATEGORIAS ---
+			async function fetchAllCategories() {
+				// logMessage('Buscando categorias na API...');
+				categoriesListContainer.innerHTML =
+					'<div class="text-center p-4">Carregando...</div>';
+				try {
+					const response = await fetch(
+						`${apiGroupsUrl}${sourceQuery}`,
+						{
+							headers: { Authorization: `Bearer ${authToken}` },
+						}
+					);
+					if (!response.ok)
+						throw new Error(`Erro ${response.status}`);
+					const categories = await response.json();
+					renderCategoriesList(categories);
+					// logMessage(`${categories.length} categorias carregadas.`, 'info');
+				} catch (error) {
+					logMessage(
+						`Falha ao buscar categorias: ${error.message}`,
+						'error'
+					);
+					categoriesListContainer.innerHTML =
+						'<div class="text-center p-4 text-red-600">Falha ao carregar.</div>';
+				}
+			}
+
+			async function handleMassCategories() {
+				const button = startCategoriesMassButton;
+				button.disabled = true;
+				button.textContent = "Processando...";
+				
+				try {
+					const categorias = JSON.parse(jsonInputCategories.value);
+					if (!Array.isArray(categorias)) throw new Error("O JSON precisa ser uma lista []");
+
+					logMessage(`=== INICIANDO CADASTRO DE ${categorias.length} CATEGORIAS ===`, 'info');
+					
+					let successCount = 0;
+					
+					for(let i=0; i<categorias.length; i++) {
+						const cat = categorias[i];
+						const payload = {
+							group_code: cat.group_code,
+							name: cat.name
+						};
+						
+						logMessage(`[${i+1}/${categorias.length}] Cadastrando: ${cat.name}...`);
+						
+						try {
+							const response = await fetch(`${apiGroupsUrl}${sourceQuery}`, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json',
+									Authorization: `Bearer ${authToken}`,
+								},
+								body: JSON.stringify(payload),
+							});
+							
+							if(!response.ok) throw new Error(`Erro API ${response.status}`);
+							logMessage(`✅ ${cat.name} cadastrada!`, 'success');
+							successCount++;
+						} catch(err) {
+							logMessage(`❌ Erro em ${cat.name}: ${err.message}`, 'error');
+						}
+						await new Promise(r => setTimeout(r, 100));
+					}
+					
+					logMessage(`Fim do processamento. ${successCount} criadas.`, 'success');
+					fetchAllCategories(); // Atualiza a lista visual
+					
+				} catch (error) {
+					logMessage(`Erro no JSON: ${error.message}`, 'error');
+				}
+				button.disabled = false;
+				button.textContent = "Processar Lote de Categorias";
+			}
+
+			async function handleAddCategory(event) {
+				event.preventDefault();
+				const payload = {
+					group_code: document
+						.getElementById('new-group-code')
+						.value.trim(),
+					name: document
+						.getElementById('new-group-name')
+						.value.trim(),
+				};
+
+				logMessage(`Cadastrando categoria "${payload.name}"...`);
+				try {
+					const response = await fetch(
+						`${apiGroupsUrl}${sourceQuery}`,
+						{
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+								Authorization: `Bearer ${authToken}`,
+							},
+							body: JSON.stringify(payload),
+						}
+					);
+					if (!response.ok) {
+						const errorData = await response
+							.json()
+							.catch(() => ({}));
+						const errorMessage =
+							errorData.details ||
+							errorData.message ||
+							`Erro HTTP ${response.status}`;
+						throw new Error(errorMessage);
+					}
+					logMessage(
+						`Categoria "${payload.name}" cadastrada com sucesso!`,
+						'success'
+					);
+					addCategoryForm.reset();
+					fetchAllCategories();
+				} catch (error) {
+					logMessage(
+						`Erro ao cadastrar categoria: ${error.message}`,
+						'error'
+					);
+				}
+			}
+
+			async function handleUpdateCategory(event) {
+				event.preventDefault();
+				const id = document.getElementById('edit-category-id').value;
+				const payload = {
+					group_code: document
+						.getElementById('edit-category-code')
+						.value.trim(),
+					name: document
+						.getElementById('edit-category-name')
+						.value.trim(),
+				};
+
+				logMessage(`Atualizando categoria ID: ${id}...`);
+				try {
+					const response = await fetch(
+						`${apiGroupsUrl}/${id}${sourceQuery}`,
+						{
+							method: 'PUT',
+							headers: {
+								'Content-Type': 'application/json',
+								Authorization: `Bearer ${authToken}`,
+							},
+							body: JSON.stringify(payload),
+						}
+					);
+					if (!response.ok) {
+						const errorData = await response
+							.json()
+							.catch(() => ({}));
+						const errorMessage =
+							errorData.details ||
+							errorData.message ||
+							`Erro HTTP ${response.status}`;
+						throw new Error(errorMessage);
+					}
+					logMessage(
+						`Categoria "${payload.name}" atualizada com sucesso!`,
+						'success'
+					);
+					closeCategoryModal();
+					fetchAllCategories();
+				} catch (error) {
+					logMessage(
+						`Erro ao atualizar categoria: ${error.message}`,
+						'error'
+					);
+				}
+			}
+
+			async function deleteCategory(id, name) {
+				if (
+					!(await showConfirm(
+						`Tem certeza que deseja excluir a categoria "${name}" (ID: ${id})? Isso pode afetar produtos vinculados.`
+					))
+				)
+					return;
+				logMessage(`Excluindo categoria ID: ${id}...`);
+				try {
+					const response = await fetch(
+						`${apiGroupsUrl}/${id}${sourceQuery}`,
+						{
+							method: 'DELETE',
+							headers: { Authorization: `Bearer ${authToken}` },
+						}
+					);
+					if (!response.ok) {
+						const errorData = await response
+							.json()
+							.catch(() => ({}));
+						const errorMessage =
+							errorData.details ||
+							errorData.message ||
+							`Erro HTTP ${response.status}`;
+						throw new Error(errorMessage);
+					}
+					logMessage(
+						`Categoria "${name}" excluída com sucesso.`,
+						'success'
+					);
+					fetchAllCategories();
+				} catch (error) {
+					logMessage(
+						`Falha ao excluir categoria: ${error.message}`,
+						'error'
+					);
+				}
+			}
+
+			function renderCategoriesList(categories) {
+				categoriesListContainer.innerHTML = '';
+				if (!categories || categories.length === 0) {
+					categoriesListContainer.innerHTML =
+						'<div class="text-center p-4">Nenhuma categoria encontrada.</div>';
+					return;
+				}
+				categories.forEach((category) => {
+					const categoryDiv = document.createElement('div');
+					categoryDiv.className =
+						'p-3 bg-white border rounded-lg flex items-center justify-between hover:bg-gray-50';
+					categoryDiv.innerHTML = `
+						<div>
+							<p class="font-bold text-gray-800">${category.name}</p>
+							<p class="text-xs text-gray-500">Código: ${category.group_code} | ID: ${
+						category.id
+					}</p>
+						</div>
+						<div class="space-x-2">
+							<button onclick='openCategoryModal(${JSON.stringify(
+								category
+							)})' class="px-3 py-1 bg-yellow-500 text-white text-xs font-semibold rounded hover:bg-yellow-600">Editar</button>
+							<button onclick='deleteCategory(${JSON.stringify(
+								category.id
+							)}, ${JSON.stringify(
+						category.name
+					)})' class="px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded hover:bg-red-700">Excluir</button>
+						</div>
+					`;
+					categoriesListContainer.appendChild(categoryDiv);
+				});
+			}
+
+			function openCategoryModal(category) {
+				document.getElementById('edit-category-id').value = category.id;
+				document.getElementById('edit-category-code').value =
+					category.group_code;
+				document.getElementById('edit-category-name').value =
+					category.name;
+				categoryModal.classList.remove('hidden');
+			}
+
+			function closeCategoryModal() {
+				categoryModal.classList.add('hidden');
+			}
+
 			// --- EVENT LISTENERS ---
 			startButton.addEventListener('click', handleCadastro);
 			startUpdateButton.addEventListener('click', handleUpdateMass);
@@ -689,7 +1269,21 @@
 				const url = e.target.value.trim();
 				imagePreview.src = url || previewPlaceholderUrl;
 			});
+
+			// Event Listeners de Categoria
+			addCategoryForm.addEventListener('submit', handleAddCategory);
+			refreshCategoriesButton.addEventListener(
+				'click',
+				fetchAllCategories
+			);
+			editCategoryForm.addEventListener('submit', handleUpdateCategory);
+			startCategoriesMassButton.addEventListener('click', handleMassCategories);
+
+			// Carrega categorias ao abrir a aba
+			document.addEventListener('DOMContentLoaded', () => {
+				// Carregar categorias por padrão para popular a lista
+				fetchAllCategories();
+			});
 		</script>
 	</body>
 </html>
-

@@ -1,0 +1,765 @@
+const categories = [
+	{
+		group_code: 'SALGADOS',
+		name: 'Salgados Artesanais',
+		image_url:
+			'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'BEBIDAS',
+		name: 'Bebidas Geladas',
+		image_url:
+			'https://images.unsplash.com/photo-1468465226960-8899e992537c?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'BEBIDAS_QUENTES',
+		name: 'Bebidas Quentes',
+		image_url:
+			'https://images.unsplash.com/photo-1459257868276-5e65389e2722?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'SOBREMESAS',
+		name: 'Sobremesas Especiais',
+		image_url:
+			'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'PADARIA',
+		name: 'Padaria Artesanal',
+		image_url:
+			'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'MASSAS',
+		name: 'Massas Frescas',
+		image_url:
+			'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'CARNES',
+		name: 'Pratos de Carnes',
+		image_url:
+			'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'LANCHES',
+		name: 'Lanches Especiais',
+		image_url:
+			'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'PORCOES',
+		name: 'Porções Compartilháveis',
+		image_url:
+			'https://images.unsplash.com/photo-1506086679524-493c64fdfaa6?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'FRUTAS',
+		name: 'Frutas Selecionadas',
+		image_url:
+			'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'VERDURAS',
+		name: 'Verduras Frescas',
+		image_url:
+			'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'LEGUMES',
+		name: 'Legumes Selecionados',
+		image_url:
+			'https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'CARNES_BOVINAS',
+		name: 'Carnes Bovinas',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829574-0d3f4b53b3c7?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'CARNES_SUINAS',
+		name: 'Carnes Suínas',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829361-8c04e8cae058?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		group_code: 'AVES',
+		name: 'Aves Preparadas',
+		image_url:
+			'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+	},
+];
+
+const products = [
+	{
+		name: 'Coxinha de Frango',
+		product_code: 'SALG-001',
+		ean_code: '7891000000011',
+		group_code: 'SALGADOS',
+		price: 9.9,
+		description: 'Massa macia recheada com frango desfiado e catupiry.',
+		image_url:
+			'https://images.unsplash.com/photo-1592011432621-f7f576f44434?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Esfiha de Carne',
+		product_code: 'SALG-002',
+		ean_code: '7891000000028',
+		group_code: 'SALGADOS',
+		price: 8.5,
+		description: 'Esfiha aberta com carne temperada e toque de limão.',
+		image_url:
+			'https://images.unsplash.com/photo-1528832992873-5bb5781525d1?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Quibe Recheado',
+		product_code: 'SALG-003',
+		ean_code: '7891000000035',
+		group_code: 'SALGADOS',
+		price: 7.5,
+		description: 'Quibe assado recheado com queijo e hortelã fresca.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829574-0d3f4b53b3c7?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Empada de Palmito',
+		product_code: 'SALG-004',
+		ean_code: '7891000000042',
+		group_code: 'SALGADOS',
+		price: 10.0,
+		description: 'Empada amanteigada com recheio cremoso de palmito.',
+		image_url:
+			'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Suco Natural de Laranja',
+		product_code: 'BEB-001',
+		ean_code: '7892000000010',
+		group_code: 'BEBIDAS',
+		price: 11.9,
+		description: 'Suco 100% natural feito na hora.',
+		image_url:
+			'https://images.unsplash.com/photo-1468465226960-8899e992537c?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Refrigerante Lata',
+		product_code: 'BEB-002',
+		ean_code: '7892000000027',
+		group_code: 'BEBIDAS',
+		price: 7.0,
+		description: '350ml bem gelado em diversas opções.',
+		image_url:
+			'https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Água com Gás 500ml',
+		product_code: 'BEB-003',
+		ean_code: '7892000000034',
+		group_code: 'BEBIDAS',
+		price: 5.0,
+		description: 'Água mineral levemente gaseificada.',
+		image_url:
+			'https://images.unsplash.com/photo-1502741126161-b048400d0821?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Chá Gelado de Pêssego',
+		product_code: 'BEB-004',
+		ean_code: '7892000000041',
+		group_code: 'BEBIDAS',
+		price: 9.5,
+		description: 'Chá refrescante com pedaços de pêssego.',
+		image_url:
+			'https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Smoothie de Frutas Vermelhas',
+		product_code: 'BEB-005',
+		ean_code: '7892000000058',
+		group_code: 'BEBIDAS',
+		price: 14.0,
+		description: 'Vitamina cremosa com iogurte e frutas da estação.',
+		image_url:
+			'https://images.unsplash.com/photo-1464306076886-da185f6a9d12?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Café Espresso Duplo',
+		product_code: 'BEQ-001',
+		ean_code: '7892100000019',
+		group_code: 'BEBIDAS_QUENTES',
+		price: 6.0,
+		description: 'Blend próprio, extraído em dupla dose.',
+		image_url:
+			'https://images.unsplash.com/photo-1432107294467-1da77459205b?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Capuccino Cremoso',
+		product_code: 'BEQ-002',
+		ean_code: '7892100000026',
+		group_code: 'BEBIDAS_QUENTES',
+		price: 9.5,
+		description: 'Café com leite vaporizado, chocolate e canela.',
+		image_url:
+			'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Chocolate Quente Gourmet',
+		product_code: 'BEQ-003',
+		ean_code: '7892100000033',
+		group_code: 'BEBIDAS_QUENTES',
+		price: 12.0,
+		description: 'Chocolate 70% cacau com creme fresco.',
+		image_url:
+			'https://images.unsplash.com/photo-1481391032119-d89fee407e44?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Latte de Baunilha',
+		product_code: 'BEQ-004',
+		ean_code: '7892100000040',
+		group_code: 'BEBIDAS_QUENTES',
+		price: 11.0,
+		description: 'Espresso com leite vaporizado e xarope de baunilha.',
+		image_url:
+			'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Chá Mate com Limão',
+		product_code: 'BEQ-005',
+		ean_code: '7892100000057',
+		group_code: 'BEBIDAS_QUENTES',
+		price: 7.5,
+		description: 'Infusão quente de mate tostado e limão siciliano.',
+		image_url:
+			'https://images.unsplash.com/photo-1422207258071-70754198c4a2?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Macchiato Caramelizado',
+		product_code: 'BEQ-006',
+		ean_code: '7892100000064',
+		group_code: 'BEBIDAS_QUENTES',
+		price: 10.5,
+		description: 'Macchiato com calda de caramelo artesanal.',
+		image_url:
+			'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Bolo de Aniversário',
+		product_code: 'SOB-001',
+		ean_code: '7892200000018',
+		group_code: 'SOBREMESAS',
+		price: 120.0,
+		description: 'Bolo de três camadas com recheio de creme e frutas.',
+		image_url:
+			'https://images.unsplash.com/photo-1505253216365-79f4c6cd1ac4?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Cheesecake de Frutas Vermelhas',
+		product_code: 'SOB-002',
+		ean_code: '7892200000025',
+		group_code: 'SOBREMESAS',
+		price: 15.0,
+		description: 'Cheesecake cremoso com calda artesanal.',
+		image_url:
+			'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Mousse de Chocolate Belga',
+		product_code: 'SOB-003',
+		ean_code: '7892200000032',
+		group_code: 'SOBREMESAS',
+		price: 12.5,
+		description: 'Textura leve com chocolate 60%.',
+		image_url:
+			'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Tiramisu Clássico',
+		product_code: 'SOB-004',
+		ean_code: '7892200000049',
+		group_code: 'SOBREMESAS',
+		price: 16.0,
+		description: 'Camadas de mascarpone com café espresso.',
+		image_url:
+			'https://images.unsplash.com/photo-1509402201816-7c7c61b6f006?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Pão Italiano Artesanal',
+		product_code: 'PAD-001',
+		ean_code: '7892300000017',
+		group_code: 'PADARIA',
+		price: 18.0,
+		description: 'Fermentação natural, casca crocante.',
+		image_url:
+			'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Croissant de Manteiga',
+		product_code: 'PAD-002',
+		ean_code: '7892300000024',
+		group_code: 'PADARIA',
+		price: 9.0,
+		description: 'Massa folhada 100% manteiga francesa.',
+		image_url:
+			'https://images.unsplash.com/photo-1509175918812-8bc3133cc0f4?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Baguete Integral',
+		product_code: 'PAD-003',
+		ean_code: '7892300000031',
+		group_code: 'PADARIA',
+		price: 11.0,
+		description: 'Farinha integral com sementes variadas.',
+		image_url:
+			'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Lasanha Bolonhesa',
+		product_code: 'MAS-001',
+		ean_code: '7892400000016',
+		group_code: 'MASSAS',
+		price: 34.0,
+		description: 'Lasanha artesanal com ragu de longa cocção.',
+		image_url:
+			'https://images.unsplash.com/photo-1543357480-c60d7cbcbb62?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Fettuccine Alfredo',
+		product_code: 'MAS-002',
+		ean_code: '7892400000023',
+		group_code: 'MASSAS',
+		price: 32.0,
+		description: 'Molho cremoso com parmesão curado.',
+		image_url:
+			'https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Ravioli de Ricota',
+		product_code: 'MAS-003',
+		ean_code: '7892400000030',
+		group_code: 'MASSAS',
+		price: 33.0,
+		description: 'Recheado com ricota fresca e espinafre.',
+		image_url:
+			'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Picanha Grelhada',
+		product_code: 'CAR-001',
+		ean_code: '7892500000015',
+		group_code: 'CARNES',
+		price: 59.0,
+		description: 'Fatiada na hora com sal de parrilla.',
+		image_url:
+			'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Fraldinha ao Chimichurri',
+		product_code: 'CAR-002',
+		ean_code: '7892500000022',
+		group_code: 'CARNES',
+		price: 52.0,
+		description: 'Servida com molho chimichurri fresco.',
+		image_url:
+			'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Medalhão de Filé Mignon',
+		product_code: 'CAR-003',
+		ean_code: '7892500000039',
+		group_code: 'CARNES',
+		price: 64.0,
+		description: 'Medalhão grelhado com bacon crocante.',
+		image_url:
+			'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Hambúrguer Clássico',
+		product_code: 'LAN-001',
+		ean_code: '7892600000014',
+		group_code: 'LANCHES',
+		price: 28.0,
+		description: 'Blend 150g, queijo prato e maionese da casa.',
+		image_url:
+			'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Sanduíche de Pernil',
+		product_code: 'LAN-002',
+		ean_code: '7892600000021',
+		group_code: 'LANCHES',
+		price: 24.0,
+		description: 'Pernil desfiado com cebola caramelizada.',
+		image_url:
+			'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Wrap Vegetariano',
+		product_code: 'LAN-003',
+		ean_code: '7892600000038',
+		group_code: 'LANCHES',
+		price: 22.0,
+		description: 'Mix de legumes grelhados e húmus.',
+		image_url:
+			'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Cheeseburger Duplo',
+		product_code: 'LAN-004',
+		ean_code: '7892600000045',
+		group_code: 'LANCHES',
+		price: 31.0,
+		description: 'Dois discos, cheddar e picles artesanal.',
+		image_url:
+			'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Batata Rústica com Ervas',
+		product_code: 'POR-001',
+		ean_code: '7892700000013',
+		group_code: 'PORCOES',
+		price: 23.0,
+		description: 'Batatas assadas com alecrim e alho.',
+		image_url:
+			'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Iscas de Frango Crocantes',
+		product_code: 'POR-002',
+		ean_code: '7892700000020',
+		group_code: 'PORCOES',
+		price: 27.0,
+		description: 'Empanado crocante com molho barbecue.',
+		image_url:
+			'https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Anéis de Cebola Artesanais',
+		product_code: 'POR-003',
+		ean_code: '7892700000037',
+		group_code: 'PORCOES',
+		price: 21.0,
+		description: 'Massa de cerveja com páprica defumada.',
+		image_url:
+			'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Mini Pastéis Sortidos',
+		product_code: 'POR-004',
+		ean_code: '7892700000044',
+		group_code: 'PORCOES',
+		price: 25.0,
+		description: 'Recheios de carne, queijo e palmito.',
+		image_url:
+			'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Maçã Fuji',
+		product_code: 'FRU-001',
+		ean_code: '7892800000012',
+		group_code: 'FRUTAS',
+		price: 8.9,
+		description: 'Maçãs crocantes vendidas por quilo.',
+		image_url:
+			'https://images.unsplash.com/photo-1447175008436-054170c2e979?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Banana Nanica',
+		product_code: 'FRU-002',
+		ean_code: '7892800000029',
+		group_code: 'FRUTAS',
+		price: 6.5,
+		description: 'Cacho selecionado direto do produtor.',
+		image_url:
+			'https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Manga Palmer',
+		product_code: 'FRU-003',
+		ean_code: '7892800000036',
+		group_code: 'FRUTAS',
+		price: 9.8,
+		description: 'Mangas grandes e extremamente doces.',
+		image_url:
+			'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Uva Crimson',
+		product_code: 'FRU-004',
+		ean_code: '7892800000043',
+		group_code: 'FRUTAS',
+		price: 16.9,
+		description: 'Sem sementes, ideal para sobremesas.',
+		image_url:
+			'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Abacaxi Pérola',
+		product_code: 'FRU-005',
+		ean_code: '7892800000050',
+		group_code: 'FRUTAS',
+		price: 7.9,
+		description: 'Fruta inteira com coroa preservada.',
+		image_url:
+			'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Alface Americana',
+		product_code: 'VER-001',
+		ean_code: '7892900000011',
+		group_code: 'VERDURAS',
+		price: 5.5,
+		description: 'Cabeças crocantes higienizadas.',
+		image_url:
+			'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Rúcula Hidropônica',
+		product_code: 'VER-002',
+		ean_code: '7892900000028',
+		group_code: 'VERDURAS',
+		price: 6.9,
+		description: 'Folhas jovens, sabor marcante.',
+		image_url:
+			'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Espinafre Fresco',
+		product_code: 'VER-003',
+		ean_code: '7892900000035',
+		group_code: 'VERDURAS',
+		price: 7.5,
+		description: 'Maços prontos para consumo.',
+		image_url:
+			'https://images.unsplash.com/photo-1447175008436-054170c2e979?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Couve Manteiga',
+		product_code: 'VER-004',
+		ean_code: '7892900000042',
+		group_code: 'VERDURAS',
+		price: 4.9,
+		description: 'Folhas largas ideais para refogados.',
+		image_url:
+			'https://images.unsplash.com/photo-1447175008436-054170c2e979?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Agrião Orgânico',
+		product_code: 'VER-005',
+		ean_code: '7892900000059',
+		group_code: 'VERDURAS',
+		price: 8.2,
+		description: 'Produção certificada sem agrotóxicos.',
+		image_url:
+			'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Cenoura Extra',
+		product_code: 'LEG-001',
+		ean_code: '7893000000010',
+		group_code: 'LEGUMES',
+		price: 5.8,
+		description: 'Seleção de raízes laranjas crocantes.',
+		image_url:
+			'https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Abobrinha Italiana',
+		product_code: 'LEG-002',
+		ean_code: '7893000000027',
+		group_code: 'LEGUMES',
+		price: 6.4,
+		description: 'Textura macia para grelhados.',
+		image_url:
+			'https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Beterraba Orgânica',
+		product_code: 'LEG-003',
+		ean_code: '7893000000034',
+		group_code: 'LEGUMES',
+		price: 6.9,
+		description: 'Raízes doces e cheias de cor.',
+		image_url:
+			'https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Batata Doce Roxa',
+		product_code: 'LEG-004',
+		ean_code: '7893000000041',
+		group_code: 'LEGUMES',
+		price: 7.5,
+		description: 'Ideal para assados e purês.',
+		image_url:
+			'https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Tomate Italiano',
+		product_code: 'LEG-005',
+		ean_code: '7893000000058',
+		group_code: 'LEGUMES',
+		price: 9.4,
+		description: 'Formato alongado, perfeito para molhos.',
+		image_url:
+			'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Filé Mignon Limpo',
+		product_code: 'CBOV-001',
+		ean_code: '7893100000019',
+		group_code: 'CARNES_BOVINAS',
+		price: 89.0,
+		description: 'Corte premium limpo e porcionado.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829574-0d3f4b53b3c7?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Contra Filé Angus',
+		product_code: 'CBOV-002',
+		ean_code: '7893100000026',
+		group_code: 'CARNES_BOVINAS',
+		price: 74.0,
+		description: 'Marmoreio alto e sabor marcante.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829574-0d3f4b53b3c7?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Costela Janela',
+		product_code: 'CBOV-003',
+		ean_code: '7893100000033',
+		group_code: 'CARNES_BOVINAS',
+		price: 42.0,
+		description: 'Ideal para churrascos de longa duração.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829574-0d3f4b53b3c7?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Maminha Premium',
+		product_code: 'CBOV-004',
+		ean_code: '7893100000040',
+		group_code: 'CARNES_BOVINAS',
+		price: 58.0,
+		description: 'Corte macio e suculento.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829574-0d3f4b53b3c7?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Acém Moído',
+		product_code: 'CBOV-005',
+		ean_code: '7893100000057',
+		group_code: 'CARNES_BOVINAS',
+		price: 32.0,
+		description: 'Moído fresco com 15% de gordura.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829574-0d3f4b53b3c7?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Lombo Suíno Temperado',
+		product_code: 'CSUI-001',
+		ean_code: '7893200000018',
+		group_code: 'CARNES_SUINAS',
+		price: 39.0,
+		description: 'Lombo marinado com ervas finas.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829361-8c04e8cae058?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Pernil Desossado',
+		product_code: 'CSUI-002',
+		ean_code: '7893200000025',
+		group_code: 'CARNES_SUINAS',
+		price: 34.0,
+		description: 'Pronto para assados longos.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829361-8c04e8cae058?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Costelinha Barbecue',
+		product_code: 'CSUI-003',
+		ean_code: '7893200000032',
+		group_code: 'CARNES_SUINAS',
+		price: 44.0,
+		description: 'Costelas glaceadas com molho barbecue.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829361-8c04e8cae058?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Linguiça Artesanal',
+		product_code: 'CSUI-004',
+		ean_code: '7893200000049',
+		group_code: 'CARNES_SUINAS',
+		price: 29.0,
+		description: 'Linguiça toscana com vinho branco.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829361-8c04e8cae058?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Bisteca Suína',
+		product_code: 'CSUI-005',
+		ean_code: '7893200000056',
+		group_code: 'CARNES_SUINAS',
+		price: 27.0,
+		description: 'Cortes individuais com osso em T.',
+		image_url:
+			'https://images.unsplash.com/photo-1608039829361-8c04e8cae058?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Coxinha da Asa Temperada',
+		product_code: 'AVE-001',
+		ean_code: '7893300000017',
+		group_code: 'AVES',
+		price: 24.0,
+		description: 'Temperada com páprica e limão.',
+		image_url:
+			'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Filé de Peito Orgânico',
+		product_code: 'AVE-002',
+		ean_code: '7893300000024',
+		group_code: 'AVES',
+		price: 31.0,
+		description: 'Peito sem pele, pronto para grelhar.',
+		image_url:
+			'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Sobrecoxa Desossada',
+		product_code: 'AVE-003',
+		ean_code: '7893300000031',
+		group_code: 'AVES',
+		price: 26.0,
+		description: 'Suculenta e perfeita para assados.',
+		image_url:
+			'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Peru Fatiado',
+		product_code: 'AVE-004',
+		ean_code: '7893300000048',
+		group_code: 'AVES',
+		price: 48.0,
+		description: 'Fatias defumadas prontas para servir.',
+		image_url:
+			'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+	},
+	{
+		name: 'Tulipa Crocante',
+		product_code: 'AVE-005',
+		ean_code: '7893300000055',
+		group_code: 'AVES',
+		price: 25.0,
+		description: 'Tulipas temperadas com molho especial.',
+		image_url:
+			'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+	},
+];
+
+const dataset = {
+	categories,
+	products: products.map((product) => ({
+		...product,
+		source_name: 'uai_pdv_mais',
+	})),
+};
+
+console.log(JSON.stringify(dataset, null, 2));

@@ -11,24 +11,18 @@
  * diretamente no código. Elas devem ser obtidas de forma segura.
  */
 const config = {
-	// CORREÇÃO: URL base para os endpoints de dados (produtos, categorias, etc.)
-	apiUrlBase: 'https://sup.bixs.com.br/v1/api',
-	// CORREÇÃO: URL base separada para o endpoint de autenticação
-	authUrlBase: 'https://sup.bixs.com.br/v1',
+	// URL base para os endpoints de dados (produtos, categorias, etc.)
+	apiUrlBase: 'https://dev.bixs.com.br/v1/api',
+	// URL base separada para o endpoint de autenticação de admin
+	authUrlBase: 'https://dev.bixs.com.br/v1',
 	source: 'uai_pdv_mais',
 	loginCredentials: {
-		email: 'pedrolucasmota2005.pl@gmail.com',
-		mac: '00000',
-		password: 'plm200510',
-		source_app: 'teste_app',
+		email: 'pedro@bixs.com.br',
+		password: 'P3dro001',
 	},
-	// O token permanente pode ser usado em uma lógica de "refresh token" se a API suportar.
-	// Por enquanto, usaremos o login/senha que é garantido pela rota /auth/login.
-	permanentToken:
-		'c437d95b4be4725b3890a891e6492bb5a51128d777af73df6d7f5753480dfb9b',
 	// Token JWT inicial fornecido (opcional) — será pré-carregado no storage para testes.
 	initialToken:
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJuYW1lIjoiUGVkcm8iLCJlbWFpbCI6InBlZHJvbHVjYXNtb3RhMjAwNS5wbEBnbWFpbC5jb20iLCJpc0FkbWluIjpmYWxzZSwic3ViIjoiNSIsImV4cCI6MTc2MTE1ODE0NCwiaWF0IjoxNzYxMDcxNzQ0fQ.z_Ot2QqU0HO5kva_uLyocp7ywne6cfsmXMyGg_BjHQs',
+		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJ1c2VybmFtZSI6IlBlZHJvIiwiY3BmQ25waiI6IiIsImVtYWlsIjoicGVkcm9AYml4cy5jb20uYnIiLCJpc0FkbWluIjp0cnVlLCJzdWIiOiIxMiIsImV4cCI6MTc2Mjk3NDg3OSwiaWF0IjoxNzYyODg4NDc5fQ.0JR1wHx5rMujJvx1VhZkm_RgRotHPM-OYPmGTqXjhrQ',
 };
 
 /**
@@ -58,8 +52,8 @@ if (config && config.initialToken) {
  * @returns {Promise<string|null>} O novo token de acesso ou null em caso de falha.
  */
 async function loginAndGetNewToken() {
-	// CORREÇÃO: Utiliza a authUrlBase para a rota de login.
-	const url = `${config.authUrlBase}/auth/login`;
+	// Utiliza a authUrlBase para a rota de login de admin
+	const url = `${config.authUrlBase}/auth/admin/login`;
 	try {
 		console.warn(
 			'[API AUTENTICAÇÃO]',

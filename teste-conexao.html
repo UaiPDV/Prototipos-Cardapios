@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Teste de Conexão API</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				max-width: 800px;
+				margin: 50px auto;
+				padding: 20px;
+				background: #f5f5f5;
+			}
+			.teste-box {
+				background: white;
+				padding: 20px;
+				margin: 10px 0;
+				border-radius: 8px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
+			.status {
+				padding: 10px;
+				margin: 10px 0;
+				border-radius: 4px;
+				font-weight: bold;
+			}
+			.sucesso {
+				background: #d4edda;
+				color: #155724;
+			}
+			.erro {
+				background: #f8d7da;
+				color: #721c24;
+			}
+			.info {
+				background: #d1ecf1;
+				color: #0c5460;
+			}
+			.loading {
+				background: #fff3cd;
+				color: #856404;
+			}
+			button {
+				background: #007bff;
+				color: white;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 4px;
+				cursor: pointer;
+				font-size: 16px;
+			}
+			button:hover {
+				background: #0056b3;
+			}
+			pre {
+				background: #f8f9fa;
+				padding: 10px;
+				border-radius: 4px;
+				overflow-x: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>🔍 Diagnóstico de Conexão com a API</h1>
+
+		<div class="teste-box">
+			<h2>Teste 1: Verificar conectividade básica</h2>
+			<button onclick="testeConectividade()">Executar Teste</button>
+			<div
+				id="resultado1"
+				class="status info"
+				style="display: none"
+			></div>
+		</div>
+
+		<div class="teste-box">
+			<h2>Teste 2: Verificar endpoint de autenticação</h2>
+			<button onclick="testeAutenticacao()">Executar Teste</button>
+			<div
+				id="resultado2"
+				class="status info"
+				style="display: none"
+			></div>
+		</div>
+
+		<div class="teste-box">
+			<h2>Teste 3: Verificar endpoints de dados</h2>
+			<button onclick="testeDados()">Executar Teste</button>
+			<div
+				id="resultado3"
+				class="status info"
+				style="display: none"
+			></div>
+		</div>
+
+		<div class="teste-box">
+			<h2>Teste 4: Verificar com HTTP (sem SSL)</h2>
+			<button onclick="testeHTTP()">Executar Teste</button>
+			<div
+				id="resultado4"
+				class="status info"
+				style="display: none"
+			></div>
+			<p>
+				<small
+					>⚠️ Este teste verifica se o servidor responde via HTTP
+					simples</small
+				>
+			</p>
+		</div>
+
+		<div class="teste-box">
+			<h2>📋 Resumo e Recomendações</h2>
+			<div id="resumo" class="status info">
+				Execute os testes acima para ver as recomendações.
+			</div>
+		</div>
+
+		<script>
+			const URLs = {
+				authHttps: 'https://dev.bixs.com.br/v1/auth/admin/login',
+				groupsHttps:
+					'https://dev.bixs.com.br/v1/api/groups?source=uai_pdv_mais',
+				productsHttps:
+					'https://dev.bixs.com.br/v1/api/products?source=uai_pdv_mais',
+				authHttp: 'http://dev.bixs.com.br/v1/auth/admin/login',
+				groupsHttp:
+					'http://dev.bixs.com.br/v1/api/groups?source=uai_pdv_mais',
+			};
+
+			async function testeConectividade() {
+				const resultado = document.getElementById('resultado1');
+				resultado.style.display = 'block';
+				resultado.className = 'status loading';
+				resultado.innerHTML = '⏳ Testando conectividade...';
+
+				try {
+					const response = await fetch(URLs.groupsHttps, {
+						method: 'HEAD',
+						mode: 'no-cors',
+					});
+
+					resultado.className = 'status info';
+					resultado.innerHTML = `
+                    <strong>Resultado:</strong><br>
+                    ℹ️ Modo 'no-cors' executado (não podemos ver detalhes da resposta por questões de segurança do navegador)<br>
+                    <strong>Conclusão:</strong> O servidor pode estar acessível, mas precisamos dos outros testes para confirmar.
+                `;
+				} catch (error) {
+					resultado.className = 'status erro';
+					resultado.innerHTML = `
+                    <strong>❌ Erro de Conectividade</strong><br>
+                    Tipo: ${error.name}<br>
+                    Mensagem: ${error.message}<br>
+                    <br>
+                    <strong>Possíveis causas:</strong><br>
+                    • Servidor está offline<br>
+                    • Problemas de rede/firewall<br>
+                    • Certificado SSL inválido
+                `;
+				}
+			}
+
+			async function testeAutenticacao() {
+				const resultado = document.getElementById('resultado2');
+				resultado.style.display = 'block';
+				resultado.className = 'status loading';
+				resultado.innerHTML = '⏳ Testando endpoint de autenticação...';
+
+				try {
+					const response = await fetch(URLs.authHttps, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							email: 'pedro@bixs.com.br',
+							password: 'Pedro@2005',
+						}),
+					});
+
+					let dados = null;
+					let textoResposta = '';
+
+					try {
+						textoResposta = await response.text();
+						dados = JSON.parse(textoResposta);
+					} catch (e) {
+						dados = textoResposta;
+					}
+
+					if (response.ok) {
+						resultado.className = 'status sucesso';
+						resultado.innerHTML = `
+                        <strong>✅ Autenticação bem-sucedida!</strong><br>
+                        Status: ${response.status}<br>
+                        <details>
+                            <summary>Ver resposta completa</summary>
+                            <pre>${JSON.stringify(dados, null, 2)}</pre>
+                        </details>
+                    `;
+					} else {
+						resultado.className = 'status erro';
+						resultado.innerHTML = `
+                        <strong>❌ Erro na autenticação</strong><br>
+                        Status HTTP: ${response.status} ${
+							response.statusText
+						}<br>
+                        <details>
+                            <summary>Ver resposta</summary>
+                            <pre>${
+								typeof dados === 'string'
+									? dados
+									: JSON.stringify(dados, null, 2)
+							}</pre>
+                        </details>
+                    `;
+					}
+				} catch (error) {
+					resultado.className = 'status erro';
+					resultado.innerHTML = `
+                    <strong>❌ Erro ao conectar no endpoint de autenticação</strong><br>
+                    Tipo: ${error.name}<br>
+                    Mensagem: ${error.message}<br>
+                    <br>
+                    <strong>Diagnóstico:</strong><br>
+                    ${
+						error.message.includes('SSL') ||
+						error.message.includes('certificate')
+							? '🔒 <strong>Problema de Certificado SSL</strong> - O servidor tem problemas com HTTPS'
+							: '🌐 <strong>Problema de Rede</strong> - Não foi possível conectar ao servidor'
+					}
+                `;
+				}
+			}
+
+			async function testeDados() {
+				const resultado = document.getElementById('resultado3');
+				resultado.style.display = 'block';
+				resultado.className = 'status loading';
+				resultado.innerHTML = '⏳ Testando endpoints de dados...';
+
+				const token =
+					'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJ1c2VybmFtZSI6IlBlZHJvIiwiY3BmQ25waiI6IiIsImVtYWlsIjoicGVkcm9AYml4cy5jb20uYnIiLCJpc0FkbWluIjp0cnVlLCJzdWIiOiIxMiIsImV4cCI6MTc2Mjk3NDg3OSwiaWF0IjoxNzYyODg4NDc5fQ.0JR1wHx5rMujJvx1VhZkm_RgRotHPM-OYPmGTqXjhrQ';
+
+				const testes = [
+					{ nome: 'Groups', url: URLs.groupsHttps },
+					{ nome: 'Products', url: URLs.productsHttps },
+				];
+
+				let resultadosHTML = '';
+
+				for (const teste of testes) {
+					try {
+						const response = await fetch(teste.url, {
+							method: 'GET',
+							headers: {
+								'Content-Type': 'application/json',
+								Authorization: `Bearer ${token}`,
+							},
+						});
+
+						let dados = null;
+						try {
+							dados = await response.json();
+						} catch (e) {
+							dados = await response.text();
+						}
+
+						if (response.ok) {
+							resultadosHTML += `<strong>✅ ${teste.nome}:</strong> Sucesso (${response.status})<br>`;
+						} else {
+							resultadosHTML += `<strong>❌ ${teste.nome}:</strong> Erro ${response.status}<br>`;
+						}
+					} catch (error) {
+						resultadosHTML += `<strong>❌ ${teste.nome}:</strong> ${error.message}<br>`;
+					}
+				}
+
+				resultado.className = resultadosHTML.includes('❌')
+					? 'status erro'
+					: 'status sucesso';
+				resultado.innerHTML = resultadosHTML;
+			}
+
+			async function testeHTTP() {
+				const resultado = document.getElementById('resultado4');
+				resultado.style.display = 'block';
+				resultado.className = 'status loading';
+				resultado.innerHTML = '⏳ Testando com HTTP (sem SSL)...';
+
+				try {
+					// Tenta com HTTP simples
+					const response = await fetch(URLs.authHttp, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							email: 'pedro@bixs.com.br',
+							password: 'Pedro@2005',
+						}),
+					});
+
+					if (response.ok) {
+						resultado.className = 'status info';
+						resultado.innerHTML = `
+                        <strong>ℹ️ HTTP funciona!</strong><br>
+                        Status: ${response.status}<br>
+                        <br>
+                        <strong>Conclusão:</strong> O servidor responde via HTTP, mas há problemas com HTTPS/SSL.<br>
+                        <strong>Recomendação:</strong> Entre em contato com o administrador do servidor para corrigir o certificado SSL.
+                    `;
+					} else {
+						resultado.className = 'status erro';
+						resultado.innerHTML = `
+                        <strong>❌ HTTP também falhou</strong><br>
+                        Status: ${response.status}
+                    `;
+					}
+				} catch (error) {
+					resultado.className = 'status erro';
+					resultado.innerHTML = `
+                    <strong>❌ Erro com HTTP</strong><br>
+                    Mensagem: ${error.message}<br>
+                    <br>
+                    <strong>Nota:</strong> Alguns navegadores bloqueiam requisições HTTP em páginas HTTPS por segurança.
+                `;
+				}
+			}
+
+			// Executar um teste completo
+			async function executarTodosOsTestes() {
+				await testeConectividade();
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				await testeAutenticacao();
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				await testeDados();
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				await testeHTTP();
+
+				gerarResumo();
+			}
+
+			function gerarResumo() {
+				const resumo = document.getElementById('resumo');
+				resumo.innerHTML = `
+                <strong>📊 Análise Completa:</strong><br><br>
+                
+                <strong>Situação Atual:</strong><br>
+                O erro <code>ERR_SSL_PROTOCOL_ERROR</code> indica que o servidor tem problemas com o certificado SSL/TLS.<br><br>
+                
+                <strong>O que isso significa:</strong><br>
+                • O servidor <code>dev.bixs.com.br</code> pode estar com certificado SSL expirado ou mal configurado<br>
+                • A página Swagger não carregar confirma que é um problema no servidor<br>
+                • Seu código está correto, o problema é na infraestrutura do servidor<br><br>
+                
+                <strong>Possíveis soluções:</strong><br>
+                1️⃣ <strong>Solução temporária:</strong> Se o servidor aceitar HTTP, você pode temporariamente usar HTTP em vez de HTTPS (não recomendado para produção)<br>
+                2️⃣ <strong>Solução definitiva:</strong> Contatar o administrador do servidor para renovar/corrigir o certificado SSL<br>
+                3️⃣ <strong>Alternativa:</strong> Usar um proxy/servidor intermediário que faça a conexão SSL corretamente<br><br>
+                
+                <strong>Para testar se é realmente problema do servidor:</strong><br>
+                • Tente acessar <a href="https://dev.bixs.com.br" target="_blank">https://dev.bixs.com.br</a> diretamente no navegador<br>
+                • Use ferramentas online como <a href="https://www.ssllabs.com/ssltest/" target="_blank">SSL Labs</a> para verificar o certificado<br>
+                • Teste em outro dispositivo/rede para descartar problemas locais
+            `;
+			}
+		</script>
+	</body>
+</html>
